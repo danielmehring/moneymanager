@@ -1,27 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical"
     tools:context=".activities.SplashScreenActivity">
 
-    <Button
-        android:id="@+id/addEntry"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add Entry"/>
+    <ImageView
+        android:id="@+id/imageViewMmLogo"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/money_manager_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <Space
-        android:layout_width="wrap_content"
-        android:layout_height="10dp"/>
+    <ImageView
+        android:id="@+id/imageViewXsLogo"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_xyzerstudios_logo" />
 
-    <Button
-        android:id="@+id/readEntries"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Read Entries"/>
-
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

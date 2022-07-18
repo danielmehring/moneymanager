@@ -5,11 +5,18 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import java.util.Date;
+
+import de.xyzerstudios.moneymanager.utils.Utils;
+
 public class BalanceDatabaseHelper extends SQLiteOpenHelper {
+
+    private static final String tag = "BalanceDatabaseHelper";
 
     private static final String DATABASE_NAME = "Balances.db";
     private static final int DATABASE_VERSION = 1;
@@ -40,6 +47,20 @@ public class BalanceDatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_EXPENSES_SUM + " INTEGER, " +
                 COLUMN_SALDO + " INTEGER);";
         database.execSQL(query);
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(COLUMN_NAME, "Portfolio 1");
+        Date date = new Date();
+        contentValues.put(COLUMN_TIMESTAMP_CREATED, Utils.isoDateFormat.format(date));
+
+        long result = database.insert(TABLE_NAME, null, contentValues);
+        if (result == -1) {
+            Log.d(tag, "Something went wrong.");
+        } else {
+            Log.d(tag, "Added new entry.");
+        }
+
+        Log.d(tag, "Database created.");
     }
 
     @Override
@@ -57,9 +78,9 @@ public class BalanceDatabaseHelper extends SQLiteOpenHelper {
 
         long result = database.insert(TABLE_NAME, null, contentValues);
         if (result == -1) {
-            Toast.makeText(context, "Something went wrong.", Toast.LENGTH_SHORT).show();
+            Log.d(tag, "Something went wrong.");
         } else {
-            Toast.makeText(context, "Added new entry.", Toast.LENGTH_SHORT).show();
+            Log.d(tag, "Added new entry.");
         }
     }
 
@@ -71,9 +92,9 @@ public class BalanceDatabaseHelper extends SQLiteOpenHelper {
 
         long result = database.update(TABLE_NAME, contentValues, "_id=?", new String[]{String.valueOf(balanceId)});
         if (result == -1) {
-            Toast.makeText(context, "Something went wrong.", Toast.LENGTH_SHORT).show();
+            Log.d(tag, "Something went wrong.");
         } else {
-            Toast.makeText(context, "Entry updated.", Toast.LENGTH_SHORT).show();
+            Log.d(tag, "Entry updated.");
         }
     }
 
@@ -85,9 +106,9 @@ public class BalanceDatabaseHelper extends SQLiteOpenHelper {
 
         long result = database.update(TABLE_NAME, contentValues, "_id=?", new String[]{String.valueOf(balanceId)});
         if (result == -1) {
-            Toast.makeText(context, "Something went wrong.", Toast.LENGTH_SHORT).show();
+            Log.d(tag, "Something went wrong.");
         } else {
-            Toast.makeText(context, "Entry updated.", Toast.LENGTH_SHORT).show();
+            Log.d(tag, "Entry updated.");
         }
     }
 
@@ -101,9 +122,9 @@ public class BalanceDatabaseHelper extends SQLiteOpenHelper {
 
         long result = database.update(TABLE_NAME, contentValues, "_id=?", new String[]{String.valueOf(balanceId)});
         if (result == -1) {
-            Toast.makeText(context, "Something went wrong.", Toast.LENGTH_SHORT).show();
+            Log.d(tag, "Something went wrong.");
         } else {
-            Toast.makeText(context, "Entry updated.", Toast.LENGTH_SHORT).show();
+            Log.d(tag, "Entry updated.");
         }
     }
 
@@ -111,9 +132,9 @@ public class BalanceDatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase database = this.getWritableDatabase();
         long result = database.delete(TABLE_NAME, "_id=?", new String[]{String.valueOf(balanceId)});
         if (result == -1) {
-            Toast.makeText(context, "Something went wrong.", Toast.LENGTH_SHORT).show();
+            Log.d(tag, "Something went wrong.");
         } else {
-            Toast.makeText(context, "Entry deleted.", Toast.LENGTH_SHORT).show();
+            Log.d(tag, "Entry deleted.");
         }
     }
 

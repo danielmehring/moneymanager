@@ -3,7 +3,27 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/layout/activity_splash_screen.xml" value="0.360054347826087" />
+        <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/drawable-v24-night/ic_xyzerstudios_logo.xml" value="0.196" />
+        <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.3135" />
+        <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/drawable-v24/ic_xyzerstudios_logo.xml" value="0.196" />
+        <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/drawable-v24/ic_xyzerstudios_logo2.xml" value="0.195" />
+        <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/drawable/button_translucent.xml" value="0.3135" />
+        <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/drawable/ic_launcher_background.xml" value="0.3135" />
+        <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/drawable/image_button.xml" value="0.3135" />
+        <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/drawable/light_button.xml" value="0.1575" />
+        <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/drawable/notification_circle.xml" value="0.25" />
+        <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/drawable/portfolio_circle_watermark.xml" value="0.3135" />
+        <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/layout/activity_home.xml" value="0.36666666666666664" />
+        <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/layout/activity_splash_screen.xml" value="0.5" />
+        <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/layout/drawer_item_heading.xml" value="0.36666666666666664" />
+        <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/layout/drawer_item_option.xml" value="0.36666666666666664" />
+        <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/layout/drawer_menu.xml" value="0.33" />
+        <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/layout/fragment_about_us.xml" value="0.36666666666666664" />
+        <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/layout/fragment_bilanzen.xml" value="0.18802083333333333" />
+        <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/layout/fragment_dashboard.xml" value="0.21707757065544198" />
+        <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/layout/fragment_donate.xml" value="0.36666666666666664" />
+        <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/layout/fragment_portfolio.xml" value="0.18802083333333333" />
+        <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/layout/fragment_premium.xml" value="0.18802083333333333" />
       </map>
     </option>
   </component>

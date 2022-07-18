@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">Money Manager</string>
+
+    <string name="press_again_to_exit">Drücke erneut, um die App zu verlassen.</string>
+
+    <string name="menu_heading_general">General</string>
+    <string name="menu_title_dashboard">General</string>
+    <string name="menu_title_portfolios">Portfolios</string>
+    <string name="menu_title_bilanzen">Bilanzen</string>
+    <string name="menu_heading_actions">Aktionen</string>
+    <string name="menu_title_premium">Premium</string>
+    <string name="menu_title_donate">Spenden</string>
+    <string name="menu_heading_other">Anderes</string>
+    <string name="menu_title_about_us">Über uns</string>
+
+    <string name="income">Einkommen</string>
+    <string name="expenses">Ausgaben</string>
+
+    <string name="add_expense">Ausgabe hinzufügen</string>
+    <string name="add_revenue">Einnahme hinzufügen</string>
+
 </resources>
