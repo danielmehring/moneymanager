@@ -17,5 +17,6 @@
     <color name="blacklighttransparent">#990A0A0A</color>
     <color name="blacklight">#0A0A0A</color>
 
-    <color name="transparent">#00000000</color>
+    <color name="transparent_black">#00000000</color>
+    <color name="transparent_white">#00FFFFFF</color>
 </resources>

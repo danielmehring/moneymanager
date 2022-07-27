@@ -24,6 +24,7 @@ public class IncomeDatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_MONTH = "month";
     private static final String COLUMN_YEAR = "year";
     private static final String COLUMN_AMOUNT = "amount";
+    private static final String COLUMN_CATEGORY_ID = "category_id";
     private final Context context;
 
 
@@ -41,7 +42,8 @@ public class IncomeDatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_TIMESTAMP + " TEXT, " +
                 COLUMN_MONTH + " INTEGER, " +
                 COLUMN_YEAR + " INTEGER, " +
-                COLUMN_AMOUNT + " INTEGER);";
+                COLUMN_AMOUNT + " INTEGER, " +
+                COLUMN_CATEGORY_ID + " INTEGER);";
         database.execSQL(query);
 
         Log.d(tag, "Database created.");
@@ -53,7 +55,8 @@ public class IncomeDatabaseHelper extends SQLiteOpenHelper {
         onCreate(database);
     }
 
-    public void addNewEntry(int portfolioId, String name, int amount, String timestamp, int month, int year) {
+    public void addNewEntry(int portfolioId, String name, int amount, int categoryId, String timestamp,
+                            int month, int year) {
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
@@ -62,6 +65,7 @@ public class IncomeDatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(COLUMN_AMOUNT, amount);
         contentValues.put(COLUMN_TIMESTAMP, timestamp);
         contentValues.put(COLUMN_MONTH, month);
+        contentValues.put(COLUMN_CATEGORY_ID, categoryId);
         contentValues.put(COLUMN_YEAR, year);
 
         long result = database.insert(TABLE_NAME, null, contentValues);
@@ -72,8 +76,8 @@ public class IncomeDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void updateEntry(int incomeEntryId, String name, int amount, String timestamp, int month,
-                            int year) {
+    public void updateEntry(int incomeEntryId, String name, int amount, int categoryId, String timestamp,
+                            int month, int year) {
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
@@ -81,6 +85,7 @@ public class IncomeDatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(COLUMN_AMOUNT, amount);
         contentValues.put(COLUMN_TIMESTAMP, timestamp);
         contentValues.put(COLUMN_MONTH, month);
+        contentValues.put(COLUMN_CATEGORY_ID, categoryId);
         contentValues.put(COLUMN_YEAR, year);
 
         long result = database.update(TABLE_NAME, contentValues, "_id=?", new String[]{String.valueOf(incomeEntryId)});
@@ -129,6 +134,70 @@ public class IncomeDatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor readEntryById(int incomeEntryId) {
         String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_ID + "=" + incomeEntryId;
+        SQLiteDatabase database = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (database != null) {
+            cursor = database.rawQuery(query, null);
+        }
+        return cursor;
+    }
+
+    public Cursor readEntriesByPortfolioId(int portfolioId) {
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_PORTFOLIO_ID + "=" + portfolioId;
+        SQLiteDatabase database = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (database != null) {
+            cursor = database.rawQuery(query, null);
+        }
+        return cursor;
+    }
+
+    public Cursor readEntriesByPortfolioIdSortedByCategoriesDesc(int portfolioId) {
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_PORTFOLIO_ID + "=" + portfolioId + " ORDER BY " + COLUMN_CATEGORY_ID + " DESC";
+        SQLiteDatabase database = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (database != null) {
+            cursor = database.rawQuery(query, null);
+        }
+        return cursor;
+    }
+
+    public Cursor sumAllEntriesByPortfolioId(int portfolioId, int month, int year) {
+        String query = "SELECT Sum(" + COLUMN_AMOUNT + ") as total_sum FROM " + TABLE_NAME + " WHERE "
+                + COLUMN_PORTFOLIO_ID + "=" + portfolioId +
+                " AND " + COLUMN_MONTH + "=" + month +
+                " AND " + COLUMN_YEAR + "=" + year;
+        SQLiteDatabase database = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (database != null) {
+            cursor = database.rawQuery(query, null);
+        }
+        return cursor;
+    }
+
+    public Cursor sumEntriesGroupedByCategory(int portfolioId, int month, int year) {
+        String query = "SELECT Sum(" + COLUMN_AMOUNT + ") as sum_cat, " +
+                COLUMN_CATEGORY_ID +
+                " FROM " + TABLE_NAME +
+                " WHERE " + COLUMN_PORTFOLIO_ID + "=" + portfolioId +
+                " AND " + COLUMN_MONTH + "=" + month +
+                " AND " + COLUMN_YEAR + "=" + year +
+                " GROUP BY " + COLUMN_CATEGORY_ID;
+
+        SQLiteDatabase database = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (database != null) {
+            cursor = database.rawQuery(query, null);
+        }
+        return cursor;
+    }
+
+    public Cursor customQuery(String query) {
         SQLiteDatabase database = this.getReadableDatabase();
 
         Cursor cursor = null;

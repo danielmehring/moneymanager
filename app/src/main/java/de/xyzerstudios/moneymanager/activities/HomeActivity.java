@@ -1,16 +1,14 @@
 package de.xyzerstudios.moneymanager.activities;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
-import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
-import android.view.Display;
-import android.widget.LinearLayout;
-import android.widget.Space;
 import android.widget.Toast;
 
 import androidx.annotation.ColorInt;
@@ -30,31 +28,34 @@ import java.util.Arrays;
 
 import de.xyzerstudios.moneymanager.R;
 import de.xyzerstudios.moneymanager.fragments.AboutUsFragment;
-import de.xyzerstudios.moneymanager.fragments.BilanzenFragment;
+import de.xyzerstudios.moneymanager.fragments.BalancesFragment;
 import de.xyzerstudios.moneymanager.fragments.DashboardFragment;
 import de.xyzerstudios.moneymanager.fragments.DonateFragment;
-import de.xyzerstudios.moneymanager.fragments.PortfolioFragment;
+import de.xyzerstudios.moneymanager.fragments.PortfoliosFragment;
 import de.xyzerstudios.moneymanager.fragments.PremiumFragment;
+import de.xyzerstudios.moneymanager.utils.PublicValues;
+import de.xyzerstudios.moneymanager.utils.Utils;
 import de.xyzerstudios.moneymanager.utils.drawermenu.DrawerAdapter;
 import de.xyzerstudios.moneymanager.utils.drawermenu.HeadingItem;
 import de.xyzerstudios.moneymanager.utils.drawermenu.SimpleItem;
-import de.xyzerstudios.moneymanager.utils.drawermenu.SpaceItem;
 
 public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnItemSelectedListener {
 
     private static final int POS_DASHBOARD = 1;
     private static final int POS_PORTFOLIOS = 2;
     private static final int POS_BILANZEN = 3;
-    private static final int POS_PREMIUM = 5;
-    private static final int POS_DONATE = 6;
-    private static final int POS_ABOUT_US = 8;
+    private static final int POS_BUDGET = 4;
+    private static final int POS_PREMIUM = 6;
+    private static final int POS_DONATE = 7;
+    private static final int POS_ABOUT_US = 9;
 
     private static final int RESOURCE_DASHBOARD = 0;
     private static final int RESOURCE_PORTFOLIOS = 1;
     private static final int RESOURCE_BILANZEN = 2;
-    private static final int RESOURCE_PREMIUM = 3;
-    private static final int RESOURCE_DONATE = 4;
-    private static final int RESOURCE_ABOUT_US = 5;
+    private static final int RESOURCE_BUDGET = 3;
+    private static final int RESOURCE_PREMIUM = 4;
+    private static final int RESOURCE_DONATE = 5;
+    private static final int RESOURCE_ABOUT_US = 6;
 
     private static final int RESOURCE_HEADING_GENERAL = 0;
     private static final int RESOURCE_HEADING_ACTIONS = 1;
@@ -67,6 +68,7 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
     private String[] headingItemTitles;
 
     private SlidingRootNav slidingRootNav;
+    private DrawerAdapter adapter;
 
     private Toolbar toolbar;
     private Configuration mPrevConfig;
@@ -112,18 +114,20 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
 
     }
 
+
     private void loadSlidingRootNav() {
 
         simpleItemTitles = loadSimpleItemTitles();
         simpleItemIcons = loadSimpleItemIcons();
         headingItemTitles = loadHeadingItemTitles();
 
-        DrawerAdapter adapter = new DrawerAdapter(Arrays.asList(
+        adapter = new DrawerAdapter(Arrays.asList(
                 createNewHeadingItem(RESOURCE_HEADING_GENERAL),
 
                 createNewDrawerItem(RESOURCE_DASHBOARD).hideNotification().setChecked(true),
                 createNewDrawerItem(RESOURCE_PORTFOLIOS).hideNotification(),
                 createNewDrawerItem(RESOURCE_BILANZEN).hideNotification(),
+                createNewDrawerItem(RESOURCE_BUDGET).hideNotification(),
 
                 createNewHeadingItem(RESOURCE_HEADING_ACTIONS),
 
@@ -141,7 +145,7 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
         list.setAdapter(adapter);
 
 
-        adapter.setSelected(RESOURCE_DASHBOARD);
+        adapter.setSelected(POS_DASHBOARD);
 
         Fragment dashboardFragment = new DashboardFragment();
         showFragment(dashboardFragment);
@@ -163,7 +167,10 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
         }
     }
 
-
+    private int loadPortfolioIdFromSharedPrefs() {
+        SharedPreferences sharedPreferences = getSharedPreferences(Utils.SHARED_PREFS, MODE_PRIVATE);
+        return sharedPreferences.getInt(Utils.SHARED_PREFS_CURRENT_PORTFOLIO, 1);
+    }
 
     private void showFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction()
@@ -236,19 +243,24 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
     public void onItemSelected(int position) {
         switch (position) {
             case POS_DASHBOARD:
+                loadPortfolioIdFromSharedPrefs();
                 Fragment dashboardFragment = new DashboardFragment();
                 showFragment(dashboardFragment);
                 slidingRootNav.closeMenu();
                 break;
             case POS_PORTFOLIOS:
-                Fragment portfolioFragment = new PortfolioFragment();
-                showFragment(portfolioFragment);
                 slidingRootNav.closeMenu();
+                Intent intent = new Intent(HomeActivity.this, PortfoliosActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 break;
             case POS_BILANZEN:
-                Fragment bilanzenFragment = new BilanzenFragment();
+                Fragment bilanzenFragment = new BalancesFragment();
                 showFragment(bilanzenFragment);
                 slidingRootNav.closeMenu();
+                break;
+            case POS_BUDGET:
+
                 break;
             case POS_PREMIUM:
                 Fragment premiumFragment = new PremiumFragment();

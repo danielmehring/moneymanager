@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ui_light_background"
+    android:orientation="vertical"
+    android:paddingHorizontal="15dp"
+    tools:context=".activities.add.AddPortfolioActivity">
+    
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="25dp"/>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/closeActivityAddPortfolio"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            android:elevation="2dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:src="@drawable/ic_close"
+            app:tint="@color/ui_black" />
+
+        <Space
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="2dp"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/ui_black"
+            android:textSize="20dp"
+            android:text="@string/add_portfolio"/>
+
+        <Space
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+        <ImageView
+            android:id="@+id/addPortfolio"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="10dp"
+            android:elevation="2dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:src="@drawable/ic_done"
+            app:tint="@color/ui_black" />
+
+    </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="70dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/ui_text_faded"
+            android:textSize="15dp"
+            android:text="@string/name" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="5dp"/>
+
+        <EditText
+            android:id="@+id/editTextPortfolioName"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:elevation="2dp"
+            android:layout_margin="1dp"
+            android:maxLines="1"
+            android:maxLength="35"
+            android:textColor="@color/ui_text_faded"
+            android:background="@drawable/edit_text_custom_bg"/>
+
+    </LinearLayout>
+    
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/ui_text_faded"
+            android:textSize="15dp"
+            android:text="@string/descriptopn" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="5dp"/>
+
+        <EditText
+            android:id="@+id/editTextPortfolioDescription"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:paddingVertical="10dp"
+            android:elevation="2dp"
+            android:layout_margin="1dp"
+            android:maxLength="255"
+            android:gravity="top|left"
+            android:textColor="@color/ui_text_faded"
+            android:background="@drawable/edit_text_custom_bg"/>
+
+    </LinearLayout>
+
+</LinearLayout>

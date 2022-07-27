@@ -2,12 +2,12 @@
     <!-- Base application theme. -->
     <style name="Theme.MoneyManager" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/whitetransparent</item>
-        <item name="colorPrimaryVariant">@color/gui_elevation1</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimary">@color/ui_icon</item>
+        <item name="colorPrimaryVariant">@color/ui_light_background</item>
+        <item name="colorOnPrimary">@color/ui_light_background</item>
         <item name="android:windowLightStatusBar">true</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondary">@color/ui_link_blue</item>
         <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
@@ -18,6 +18,17 @@
         <item name="windowActionBarOverlay">true</item>
         <item name="android:windowActionBarOverlay">true</item>
         <item name="android:textColorSecondary">@color/ui_icon</item>
+        <item name="android:textColorPrimary">@color/ui_icon</item>
+    </style>
+
+    <style name="DatePickerTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/ui_link_blue</item>
+        <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
+        <item name="buttonBarPositiveButtonStyle">@style/NegativeButtonStyle</item>
+    </style>
+
+    <style name="NegativeButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/ui_text_faded</item>
     </style>
 
 </resources>

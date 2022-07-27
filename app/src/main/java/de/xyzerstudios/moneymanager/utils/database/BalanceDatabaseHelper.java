@@ -47,18 +47,6 @@ public class BalanceDatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_EXPENSES_SUM + " INTEGER, " +
                 COLUMN_SALDO + " INTEGER);";
         database.execSQL(query);
-        ContentValues contentValues = new ContentValues();
-
-        contentValues.put(COLUMN_NAME, "Portfolio 1");
-        Date date = new Date();
-        contentValues.put(COLUMN_TIMESTAMP_CREATED, Utils.isoDateFormat.format(date));
-
-        long result = database.insert(TABLE_NAME, null, contentValues);
-        if (result == -1) {
-            Log.d(tag, "Something went wrong.");
-        } else {
-            Log.d(tag, "Added new entry.");
-        }
 
         Log.d(tag, "Database created.");
     }

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -15,12 +16,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.Date;
 
 import de.xyzerstudios.moneymanager.R;
 import de.xyzerstudios.moneymanager.utils.Utils;
 import de.xyzerstudios.moneymanager.utils.database.BalanceDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.database.BalanceTurnoversDatabaseHelper;
+import de.xyzerstudios.moneymanager.utils.database.Categories;
+import de.xyzerstudios.moneymanager.utils.database.CategoriesDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.database.ExpensesDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.database.IncomeDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.database.PortfolioDatabaseHelper;
@@ -35,6 +39,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     private ExpensesDatabaseHelper expensesDatabase;
     private IncomeDatabaseHelper incomeDatabase;
     private PortfolioDatabaseHelper portfolioDatabase;
+    private CategoriesDatabaseHelper categoriesDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,12 +58,14 @@ public class SplashScreenActivity extends AppCompatActivity {
         expensesDatabase = new ExpensesDatabaseHelper(this);
         incomeDatabase = new IncomeDatabaseHelper(this);
         portfolioDatabase = new PortfolioDatabaseHelper(this);
+        categoriesDatabase = new CategoriesDatabaseHelper(this, this);
 
         balanceDatabase.getReadableDatabase();
         balanceTurnoversDatabase.getReadableDatabase();
         expensesDatabase.getReadableDatabase();
         incomeDatabase.getReadableDatabase();
         portfolioDatabase.getReadableDatabase();
+        categoriesDatabase.getReadableDatabase();
     }
 
     private void manipulateGuiObjects() {

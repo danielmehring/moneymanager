@@ -10,6 +10,10 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import java.util.Date;
+
+import de.xyzerstudios.moneymanager.utils.Utils;
+
 public class PortfolioDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String tag = "PortfolioDatabaseHelper";
@@ -23,6 +27,7 @@ public class PortfolioDatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_REVENUES_SUM = "revenue_sum";
     private static final String COLUMN_EXPENSES_SUM = "expense_sum";
     private static final String COLUMN_SALDO = "saldo_sum";
+    private static final String COLUMN_DESCRIPTION = "description";
     private final Context context;
 
 
@@ -39,10 +44,29 @@ public class PortfolioDatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_TIMESTAMP_CREATED + " TEXT, " +
                 COLUMN_REVENUES_SUM + " INTEGER, " +
                 COLUMN_EXPENSES_SUM + " INTEGER, " +
-                COLUMN_SALDO + " INTEGER);";
+                COLUMN_SALDO + " INTEGER, " +
+                COLUMN_DESCRIPTION + " TEXT);";
         database.execSQL(query);
 
         Log.d(tag, "Database created.");
+
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(COLUMN_NAME, "Portfolio 1");
+        Date date = new Date();
+        contentValues.put(COLUMN_TIMESTAMP_CREATED, Utils.isoDateFormat.format(date));
+        contentValues.put(COLUMN_REVENUES_SUM, 0);
+        contentValues.put(COLUMN_EXPENSES_SUM, 0);
+        contentValues.put(COLUMN_SALDO, 0);
+        contentValues.put(COLUMN_DESCRIPTION, "Default portfolio.");
+
+        long result = database.insert(TABLE_NAME, null, contentValues);
+        if (result == -1) {
+            Log.d(tag, "Something went wrong.");
+        } else {
+            Log.d(tag, "Added new entry.");
+        }
+
     }
 
     @Override
@@ -51,12 +75,16 @@ public class PortfolioDatabaseHelper extends SQLiteOpenHelper {
         onCreate(database);
     }
 
-    public void addNewPortfolio(String name, String timestampOfCreation) {
+    public void addNewPortfolio(String name, String timestampOfCreation, String description) {
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
         contentValues.put(COLUMN_NAME, name);
         contentValues.put(COLUMN_TIMESTAMP_CREATED, timestampOfCreation);
+        contentValues.put(COLUMN_REVENUES_SUM, 0);
+        contentValues.put(COLUMN_EXPENSES_SUM, 0);
+        contentValues.put(COLUMN_SALDO, 0);
+        contentValues.put(COLUMN_DESCRIPTION, description);
 
         long result = database.insert(TABLE_NAME, null, contentValues);
         if (result == -1) {
@@ -66,11 +94,12 @@ public class PortfolioDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void updatePortfolio(int portfolioId, String name) {
+    public void updatePortfolio(int portfolioId, String name, String description) {
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
         contentValues.put(COLUMN_NAME, name);
+        contentValues.put(COLUMN_DESCRIPTION, description);
 
         long result = database.update(TABLE_NAME, contentValues, "_id=?", new String[]{String.valueOf(portfolioId)});
         if (result == -1) {

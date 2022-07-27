@@ -3,8 +3,10 @@
 
     <string name="press_again_to_exit">Drücke erneut, um die App zu verlassen.</string>
 
+    <string name="name">Name</string>
+
     <string name="menu_heading_general">General</string>
-    <string name="menu_title_dashboard">General</string>
+    <string name="menu_title_dashboard">Dashboard</string>
     <string name="menu_title_portfolios">Portfolios</string>
     <string name="menu_title_bilanzen">Bilanzen</string>
     <string name="menu_heading_actions">Aktionen</string>
@@ -12,11 +14,79 @@
     <string name="menu_title_donate">Spenden</string>
     <string name="menu_heading_other">Anderes</string>
     <string name="menu_title_about_us">Über uns</string>
+    <string name="menu_title_budgets">Budgets</string>
+
+    <string name="add_balance">Bilanz hinzufügen</string>
+    <string name="add_portfolio">Portfolio hinzufügen</string>
+    <string name="edit_portfolio">Portfolio bearbeiten</string>
 
     <string name="income">Einkommen</string>
     <string name="expenses">Ausgaben</string>
 
+    <string name="yes">Ja</string>
+    <string name="cancel">Abbrechen</string>
+
     <string name="add_expense">Ausgabe hinzufügen</string>
     <string name="add_revenue">Einnahme hinzufügen</string>
+
+    <string name="choose_category">Kategorie auswählen</string>
+
+    <string name="date">Datum</string>
+    <string name="payment_method">Zahlungsmittel</string>
+    <string name="category">Kategorie</string>
+    <string name="categories">Kategorien</string>
+
+    <string name="add">hinzufügen</string>
+    <string name="saldo">Saldo</string>
+    <string name="descriptopn">Beschreibung</string>
+    <string name="please_enter_a_name">Bitte gebe einen Namen an</string>
+    <string name="only_letters_numbers">Bitte nur Buchstaben und Zahlen eingeben</string>
+    <string name="delete_confirmation">Sind Sie sich sicher, dass Sie den Eintrag löschen wollen?</string>
+    <string name="cannot_be_deleted">Dieser Eintrag kann nicht gelöscht werden</string>
+
+    <string name="category_food">Essen</string>
+    <string name="category_car">Auto</string>
+    <string name="category_entertainment">Unterhaltung</string>
+    <string name="category_shopping">Einkaufen</string>
+    <string name="category_clothing">Kleidung</string>
+    <string name="category_telephone">Telefon</string>
+    <string name="category_gift">Geschenk</string>
+    <string name="category_social">Sozial</string>
+    <string name="category_other">Andere</string>
+    <string name="category_alcohol">Alkohol</string>
+    <string name="category_sports">Sport</string>
+    <string name="category_books">Bücher</string>
+    <string name="category_office">Büro</string>
+    <string name="category_education">Bildung</string>
+    <string name="category_travel">Reisen</string>
+    <string name="category_snacks">Snacks</string>
+    <string name="category_vegetables">Gemüse</string>
+    <string name="category_electronics">Elektronik</string>
+    <string name="category_pet">Haustier</string>
+    <string name="category_baby">Baby</string>
+    <string name="category_health">Gesundheit</string>
+    <string name="category_smoking">Rauchen</string>
+    <string name="category_insurance">Versicherung</string>
+    <string name="category_transportation">Transport</string>
+    <string name="category_home">Zuhause</string>
+    <string name="category_rent">Miete</string>
+
+    <string name="category_wage">Gehalt</string>
+    <string name="category_prize">Preise</string>
+    <string name="category_grant">Zuschuss</string>
+    <string name="category_sales">Verkauf</string>
+    <string name="category_renting">Vermietung</string>
+    <string name="category_voucher">Gutscheine</string>
+    <string name="category_refund">Rückerstattung</string>
+    <string name="category_lottery">Lotterie</string>
+    <string name="category_bonus">Bonus</string>
+    <string name="category_dividend">Dividende</string>
+    <string name="category_investment">Investition</string>
+    <string name="amount">Betrag</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="time_stamp">Zeitstempel</string>
+    <string name="edit_expense">Ausgabe bearbeiten</string>
+    <string name="delete">löschen</string>
 
 </resources>

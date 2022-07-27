@@ -12,6 +12,7 @@
     <color name="ui_light_background">#F3F3FF</color>
     <color name="ui_light_button">#E0E0E0</color>
     <color name="ui_text_faded">#4D4C4C</color>
+    <color name="ui_text_strongly_faded">#AEAEAE</color>
     <color name="ui_icon">#181818</color>
     <color name="ui_dark_purple">#35355E</color>
     <color name="ui_lime_green_text">#BFFFE8</color>
@@ -20,6 +21,8 @@
     <color name="ui_soft_red">#FF3737</color>
     <color name="ui_lime_green">#63C8A6</color>
     <color name="ui_lime_red">#DE6A63</color>
+    <color name="ui_lime_grey">#989C9B</color>
     <color name="ui_white_translucent">#33FFFFFF</color>
     <color name="ui_white_semitranslucent_text">#B3FFFFFF</color>
+    <color name="ui_black_translucent">#1A000000</color>
 </resources>
