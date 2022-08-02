@@ -83,10 +83,31 @@
     <string name="category_dividend">Dividende</string>
     <string name="category_investment">Investition</string>
     <string name="amount">Betrag</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string name="time_stamp">Zeitstempel</string>
     <string name="edit_expense">Ausgabe bearbeiten</string>
     <string name="delete">löschen</string>
+    <string name="month">Monat</string>
+
+    <string name="choose_month_and_year">Monat und Jahr auswählen</string>
+    <string name="choose_payment_method">Zahlungsmittel auswählen</string>
+
+    <string name="january">Januar</string>
+    <string name="february">Februar</string>
+    <string name="march">März</string>
+    <string name="april">April</string>
+    <string name="may">Mai</string>
+    <string name="june">Juni</string>
+    <string name="july">Juli</string>
+    <string name="august">August</string>
+    <string name="september">September</string>
+    <string name="october">Oktober</string>
+    <string name="november">November</string>
+    <string name="december">Dezember</string>
+
+    <string name="credit_card">Kreditkarte</string>
+    <string name="ec_card">EC-Karte</string>
+    <string name="cash">Bargeld</string>
+    <string name="remove_filter">Filter entfernen</string>
 
 </resources>

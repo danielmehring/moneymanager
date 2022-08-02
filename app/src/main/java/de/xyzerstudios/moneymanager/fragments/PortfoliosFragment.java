@@ -16,9 +16,8 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import de.xyzerstudios.moneymanager.R;
-import de.xyzerstudios.moneymanager.utils.BalanceAdapter;
-import de.xyzerstudios.moneymanager.utils.BalancePortfolioItem;
-import de.xyzerstudios.moneymanager.utils.PortfolioAdapter;
+import de.xyzerstudios.moneymanager.utils.adapters.items.BalancePortfolioItem;
+import de.xyzerstudios.moneymanager.utils.adapters.PortfolioAdapter;
 import de.xyzerstudios.moneymanager.utils.Utils;
 
 

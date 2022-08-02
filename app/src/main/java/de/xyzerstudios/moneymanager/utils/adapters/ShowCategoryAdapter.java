@@ -1,4 +1,4 @@
-package de.xyzerstudios.moneymanager.utils;
+package de.xyzerstudios.moneymanager.utils.adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import de.xyzerstudios.moneymanager.R;
-import de.xyzerstudios.moneymanager.utils.charting.CategoryItem;
+import de.xyzerstudios.moneymanager.utils.adapters.items.ShowCategoryItem;
 
 public class ShowCategoryAdapter extends RecyclerView.Adapter<ShowCategoryAdapter.ViewHolder> {
 
@@ -36,7 +36,7 @@ public class ShowCategoryAdapter extends RecyclerView.Adapter<ShowCategoryAdapte
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.category_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_category, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }

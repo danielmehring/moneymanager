@@ -22,8 +22,10 @@
             android:src="@drawable/ic_arrow_back"
             android:backgroundTint="@color/transparent_white"/>
 
+
+
         <LinearLayout
-            android:id="@+id/buttonMonthPicker"
+            android:id="@+id/buttonExpensesFilter"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="right"
@@ -34,21 +36,13 @@
             android:paddingTop="3dp"
             android:paddingHorizontal="4dp"
             android:orientation="horizontal">
-            <!--TextView
-                android:id="@+id/textViewMonthPicker"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="3dp"
-                android:fontFamily="@font/poppins_medium"
-                android:textSize="15dp"
-                android:textColor="@color/ui_black"
-                android:text="Oktober, 2022" /-->
 
             <ImageView
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:src="@drawable/ic_tune" />
         </LinearLayout>
+
 
     </androidx.appcompat.widget.Toolbar>
 

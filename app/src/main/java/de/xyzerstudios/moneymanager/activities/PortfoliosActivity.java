@@ -21,8 +21,8 @@ import java.util.ArrayList;
 import de.xyzerstudios.moneymanager.R;
 import de.xyzerstudios.moneymanager.activities.add.AddPortfolioActivity;
 import de.xyzerstudios.moneymanager.asynctasks.LoadPortfoliosAsyncTask;
-import de.xyzerstudios.moneymanager.utils.BalancePortfolioItem;
-import de.xyzerstudios.moneymanager.utils.PortfolioAdapter;
+import de.xyzerstudios.moneymanager.utils.adapters.items.BalancePortfolioItem;
+import de.xyzerstudios.moneymanager.utils.adapters.PortfolioAdapter;
 import de.xyzerstudios.moneymanager.utils.Utils;
 
 public class PortfoliosActivity extends AppCompatActivity {

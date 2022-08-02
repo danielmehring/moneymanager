@@ -70,6 +70,7 @@
                     android:paddingTop="4dp">
 
                     <ImageView
+                        android:id="@+id/imageViewAdd"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_marginLeft="4dp"
@@ -77,6 +78,7 @@
                         app:tint="@color/ui_link_blue" />
 
                     <TextView
+                        android:id="@+id/textViewAdd"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="5dp"

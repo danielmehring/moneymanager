@@ -1,6 +1,5 @@
 package de.xyzerstudios.moneymanager.asynctasks;
 
-import android.app.Activity;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.widget.Toast;
@@ -9,8 +8,8 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 import de.xyzerstudios.moneymanager.activities.PortfoliosActivity;
-import de.xyzerstudios.moneymanager.utils.BalancePortfolioItem;
-import de.xyzerstudios.moneymanager.utils.PortfolioAdapter;
+import de.xyzerstudios.moneymanager.utils.adapters.items.BalancePortfolioItem;
+import de.xyzerstudios.moneymanager.utils.adapters.PortfolioAdapter;
 import de.xyzerstudios.moneymanager.utils.database.PortfolioDatabaseHelper;
 
 

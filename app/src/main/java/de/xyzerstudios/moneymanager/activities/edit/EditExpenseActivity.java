@@ -18,9 +18,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.Html;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.DatePicker;
@@ -37,14 +35,13 @@ import java.util.Date;
 
 import de.xyzerstudios.moneymanager.R;
 import de.xyzerstudios.moneymanager.activities.CategoriesActivity;
-import de.xyzerstudios.moneymanager.activities.add.AddExpenseActivity;
-import de.xyzerstudios.moneymanager.utils.DatePickerFragment;
+import de.xyzerstudios.moneymanager.utils.dialogs.DatePickerFragment;
 import de.xyzerstudios.moneymanager.utils.Utils;
 import de.xyzerstudios.moneymanager.utils.database.CategoriesDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.database.ExpensesDatabaseHelper;
-import de.xyzerstudios.moneymanager.utils.database.PortfolioDatabaseHelper;
+import de.xyzerstudios.moneymanager.utils.dialogs.PaymentMethodDialog;
 
-public class EditExpenseActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class EditExpenseActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, PaymentMethodDialog.PaymentMethodDialogListener {
 
     public EditText editTextExpenseAmount, editTextExpenseName;
     public ImageView closeActivityAddExpense, editExpense;
@@ -54,8 +51,8 @@ public class EditExpenseActivity extends AppCompatActivity implements DatePicker
 
     private final Utils utils = new Utils();
 
-    private int categoryId;
-    private String paymentMethod;
+    private int categoryId = 9;
+    private String paymentMethod = "";
 
     private int expensesEntryId;
 
@@ -212,6 +209,7 @@ public class EditExpenseActivity extends AppCompatActivity implements DatePicker
             public void onClick(View view) {
                 Intent intent = new Intent(EditExpenseActivity.this, CategoriesActivity.class);
                 intent.putExtra("type", "expense");
+                intent.putExtra("removefilter", false);
                 startForResult.launch(intent);
             }
         });
@@ -254,6 +252,13 @@ public class EditExpenseActivity extends AppCompatActivity implements DatePicker
                 alertDialog.show();
             }
         });
+
+        chooserExpensePaymentMethod.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialogPaymentMethod();
+            }
+        });
     }
 
     private void manipulateGui() {
@@ -270,7 +275,7 @@ public class EditExpenseActivity extends AppCompatActivity implements DatePicker
                 editTextExpenseName.setText(cursor.getString(2));
                 textViewExpenseTimestamp.setText(Utils.timestampDateDisplayFormat.format(date));
                 textViewExpenseAmount.setText(utils.formatCurrency(amount) + " €");
-                textViewExpensePaymentMethod.setText(paymentMethod);
+                updatePaymentMethodTextView();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -294,6 +299,11 @@ public class EditExpenseActivity extends AppCompatActivity implements DatePicker
         return sharedPreferences.getInt(Utils.SHARED_PREFS_CURRENT_PORTFOLIO, 1);
     }
 
+    private void showDialogPaymentMethod() {
+        PaymentMethodDialog paymentMethodDialog = new PaymentMethodDialog();
+        paymentMethodDialog.show(getSupportFragmentManager(), "Payment Method Dialog");
+    }
+
     private void showDialogDatePicker() {
         DialogFragment datePicker = new DatePickerFragment();
         datePicker.show(getSupportFragmentManager(), "Date Picker");
@@ -306,7 +316,24 @@ public class EditExpenseActivity extends AppCompatActivity implements DatePicker
         calendar.set(Calendar.MONTH, month);
         calendar.set(Calendar.DAY_OF_MONTH, day);
         date = calendar.getTime();
-        Toast.makeText(this, Utils.isoDateFormat.format(date), Toast.LENGTH_SHORT).show();
         textViewExpenseTimestamp.setText(Utils.timestampDateDisplayFormat.format(date));
+    }
+
+    private void updatePaymentMethodTextView() {
+        String paymentMethodString = "";
+        if (paymentMethod.matches("CC")) {
+            paymentMethodString = getResources().getString(R.string.credit_card);
+        } else if (paymentMethod.matches("EC")) {
+            paymentMethodString = getResources().getString(R.string.ec_card);
+        } else if (paymentMethod.matches("CASH")) {
+            paymentMethodString = getResources().getString(R.string.cash);
+        }
+        textViewExpensePaymentMethod.setText(paymentMethodString);
+    }
+
+    @Override
+    public void applyPaymentMethod(String paymentMethodCode) {
+        paymentMethod = paymentMethodCode;
+        updatePaymentMethodTextView();
     }
 }

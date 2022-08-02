@@ -11,11 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
+        android:layout_margin="1dp"
         android:clickable="true"
         android:foreground="?android:attr/selectableItemBackground"
         android:background="@drawable/default_corners"
-        app:cardCornerRadius="15dp"
-        android:layout_margin="1dp">
+        android:backgroundTint="@color/ui_white"
+        app:cardCornerRadius="15dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -107,6 +108,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/headingPaymentMethod"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"

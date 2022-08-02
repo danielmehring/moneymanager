@@ -1,4 +1,4 @@
-package de.xyzerstudios.moneymanager.utils;
+package de.xyzerstudios.moneymanager.utils.adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +23,9 @@ import java.util.ArrayList;
 
 import de.xyzerstudios.moneymanager.R;
 import de.xyzerstudios.moneymanager.activities.edit.EditPortfolioActivity;
+import de.xyzerstudios.moneymanager.utils.adapters.items.BalancePortfolioItem;
+import de.xyzerstudios.moneymanager.utils.PublicValues;
+import de.xyzerstudios.moneymanager.utils.Utils;
 import de.xyzerstudios.moneymanager.utils.database.PortfolioDatabaseHelper;
 
 
@@ -44,7 +46,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.balance_portfolio_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_balance_portfolio, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }

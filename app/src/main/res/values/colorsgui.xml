@@ -13,6 +13,7 @@
     <color name="ui_light_button">#E0E0E0</color>
     <color name="ui_text_faded">#4D4C4C</color>
     <color name="ui_text_strongly_faded">#AEAEAE</color>
+    <color name="ui_text">#1B1B1B</color>
     <color name="ui_icon">#181818</color>
     <color name="ui_dark_purple">#35355E</color>
     <color name="ui_lime_green_text">#BFFFE8</color>

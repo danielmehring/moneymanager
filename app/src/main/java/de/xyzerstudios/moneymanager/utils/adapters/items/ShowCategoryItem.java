@@ -1,4 +1,4 @@
-package de.xyzerstudios.moneymanager.utils;
+package de.xyzerstudios.moneymanager.utils.adapters.items;
 
 public class ShowCategoryItem {
 

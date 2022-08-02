@@ -1,4 +1,4 @@
-package de.xyzerstudios.moneymanager.utils;
+package de.xyzerstudios.moneymanager.utils.dialogs;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;

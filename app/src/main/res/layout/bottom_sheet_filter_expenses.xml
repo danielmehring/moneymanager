@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="25dp"
+    android:paddingTop="25dp"
+    android:paddingBottom="25dp"
+    android:background="@drawable/bottom_sheet_dialog_background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/chooserMonthAndYearExpenses"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:clickable="true"
+            android:background="@drawable/edit_text_custom_bg"
+            android:foreground="?android:attr/selectableItemBackground">
+
+            <TextView
+                android:id="@+id/textViewMonthAndYearExpenses"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingTop="3dp"
+                android:paddingLeft="12dp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="@string/choose_month_and_year"
+                android:textColor="@color/ui_icon"
+                android:textSize="20dp" />
+
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginHorizontal="8dp"
+                android:src="@drawable/ic_date"
+                app:tint="@color/ui_icon" />
+
+        </LinearLayout>
+
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="15dp" />
+        
+        <LinearLayout
+            android:id="@+id/chooserCategoryExpenses"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:clickable="true"
+            android:background="@drawable/edit_text_custom_bg"
+            android:foreground="?android:attr/selectableItemBackground">
+
+            <TextView
+                android:id="@+id/textViewCategoryExpenses"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingTop="3dp"
+                android:paddingLeft="12dp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="@string/choose_category"
+                android:textColor="@color/ui_icon"
+                android:textSize="20dp" />
+
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginHorizontal="8dp"
+                android:src="@drawable/ic_category"
+                app:tint="@color/ui_icon" />
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="15dp" />
+
+        <LinearLayout
+            android:id="@+id/chooserPaymentMethodExpenses"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:clickable="true"
+            android:background="@drawable/edit_text_custom_bg"
+            android:foreground="?android:attr/selectableItemBackground">
+
+            <TextView
+                android:id="@+id/textViewPaymentMethodExpenses"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingTop="3dp"
+                android:paddingLeft="12dp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="@string/choose_payment_method"
+                android:textColor="@color/ui_icon"
+                android:textSize="20dp" />
+
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginHorizontal="8dp"
+                android:src="@drawable/ic_budgets"
+                app:tint="@color/ui_icon" />
+
+        </LinearLayout>
+        
+    </LinearLayout>
+</LinearLayout>

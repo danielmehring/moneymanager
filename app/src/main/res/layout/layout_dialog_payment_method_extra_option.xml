@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/ui_white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/ui_link_blue"
+        android:paddingTop="11dp"
+        android:paddingBottom="15dp"
+        android:paddingHorizontal="15dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:maxLines="1"
+                android:elevation="1dp"
+                android:fontFamily="@font/poppins_medium"
+                android:paddingTop="4dp"
+                android:text="@string/payment_method"
+                android:textColor="@color/ui_white"
+                android:textSize="26dp" />
+
+            <ImageView
+                android:id="@+id/closeDialogPaymentMethod"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginLeft="10dp"
+                android:elevation="2dp"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:src="@drawable/ic_close"
+                app:tint="@color/ui_white" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="15dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="15dp"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardViewButtonCreditCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:backgroundTint="@color/ui_white"
+            app:cardCornerRadius="15dp">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:maxLines="1"
+                android:elevation="1dp"
+                android:fontFamily="@font/poppins_regular"
+                android:paddingLeft="15dp"
+                android:paddingTop="7dp"
+                android:paddingBottom="2dp"
+                android:text="@string/credit_card"
+                android:textColor="@color/ui_text"
+                android:textSize="16dp" />
+
+        </androidx.cardview.widget.CardView>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardViewButtonEC"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:backgroundTint="@color/ui_white"
+            app:cardCornerRadius="15dp">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:maxLines="1"
+                android:elevation="1dp"
+                android:fontFamily="@font/poppins_regular"
+                android:paddingLeft="15dp"
+                android:paddingTop="7dp"
+                android:paddingBottom="2dp"
+                android:text="@string/ec_card"
+                android:textColor="@color/ui_text"
+                android:textSize="16dp" />
+
+        </androidx.cardview.widget.CardView>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardViewButtonCash"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:backgroundTint="@color/ui_white"
+            app:cardCornerRadius="15dp">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:maxLines="1"
+                android:elevation="1dp"
+                android:fontFamily="@font/poppins_regular"
+                android:paddingLeft="15dp"
+                android:paddingTop="7dp"
+                android:paddingBottom="2dp"
+                android:text="@string/cash"
+                android:textColor="@color/ui_text"
+                android:textSize="16dp" />
+
+        </androidx.cardview.widget.CardView>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardViewButtonRemoveFilter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:backgroundTint="@color/ui_white"
+            app:cardCornerRadius="15dp">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:maxLines="1"
+                android:elevation="1dp"
+                android:fontFamily="@font/poppins_regular"
+                android:paddingLeft="15dp"
+                android:paddingTop="7dp"
+                android:paddingBottom="2dp"
+                android:text="@string/remove_filter"
+                android:textColor="@color/ui_text"
+                android:textSize="16dp" />
+
+        </androidx.cardview.widget.CardView>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="25dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

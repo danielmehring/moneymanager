@@ -1,10 +1,8 @@
 package de.xyzerstudios.moneymanager.utils.drawermenu;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import de.xyzerstudios.moneymanager.R;
@@ -21,7 +19,7 @@ public class HeadingItem extends DrawerItem<HeadingItem.ViewHolder> {
     @Override
     public ViewHolder createViewHolder(ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View v = inflater.inflate(R.layout.drawer_item_heading, parent, false);
+        View v = inflater.inflate(R.layout.item_drawer_heading, parent, false);
         return new HeadingItem.ViewHolder(v);
     }
 

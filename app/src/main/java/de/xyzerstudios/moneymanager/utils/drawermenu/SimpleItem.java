@@ -34,7 +34,7 @@ public class SimpleItem extends DrawerItem<SimpleItem.ViewHolder> {
     @Override
     public ViewHolder createViewHolder(ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View v = inflater.inflate(R.layout.drawer_item_simple, parent, false);
+        View v = inflater.inflate(R.layout.item_drawer_simple, parent, false);
         return new ViewHolder(v);
     }
 

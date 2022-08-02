@@ -1,7 +1,6 @@
 package de.xyzerstudios.moneymanager.utils.charting;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -30,7 +29,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chart_category_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_chart_category, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }

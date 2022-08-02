@@ -14,6 +14,7 @@
         android:clickable="true"
         android:foreground="?android:attr/selectableItemBackground"
         android:background="@drawable/default_corners"
+        android:backgroundTint="@color/ui_white"
         app:cardCornerRadius="15dp"
         android:layout_margin="1dp">
 

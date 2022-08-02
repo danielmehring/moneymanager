@@ -1,7 +1,5 @@
 package de.xyzerstudios.moneymanager.fragments;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -16,10 +14,8 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import de.xyzerstudios.moneymanager.R;
-import de.xyzerstudios.moneymanager.utils.BalanceAdapter;
-import de.xyzerstudios.moneymanager.utils.BalancePortfolioItem;
-import de.xyzerstudios.moneymanager.utils.Utils;
-import de.xyzerstudios.moneymanager.utils.charting.CategoryAdapter;
+import de.xyzerstudios.moneymanager.utils.adapters.BalanceAdapter;
+import de.xyzerstudios.moneymanager.utils.adapters.items.BalancePortfolioItem;
 
 public class BalancesFragment extends Fragment {
 

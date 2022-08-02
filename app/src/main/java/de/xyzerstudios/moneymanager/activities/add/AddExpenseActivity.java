@@ -33,12 +33,13 @@ import java.util.Date;
 
 import de.xyzerstudios.moneymanager.R;
 import de.xyzerstudios.moneymanager.activities.CategoriesActivity;
-import de.xyzerstudios.moneymanager.utils.DatePickerFragment;
+import de.xyzerstudios.moneymanager.utils.dialogs.DatePickerFragment;
 import de.xyzerstudios.moneymanager.utils.Utils;
 import de.xyzerstudios.moneymanager.utils.database.CategoriesDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.database.ExpensesDatabaseHelper;
+import de.xyzerstudios.moneymanager.utils.dialogs.PaymentMethodDialog;
 
-public class AddExpenseActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class AddExpenseActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, PaymentMethodDialog.PaymentMethodDialogListener {
 
     public EditText editTextExpenseAmount, editTextExpenseName;
     public ImageView closeActivityAddExpense, addExpense;
@@ -71,7 +72,6 @@ public class AddExpenseActivity extends AppCompatActivity implements DatePickerD
     private void initObjects() {
         date = new Date();
     }
-
 
     public ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
     new ActivityResultCallback<ActivityResult>() {
@@ -128,6 +128,7 @@ public class AddExpenseActivity extends AppCompatActivity implements DatePickerD
             public void onClick(View view) {
                 Intent intent = new Intent(AddExpenseActivity.this, CategoriesActivity.class);
                 intent.putExtra("type", "expense");
+                intent.putExtra("removefilter", false);
                 startForResult.launch(intent);
             }
         });
@@ -145,6 +146,13 @@ public class AddExpenseActivity extends AppCompatActivity implements DatePickerD
                 Log.d("AddExpenseActivity__", loadPortfolioIdFromSharedPrefs() + ";" + editTextExpenseName.getText().toString().trim() + ";" +
                         amount + ";" + Utils.isoDateFormat.format(date) + ";" + date.getMonth() + ";" + date.getYear() + ";" + categoryId + ";" + paymentMethod);
                 finish();
+            }
+        });
+
+        chooserExpensePaymentMethod.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialogPaymentMethod();
             }
         });
     }
@@ -244,6 +252,11 @@ public class AddExpenseActivity extends AppCompatActivity implements DatePickerD
         datePicker.show(getSupportFragmentManager(), "Date Picker");
     }
 
+    private void showDialogPaymentMethod() {
+        PaymentMethodDialog paymentMethodDialog = new PaymentMethodDialog();
+        paymentMethodDialog.show(getSupportFragmentManager(), "Payment Method Dialog");
+    }
+
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
         Calendar calendar = Calendar.getInstance();
@@ -251,7 +264,24 @@ public class AddExpenseActivity extends AppCompatActivity implements DatePickerD
         calendar.set(Calendar.MONTH, month);
         calendar.set(Calendar.DAY_OF_MONTH, day);
         date = calendar.getTime();
-        Toast.makeText(this, Utils.isoDateFormat.format(date), Toast.LENGTH_SHORT).show();
         textViewExpenseTimestamp.setText(Utils.timestampDateDisplayFormat.format(date));
+    }
+
+    private void updatePaymentMethodTextView() {
+        String paymentMethodString = "";
+        if (paymentMethod.matches("CC")) {
+            paymentMethodString = getResources().getString(R.string.credit_card);
+        } else if (paymentMethod.matches("EC")) {
+            paymentMethodString = getResources().getString(R.string.ec_card);
+        } else if (paymentMethod.matches("CASH")) {
+            paymentMethodString = getResources().getString(R.string.cash);
+        }
+        textViewExpensePaymentMethod.setText(paymentMethodString);
+    }
+
+    @Override
+    public void applyPaymentMethod(String paymentMethodCode) {
+        paymentMethod = paymentMethodCode;
+        updatePaymentMethodTextView();
     }
 }
