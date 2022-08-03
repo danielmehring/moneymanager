@@ -95,14 +95,14 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
 
     private void showDeleteAlertDialog(int portfolioId) {
         if (portfolioId == 1) {
-            Toast.makeText(activity, activity.getResources().getString(R.string.cannot_be_deleted), Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity, activity.getString(R.string.cannot_be_deleted), Toast.LENGTH_SHORT).show();
             return;
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder.setMessage(activity.getResources().getString(R.string.delete_confirmation))
+        builder.setMessage(activity.getString(R.string.delete_confirmation))
                 .setCancelable(false)
-                .setPositiveButton(activity.getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
+                .setPositiveButton(activity.getString(R.string.yes), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         PortfolioDatabaseHelper portfolioDatabaseHelper = new PortfolioDatabaseHelper(activity);
@@ -113,7 +113,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
                         activity.finish();
                     }
                 })
-                .setNegativeButton(activity.getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                .setNegativeButton(activity.getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();

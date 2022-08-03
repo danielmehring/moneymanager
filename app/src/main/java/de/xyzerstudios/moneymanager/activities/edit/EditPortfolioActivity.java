@@ -70,12 +70,12 @@ public class EditPortfolioActivity extends AppCompatActivity {
                 String name = namePortfolio.getText().toString().trim();
 
                 if (name.matches("")) {
-                    Toast.makeText(EditPortfolioActivity.this, getResources().getString(R.string.please_enter_a_name), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditPortfolioActivity.this, getString(R.string.please_enter_a_name), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if (name.contains(";")) {
-                    Toast.makeText(EditPortfolioActivity.this, getResources().getString(R.string.only_letters_numbers), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditPortfolioActivity.this, getString(R.string.only_letters_numbers), Toast.LENGTH_SHORT).show();
                     return;
                 }
 

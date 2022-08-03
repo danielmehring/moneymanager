@@ -109,5 +109,8 @@
     <string name="ec_card">EC-Karte</string>
     <string name="cash">Bargeld</string>
     <string name="remove_filter">Filter entfernen</string>
+    <string name="add_category">Kategorie hinzufügen</string>
+    <string name="color">Farbe</string>
+    <string name="choose_color">Farbe wählen</string>
 
 </resources>

@@ -34,7 +34,7 @@ public class PortfoliosActivity extends AppCompatActivity {
     public RecyclerView portfolioRecyclerView;
     public RecyclerView.Adapter portfolioAdapter;
     public SwipeRefreshLayout swipeRefreshPortfolio;
-    public ArrayList<BalancePortfolioItem> portfolioItems;
+    public static ArrayList<BalancePortfolioItem> portfolioItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

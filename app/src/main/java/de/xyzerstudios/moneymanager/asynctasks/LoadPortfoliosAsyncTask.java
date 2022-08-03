@@ -75,8 +75,7 @@ public class LoadPortfoliosAsyncTask extends AsyncTask<Integer, String, ArrayLis
         activity.swipeRefreshPortfolio.setRefreshing(false);
         activity.portfolioItems = a;
         activity.portfolioAdapter = new PortfolioAdapter(activity, activity, activity.portfolioItems, activity.loadPortfolioIdFromSharedPrefs());
-        activity.portfolioRecyclerView.setAdapter(activity.portfolioAdapter);
-        activity.portfolioAdapter.notifyDataSetChanged();
+        activity.portfolioRecyclerView.swapAdapter(activity.portfolioAdapter, false);
 
     }
 

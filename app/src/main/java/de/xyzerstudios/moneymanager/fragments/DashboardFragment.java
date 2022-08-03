@@ -3,6 +3,7 @@ package de.xyzerstudios.moneymanager.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -21,6 +22,7 @@ import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.jaredrummler.android.colorpicker.ColorPickerDialog;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -87,9 +89,7 @@ public class DashboardFragment extends Fragment {
         testButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), DatabaseTestActivity.class);
-                startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+
             }
         });
 
@@ -159,7 +159,7 @@ public class DashboardFragment extends Fragment {
 
     private void loadExpensesPieChartData() {
         ArrayList<PieEntry> entries = new ArrayList<>();
-        entries.add(new PieEntry(1f, getResources().getString(R.string.category)));
+        entries.add(new PieEntry(1f, getString(R.string.category)));
 
         ArrayList<Integer> colors = new ArrayList<>();
         colors.add(getResources().getColor(R.color.ui_lime_green, null));
@@ -177,7 +177,7 @@ public class DashboardFragment extends Fragment {
 
     private void loadIncomePieChartData() {
         ArrayList<PieEntry> entries = new ArrayList<>();
-        entries.add(new PieEntry(1f, getResources().getString(R.string.category)));
+        entries.add(new PieEntry(1f, getString(R.string.category)));
 
         ArrayList<Integer> colors = new ArrayList<>();
         colors.add(getResources().getColor(R.color.ui_lime_green, null));
@@ -235,7 +235,7 @@ public class DashboardFragment extends Fragment {
 
     private void inflateCategoriesIncome() {
         ArrayList<CategoryItem> categoryItems = new ArrayList<>();
-        categoryItems.add(new CategoryItem(getResources().getColor(R.color.ui_lime_green, null), getResources().getString(R.string.category), 100));
+        categoryItems.add(new CategoryItem(getResources().getColor(R.color.ui_lime_green, null), getString(R.string.category), 100));
 
         incomeRecyclerView.setHasFixedSize(false);
         incomeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -246,7 +246,7 @@ public class DashboardFragment extends Fragment {
 
     private void inflateCategoriesExpenses() {
         ArrayList<CategoryItem> categoryItems = new ArrayList<>();
-        categoryItems.add(new CategoryItem(getResources().getColor(R.color.ui_lime_green, null), getResources().getString(R.string.category), 100));
+        categoryItems.add(new CategoryItem(getResources().getColor(R.color.ui_lime_green, null), getString(R.string.category), 100));
 
         expensesRecyclerView.setHasFixedSize(false);
         expensesRecyclerViewAdapter = new CategoryAdapter(getContext(), categoryItems);

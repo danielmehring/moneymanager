@@ -228,7 +228,7 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
             finish();
         } else {
             hasBackPressed = true;
-            Toast.makeText(this, getResources().getString(R.string.press_again_to_exit), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.press_again_to_exit), Toast.LENGTH_SHORT).show();
             final Handler handler = new Handler(Looper.getMainLooper());
             handler.postDelayed(new Runnable() {
                 @Override

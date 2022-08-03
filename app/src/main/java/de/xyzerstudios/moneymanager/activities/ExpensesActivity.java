@@ -25,6 +25,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -32,6 +33,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.whiteelephant.monthpicker.MonthPickerDialog;
 
@@ -60,7 +62,7 @@ public class ExpensesActivity extends AppCompatActivity {
     public ExpensesAdapter recyclerAdapter;
     private Date date;
 
-    public ArrayList<ExpensesItem> expensesItems;
+    public static ArrayList<ExpensesItem> expensesItems;
 
     public int selectedMonth;
     public int selectedYear;
@@ -160,28 +162,44 @@ public class ExpensesActivity extends AppCompatActivity {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.bottom_sheet_filter_expenses);
 
+
+
         LinearLayout chooserMonthAndYearExpenses = dialog.findViewById(R.id.chooserMonthAndYearExpenses);
         LinearLayout chooserCategoryExpenses = dialog.findViewById(R.id.chooserCategoryExpenses);
         LinearLayout chooserPaymentMethodExpenses = dialog.findViewById(R.id.chooserPaymentMethodExpenses);
+
+        LinearLayout removeFilterCategory = dialog.findViewById(R.id.removeFilterCategoryBS);
+        LinearLayout removeFilterPaymentMethod = dialog.findViewById(R.id.removeFilterPaymentMethodBS);
 
         TextView textViewMonthAndYearExpenses = dialog.findViewById(R.id.textViewMonthAndYearExpenses);
         TextView textViewCategoryExpenses = dialog.findViewById(R.id.textViewCategoryExpenses);
         TextView textViewPaymentMethodExpenses = dialog.findViewById(R.id.textViewPaymentMethodExpenses);
 
+
+
+        if (filterCategory.matches("")) {
+            removeFilterCategory.setVisibility(View.GONE);
+        }
+
+        if (filterPaymentMethod.matches("")) {
+            removeFilterPaymentMethod.setVisibility(View.GONE);
+        }
+
         textViewMonthAndYearExpenses.setText(getMonth(selectedMonth) + ", " + selectedYear);
 
         if (!filterPaymentMethod.matches("")) {
             if (filterPaymentMethod.matches("CC")) {
-                textViewPaymentMethodExpenses.setText(getResources().getString(R.string.credit_card));
+                textViewPaymentMethodExpenses.setText(getString(R.string.credit_card));
             } else if (filterPaymentMethod.matches("EC")) {
-                textViewPaymentMethodExpenses.setText(getResources().getString(R.string.ec_card));
+                textViewPaymentMethodExpenses.setText(getString(R.string.ec_card));
             } else if (filterPaymentMethod.matches("CASH")) {
-                textViewPaymentMethodExpenses.setText(getResources().getString(R.string.cash));
+                textViewPaymentMethodExpenses.setText(getString(R.string.cash));
             }
         }
 
-        if (!filterCategory.matches(""))
+        if (!filterCategory.matches("")) {
             textViewCategoryExpenses.setText(filterCategory);
+        }
 
         chooserMonthAndYearExpenses.setOnClickListener(new View.OnClickListener() {
 
@@ -221,7 +239,7 @@ public class ExpensesActivity extends AppCompatActivity {
                 dialog.dismiss();
                 AlertDialog builder = new AlertDialog.Builder(ExpensesActivity.this).create();
                 LayoutInflater layoutInflater = ExpensesActivity.this.getLayoutInflater();
-                View view2 = layoutInflater.inflate(R.layout.layout_dialog_payment_method_extra_option, null);
+                View view2 = layoutInflater.inflate(R.layout.layout_dialog_payment_method, null);
 
                 builder.setView(view2);
 
@@ -231,7 +249,6 @@ public class ExpensesActivity extends AppCompatActivity {
                 cardViewCreditCard = view2.findViewById(R.id.cardViewButtonCreditCard);
                 cardViewEcCard = view2.findViewById(R.id.cardViewButtonEC);
                 cardViewCash = view2.findViewById(R.id.cardViewButtonCash);
-                cardViewButtonRemoveFilter = view2.findViewById(R.id.cardViewButtonRemoveFilter);
                 closeDialogPaymentMethod = view2.findViewById(R.id.closeDialogPaymentMethod);
 
                 closeDialogPaymentMethod.setOnClickListener(new View.OnClickListener() {
@@ -245,7 +262,7 @@ public class ExpensesActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         filterPaymentMethod = "CC";
-                        textViewPaymentMethodExpenses.setText(getResources().getString(R.string.credit_card));
+                        textViewPaymentMethodExpenses.setText(getString(R.string.credit_card));
                         updatePaymentMethod();
                         builder.dismiss();
                     }
@@ -255,7 +272,7 @@ public class ExpensesActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         filterPaymentMethod = "CASH";
-                        textViewPaymentMethodExpenses.setText(getResources().getString(R.string.cash));
+                        textViewPaymentMethodExpenses.setText(getString(R.string.cash));
                         updatePaymentMethod();
                         builder.dismiss();
                     }
@@ -265,21 +282,12 @@ public class ExpensesActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         filterPaymentMethod = "EC";
-                        textViewPaymentMethodExpenses.setText(getResources().getString(R.string.ec_card));
+                        textViewPaymentMethodExpenses.setText(getString(R.string.ec_card));
                         updatePaymentMethod();
                         builder.dismiss();
                     }
                 });
 
-                cardViewButtonRemoveFilter.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        filterPaymentMethod = "";
-                        textViewPaymentMethodExpenses.setText(getResources().getString(R.string.choose_payment_method));
-                        updatePaymentMethod();
-                        builder.dismiss();
-                    }
-                });
 
                 builder.show();
             }
@@ -290,8 +298,25 @@ public class ExpensesActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(ExpensesActivity.this, CategoriesActivity.class);
                 intent.putExtra("type", "expense");
-                intent.putExtra("removefilter", true);
                 startForResult.launch(intent);
+                dialog.dismiss();
+            }
+        });
+
+        removeFilterCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                filterCategory = "";
+                updateCategory();
+                dialog.dismiss();
+            }
+        });
+
+        removeFilterPaymentMethod.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                filterPaymentMethod = "";
+                updatePaymentMethod();
                 dialog.dismiss();
             }
         });
@@ -323,40 +348,40 @@ public class ExpensesActivity extends AppCompatActivity {
         String month = "";
         switch (selectedMonth) {
             case 1:
-                month = getResources().getString(R.string.january);
+                month = getString(R.string.january);
                 break;
             case 2:
-                month = getResources().getString(R.string.february);
+                month = getString(R.string.february);
                 break;
             case 3:
-                month = getResources().getString(R.string.march);
+                month = getString(R.string.march);
                 break;
             case 4:
-                month = getResources().getString(R.string.april);
+                month = getString(R.string.april);
                 break;
             case 5:
-                month = getResources().getString(R.string.may);
+                month = getString(R.string.may);
                 break;
             case 6:
-                month = getResources().getString(R.string.june);
+                month = getString(R.string.june);
                 break;
             case 7:
-                month = getResources().getString(R.string.july);
+                month = getString(R.string.july);
                 break;
             case 8:
-                month = getResources().getString(R.string.august);
+                month = getString(R.string.august);
                 break;
             case 9:
-                month = getResources().getString(R.string.september);
+                month = getString(R.string.september);
                 break;
             case 10:
-                month = getResources().getString(R.string.october);
+                month = getString(R.string.october);
                 break;
             case 11:
-                month = getResources().getString(R.string.november);
+                month = getString(R.string.november);
                 break;
             case 12:
-                month = getResources().getString(R.string.december);
+                month = getString(R.string.december);
                 break;
         }
         return month;
@@ -446,7 +471,7 @@ public class ExpensesActivity extends AppCompatActivity {
             }
             activity.expensesItems = values[0];
             activity.recyclerAdapter = new ExpensesAdapter(activity, activity, values[0]);
-            activity.recyclerViewExpenses.setAdapter(activity.recyclerAdapter);
+            activity.recyclerViewExpenses.swapAdapter(activity.recyclerAdapter, false);
         }
 
         @Override

@@ -9,6 +9,7 @@
     android:paddingBottom="25dp"
     android:background="@drawable/bottom_sheet_dialog_background">
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -50,35 +51,70 @@
         <Space
             android:layout_width="match_parent"
             android:layout_height="15dp" />
-        
+
         <LinearLayout
-            android:id="@+id/chooserCategoryExpenses"
             android:layout_width="match_parent"
             android:layout_height="35dp"
-            android:clickable="true"
-            android:background="@drawable/edit_text_custom_bg"
-            android:foreground="?android:attr/selectableItemBackground">
+            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textViewCategoryExpenses"
+            <LinearLayout
+                android:id="@+id/chooserCategoryExpenses"
                 android:layout_width="fill_parent"
-                android:layout_height="match_parent"
+                android:layout_height="35dp"
                 android:layout_weight="1"
-                android:paddingTop="3dp"
-                android:paddingLeft="12dp"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:text="@string/choose_category"
-                android:textColor="@color/ui_icon"
-                android:textSize="20dp" />
+                android:clickable="true"
+                android:background="@drawable/edit_text_custom_bg"
+                android:foreground="?android:attr/selectableItemBackground">
 
-            <ImageView
-                android:layout_width="26dp"
-                android:layout_height="26dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginHorizontal="8dp"
-                android:src="@drawable/ic_category"
-                app:tint="@color/ui_icon" />
+                <TextView
+                    android:id="@+id/textViewCategoryExpenses"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:paddingTop="3dp"
+                    android:paddingLeft="12dp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:text="@string/choose_category"
+                    android:textColor="@color/ui_icon"
+                    android:textSize="20dp" />
+
+                <ImageView
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginHorizontal="8dp"
+                    android:src="@drawable/ic_category"
+                    app:tint="@color/ui_icon" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/removeFilterCategoryBS"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="5dp"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:padding="6dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:background="@drawable/circle"
+                    android:backgroundTint="@color/ui_lime_red" >
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_close"
+                        app:tint="@color/ui_white_semi_translucent" />
+
+                </LinearLayout>
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -87,35 +123,72 @@
             android:layout_height="15dp" />
 
         <LinearLayout
-            android:id="@+id/chooserPaymentMethodExpenses"
             android:layout_width="match_parent"
             android:layout_height="35dp"
-            android:clickable="true"
-            android:background="@drawable/edit_text_custom_bg"
-            android:foreground="?android:attr/selectableItemBackground">
+            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textViewPaymentMethodExpenses"
+            <LinearLayout
+                android:id="@+id/chooserPaymentMethodExpenses"
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:paddingTop="3dp"
-                android:paddingLeft="12dp"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:text="@string/choose_payment_method"
-                android:textColor="@color/ui_icon"
-                android:textSize="20dp" />
+                android:clickable="true"
+                android:background="@drawable/edit_text_custom_bg"
+                android:foreground="?android:attr/selectableItemBackground">
 
-            <ImageView
-                android:layout_width="26dp"
-                android:layout_height="26dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginHorizontal="8dp"
-                android:src="@drawable/ic_budgets"
-                app:tint="@color/ui_icon" />
+                <TextView
+                    android:id="@+id/textViewPaymentMethodExpenses"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:paddingTop="3dp"
+                    android:paddingLeft="12dp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:text="@string/choose_payment_method"
+                    android:textColor="@color/ui_icon"
+                    android:textSize="20dp" />
+
+                <ImageView
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginHorizontal="8dp"
+                    android:src="@drawable/ic_budgets"
+                    app:tint="@color/ui_icon" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/removeFilterPaymentMethodBS"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="5dp"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:padding="6dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:background="@drawable/circle"
+                    android:backgroundTint="@color/ui_lime_red" >
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_close"
+                        app:tint="@color/ui_white_semi_translucent" />
+
+                </LinearLayout>
+            </LinearLayout>
+
 
         </LinearLayout>
-        
+
+
     </LinearLayout>
 </LinearLayout>

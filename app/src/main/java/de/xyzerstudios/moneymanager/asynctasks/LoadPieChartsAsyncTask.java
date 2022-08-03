@@ -73,13 +73,13 @@ public class LoadPieChartsAsyncTask extends AsyncTask<Integer, ArrayList<Categor
         if (cursorSumTotalExpenses.getCount() == 0 ||cursorSumCategoriesExpenses.getCount() == 0) {
             executeExpenses = false;
             categoryItemsExpenses.add(new CategoryItem(activity.getResources().getColor(R.color.ui_lime_green, null),
-                    activity.getResources().getString(R.string.category), 100));
+                    activity.getString(R.string.category), 100));
         }
 
         if (cursorSumTotalIncome.getCount() == 0 ||cursorSumCategoriesIncome.getCount() == 0) {
             executeIncome = false;
             categoryItemsIncome.add(new CategoryItem(activity.getResources().getColor(R.color.ui_lime_green, null),
-                    activity.getResources().getString(R.string.category), 100));
+                    activity.getString(R.string.category), 100));
         }
 
         if (executeExpenses) {

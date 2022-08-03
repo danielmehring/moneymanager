@@ -128,7 +128,6 @@ public class AddExpenseActivity extends AppCompatActivity implements DatePickerD
             public void onClick(View view) {
                 Intent intent = new Intent(AddExpenseActivity.this, CategoriesActivity.class);
                 intent.putExtra("type", "expense");
-                intent.putExtra("removefilter", false);
                 startForResult.launch(intent);
             }
         });
@@ -270,11 +269,11 @@ public class AddExpenseActivity extends AppCompatActivity implements DatePickerD
     private void updatePaymentMethodTextView() {
         String paymentMethodString = "";
         if (paymentMethod.matches("CC")) {
-            paymentMethodString = getResources().getString(R.string.credit_card);
+            paymentMethodString = getString(R.string.credit_card);
         } else if (paymentMethod.matches("EC")) {
-            paymentMethodString = getResources().getString(R.string.ec_card);
+            paymentMethodString = getString(R.string.ec_card);
         } else if (paymentMethod.matches("CASH")) {
-            paymentMethodString = getResources().getString(R.string.cash);
+            paymentMethodString = getString(R.string.cash);
         }
         textViewExpensePaymentMethod.setText(paymentMethodString);
     }

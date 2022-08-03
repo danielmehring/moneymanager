@@ -209,7 +209,6 @@ public class EditExpenseActivity extends AppCompatActivity implements DatePicker
             public void onClick(View view) {
                 Intent intent = new Intent(EditExpenseActivity.this, CategoriesActivity.class);
                 intent.putExtra("type", "expense");
-                intent.putExtra("removefilter", false);
                 startForResult.launch(intent);
             }
         });
@@ -232,9 +231,9 @@ public class EditExpenseActivity extends AppCompatActivity implements DatePicker
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(EditExpenseActivity.this);
-                builder.setMessage(getResources().getString(R.string.delete_confirmation))
+                builder.setMessage(getString(R.string.delete_confirmation))
                         .setCancelable(false)
-                        .setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
+                        .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 ExpensesDatabaseHelper expensesDatabaseHelper = new ExpensesDatabaseHelper(EditExpenseActivity.this);
@@ -242,7 +241,7 @@ public class EditExpenseActivity extends AppCompatActivity implements DatePicker
                                 finish();
                             }
                         })
-                        .setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                        .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.cancel();
@@ -322,11 +321,11 @@ public class EditExpenseActivity extends AppCompatActivity implements DatePicker
     private void updatePaymentMethodTextView() {
         String paymentMethodString = "";
         if (paymentMethod.matches("CC")) {
-            paymentMethodString = getResources().getString(R.string.credit_card);
+            paymentMethodString = getString(R.string.credit_card);
         } else if (paymentMethod.matches("EC")) {
-            paymentMethodString = getResources().getString(R.string.ec_card);
+            paymentMethodString = getString(R.string.ec_card);
         } else if (paymentMethod.matches("CASH")) {
-            paymentMethodString = getResources().getString(R.string.cash);
+            paymentMethodString = getString(R.string.cash);
         }
         textViewExpensePaymentMethod.setText(paymentMethodString);
     }

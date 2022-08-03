@@ -59,6 +59,11 @@
         <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/layout/fragment_premium.xml" value="0.18802083333333333" />
         <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/layout/layout_dialog_payment_method.xml" value="0.25" />
         <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/layout/layout_dialog_payment_method_extra_option.xml" value="0.3009833262077811" />
+        <entry key="app/src/main/res/layout/activity_add_category.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/activity_add_expense.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/activity_edit_expense.xml" value="0.2427536231884058" />
+        <entry key="app/src/main/res/layout/bottom_sheet_filter_expenses.xml" value="0.30982367758186397" />
+        <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.2427536231884058" />
       </map>
     </option>
   </component>

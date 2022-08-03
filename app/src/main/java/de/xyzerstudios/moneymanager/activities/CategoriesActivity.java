@@ -1,26 +1,22 @@
 package de.xyzerstudios.moneymanager.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 import de.xyzerstudios.moneymanager.R;
+import de.xyzerstudios.moneymanager.activities.add.AddCategoryActivity;
 import de.xyzerstudios.moneymanager.utils.adapters.ShowCategoryAdapter;
 import de.xyzerstudios.moneymanager.utils.adapters.items.ShowCategoryItem;
 import de.xyzerstudios.moneymanager.utils.database.CategoriesDatabaseHelper;
@@ -34,7 +30,6 @@ public class CategoriesActivity extends AppCompatActivity {
     public ArrayList<ShowCategoryItem> categoryItems;
 
     private String type;
-    boolean removeFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,39 +43,20 @@ public class CategoriesActivity extends AppCompatActivity {
         }
 
         type = bundle.getString("type");
-        removeFilter = bundle.getBoolean("removefilter");
 
         buttonAddNewCategory = findViewById(R.id.buttonAddNewCategory);
         buttonCategoriesGoBack = findViewById(R.id.buttonCategoriesGoBack);
         recyclerViewCategories = findViewById(R.id.recyclerViewCategories);
 
-        if (removeFilter) {
-            ImageView imageViewAdd = findViewById(R.id.imageViewAdd);
-            TextView textViewAdd = findViewById(R.id.textViewAdd);
 
-            Drawable drawable = getResources().getDrawable(R.drawable.ic_close, null);
-            drawable.setColorFilter(getResources().getColor(R.color.ui_link_blue, null), PorterDuff.Mode.SRC_ATOP);
-            imageViewAdd.setImageDrawable(drawable);
+        buttonAddNewCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CategoriesActivity.this, AddCategoryActivity.class);
+                startActivity(intent);
+            }
+        });
 
-            textViewAdd.setText(getResources().getString(R.string.remove_filter));
-
-            buttonAddNewCategory.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent();
-                    intent.putExtra("categoryName", "");
-                    setResult(RESULT_OK, intent);
-                    finish();
-                }
-            });
-        } else {
-            buttonAddNewCategory.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                }
-            });
-        }
 
         buttonCategoriesGoBack.setOnClickListener(new View.OnClickListener() {
             @Override

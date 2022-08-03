@@ -1,12 +1,11 @@
 package de.xyzerstudios.moneymanager.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.database.Cursor;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Date;
 
