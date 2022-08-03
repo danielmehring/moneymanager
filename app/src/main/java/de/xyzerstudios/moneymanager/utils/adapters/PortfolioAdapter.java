@@ -56,11 +56,11 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
         Utils utils = new Utils();
         BalancePortfolioItem balanceItem = portfolioItems.get(position);
 
-        Drawable background = context.getResources().getDrawable(R.drawable.default_corners, null);
+        Drawable background = context.getDrawable(R.drawable.default_corners);
         if (balanceItem.getId() == activeId) {
-            background.setColorFilter(context.getResources().getColor(R.color.ui_lime_green, null), PorterDuff.Mode.SRC_ATOP);
+            background.setColorFilter(context.getColor(R.color.ui_lime_green), PorterDuff.Mode.SRC_ATOP);
         } else {
-            background.setColorFilter(context.getResources().getColor(R.color.ui_lime_grey, null), PorterDuff.Mode.SRC_ATOP);
+            background.setColorFilter(context.getColor(R.color.ui_lime_grey), PorterDuff.Mode.SRC_ATOP);
         }
         holder.cardView.setBackground(background);
 

@@ -45,7 +45,7 @@ public class ShowCategoryAdapter extends RecyclerView.Adapter<ShowCategoryAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ShowCategoryItem categoryItem = categoryItems.get(position);
 
-        Drawable backgroundDrawableIndicator = context.getResources().getDrawable(R.drawable.circle, null);
+        Drawable backgroundDrawableIndicator = context.getDrawable(R.drawable.circle);
         backgroundDrawableIndicator.setColorFilter(categoryItem.getIndicatorColor(), PorterDuff.Mode.SRC_ATOP);
 
         holder.categoryIndicator.setBackground(backgroundDrawableIndicator);

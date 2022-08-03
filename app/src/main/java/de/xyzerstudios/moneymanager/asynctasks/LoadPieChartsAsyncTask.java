@@ -72,13 +72,13 @@ public class LoadPieChartsAsyncTask extends AsyncTask<Integer, ArrayList<Categor
 
         if (cursorSumTotalExpenses.getCount() == 0 ||cursorSumCategoriesExpenses.getCount() == 0) {
             executeExpenses = false;
-            categoryItemsExpenses.add(new CategoryItem(activity.getResources().getColor(R.color.ui_lime_green, null),
+            categoryItemsExpenses.add(new CategoryItem(activity.getColor(R.color.ui_lime_green),
                     activity.getString(R.string.category), 100));
         }
 
         if (cursorSumTotalIncome.getCount() == 0 ||cursorSumCategoriesIncome.getCount() == 0) {
             executeIncome = false;
-            categoryItemsIncome.add(new CategoryItem(activity.getResources().getColor(R.color.ui_lime_green, null),
+            categoryItemsIncome.add(new CategoryItem(activity.getColor(R.color.ui_lime_green),
                     activity.getString(R.string.category), 100));
         }
 
@@ -151,7 +151,7 @@ public class LoadPieChartsAsyncTask extends AsyncTask<Integer, ArrayList<Categor
             Log.d("categoryItem__Income", categoryItem.getIndicatorColor() + ";" +
                     categoryItem.getCategoryText() + ";" + categoryItem.getCategoryPercentage());
 
-        Log.d("categoryItem__Color", "" + activity.getResources().getColor(R.color.ui_lime_green, null));
+        Log.d("categoryItem__Color", "" + activity.getColor(R.color.ui_lime_green));
 
 
         dashboardFragment.loadExpensesPieChartData(values[0]);

@@ -160,11 +160,11 @@ public class EditExpenseActivity extends AppCompatActivity implements DatePicker
                     if (result != null && result.getResultCode() == RESULT_OK) {
                         if (result.getData() != null) {
                             String name = result.getData().getStringExtra("categoryName");
-                            int color = result.getData().getIntExtra("categoryColor", getResources().getColor(R.color.ui_text_faded, null));
+                            int color = result.getData().getIntExtra("categoryColor", getColor(R.color.ui_text_faded));
                             categoryId = result.getData().getIntExtra("categoryId", 9);
                             textViewExpenseCategory.setText(name);
 
-                            Drawable backgroundDrawableIndicator = getResources().getDrawable(R.drawable.circle, null);
+                            Drawable backgroundDrawableIndicator = getDrawable(R.drawable.circle);
                             backgroundDrawableIndicator.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
 
                             displayCategoryColor.setBackground(backgroundDrawableIndicator);
@@ -285,7 +285,7 @@ public class EditExpenseActivity extends AppCompatActivity implements DatePicker
         Cursor categoryCursor = categoriesDatabaseHelper.readCategoryById(categoryId);
         while (categoryCursor.moveToNext()) {
             textViewExpenseCategory.setText(categoryCursor.getString(1));
-            Drawable backgroundDrawableIndicator = getResources().getDrawable(R.drawable.circle, null);
+            Drawable backgroundDrawableIndicator = getDrawable(R.drawable.circle);
             backgroundDrawableIndicator.setColorFilter(categoryCursor.getInt(3), PorterDuff.Mode.SRC_ATOP);
             displayCategoryColor.setBackground(backgroundDrawableIndicator);
         }

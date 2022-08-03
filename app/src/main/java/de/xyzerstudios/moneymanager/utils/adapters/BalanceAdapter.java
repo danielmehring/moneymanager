@@ -44,13 +44,13 @@ public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.ViewHold
         Utils utils = new Utils();
         BalancePortfolioItem balanceItem = balanceItems.get(position);
         if (balanceItem.getSaldo() >= 0) {
-            Drawable background = context.getResources().getDrawable(R.drawable.default_corners, null);
-            background.setColorFilter(context.getResources().getColor(R.color.ui_lime_green, null), PorterDuff.Mode.SRC_ATOP);
+            Drawable background = context.getDrawable(R.drawable.default_corners);
+            background.setColorFilter(context.getColor(R.color.ui_lime_green), PorterDuff.Mode.SRC_ATOP);
             holder.cardView.setBackground(background);
             holder.saldo.setText("+ " + utils.formatCurrency(balanceItem.getSaldo()) + " €");
         } else {
-            Drawable background = context.getResources().getDrawable(R.drawable.default_corners, null);
-            background.setColorFilter(context.getResources().getColor(R.color.ui_lime_red, null), PorterDuff.Mode.SRC_ATOP);
+            Drawable background = context.getDrawable(R.drawable.default_corners);
+            background.setColorFilter(context.getColor(R.color.ui_lime_red), PorterDuff.Mode.SRC_ATOP);
             holder.cardView.setBackground(background);
             holder.saldo.setText("- " + utils.formatCurrency(balanceItem.getSaldoTimesMinusOne()) + " €");
         }

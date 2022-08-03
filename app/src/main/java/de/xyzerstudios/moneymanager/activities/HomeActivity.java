@@ -193,7 +193,7 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
 
     private HeadingItem createNewHeadingItem(int positionOfResourcesInArray) {
         return new HeadingItem(headingItemTitles[positionOfResourcesInArray])
-                .withTextTint(getResources().getColor(R.color.ui_text_faded, null));
+                .withTextTint(getColor(R.color.ui_text_faded));
     }
 
     private String[] loadSimpleItemTitles() {

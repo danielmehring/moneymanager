@@ -43,7 +43,7 @@ public class AddCategoryActivity extends AppCompatActivity implements ColorPicke
         buttonChooseColor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ColorPickerDialog.newBuilder().setColor(getResources().getColor(R.color.ui_dark_purple, null)).show(AddCategoryActivity.this);
+                ColorPickerDialog.newBuilder().setColor(getColor(R.color.ui_dark_purple)).show(AddCategoryActivity.this);
             }
         });
 
@@ -71,7 +71,7 @@ public class AddCategoryActivity extends AppCompatActivity implements ColorPicke
     }
 
     private void updateColorItems() {
-        Drawable circleDrawable = getResources().getDrawable(R.drawable.circle, null);
+        Drawable circleDrawable = getDrawable(R.drawable.circle);
         circleDrawable.setColorFilter(chosenColor, PorterDuff.Mode.SRC_ATOP);
         colorCircleCategoryAdd.setBackground(circleDrawable);
         colorStripeCategoryAdd.setBackgroundColor(chosenColor);
