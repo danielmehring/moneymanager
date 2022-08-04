@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import de.xyzerstudios.moneymanager.R;
+import de.xyzerstudios.moneymanager.activities.edit.EditCategoryActivity;
 import de.xyzerstudios.moneymanager.utils.adapters.items.ShowCategoryItem;
 
 public class ShowCategoryAdapter extends RecyclerView.Adapter<ShowCategoryAdapter.ViewHolder> {
@@ -26,11 +27,13 @@ public class ShowCategoryAdapter extends RecyclerView.Adapter<ShowCategoryAdapte
     private Context context;
     private ArrayList<ShowCategoryItem> categoryItems;
     private Activity activity;
+    private String type;
 
-    public ShowCategoryAdapter(Activity activity, Context context, ArrayList<ShowCategoryItem> categoryItems) {
+    public ShowCategoryAdapter(Activity activity, Context context, ArrayList<ShowCategoryItem> categoryItems, String type) {
         this.activity = activity;
         this.context = context;
         this.categoryItems = categoryItems;
+        this.type = type;
     }
 
     @NonNull
@@ -53,7 +56,12 @@ public class ShowCategoryAdapter extends RecyclerView.Adapter<ShowCategoryAdapte
         holder.editCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: edit catgory entry
+                Intent intent = new Intent(activity, EditCategoryActivity.class);
+                intent.putExtra("categoryId", categoryItem.getCategoryId());
+                intent.putExtra("color", categoryItem.getIndicatorColor());
+                intent.putExtra("name", categoryItem.getName());
+                intent.putExtra("type", type);
+                activity.startActivity(intent);
             }
         });
         holder.categoryCardView.setOnClickListener(new View.OnClickListener() {

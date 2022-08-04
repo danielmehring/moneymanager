@@ -112,5 +112,7 @@
     <string name="add_category">Kategorie hinzufügen</string>
     <string name="color">Farbe</string>
     <string name="choose_color">Farbe wählen</string>
+    <string name="category_needs_to_be_unique">Es existiert bereits eine Kategorie unter diesem Namen</string>
+    <string name="edit_category">Kategorie bearbeiten</string>
 
 </resources>

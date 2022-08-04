@@ -172,4 +172,16 @@ public class CategoriesDatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    public Cursor readCategoriesByTypeAndName(String type, String name) {
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_TYPE + "=\"" + type + "\"" +
+                " AND " + COLUMN_NAME + "=\"" + name + "\"";
+        SQLiteDatabase database = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (database != null) {
+            cursor = database.rawQuery(query, null);
+        }
+        return cursor;
+    }
+
 }

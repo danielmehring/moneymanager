@@ -1,5 +1,6 @@
 package de.xyzerstudios.moneymanager.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
@@ -29,7 +30,7 @@ public class CategoriesActivity extends AppCompatActivity {
     public RecyclerView.Adapter categoriesAdapter;
     public ArrayList<ShowCategoryItem> categoryItems;
 
-    private String type;
+    private String type = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,7 @@ public class CategoriesActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(CategoriesActivity.this, AddCategoryActivity.class);
+                intent.putExtra("type", type);
                 startActivity(intent);
             }
         });
@@ -69,12 +71,19 @@ public class CategoriesActivity extends AppCompatActivity {
 
         recyclerViewCategories.setHasFixedSize(true);
         recyclerViewCategories.setLayoutManager(new LinearLayoutManager(this));
-        categoriesAdapter = new ShowCategoryAdapter(this, this, categoryItems);
+        categoriesAdapter = new ShowCategoryAdapter(this, this, categoryItems, type);
 
         recyclerViewCategories.setAdapter(categoriesAdapter);
 
         startLoadingAsyncTask(type);
 
+    }
+
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        startLoadingAsyncTask(type);
     }
 
     private void startLoadingAsyncTask(String type) {
@@ -83,9 +92,11 @@ public class CategoriesActivity extends AppCompatActivity {
 
     private class loadCategoriesAsyncTask extends AsyncTask<String, ArrayList<ShowCategoryItem>, String> {
         private final WeakReference<CategoriesActivity> activityWeakReference;
+        private CategoriesActivity activity;
 
         loadCategoriesAsyncTask(CategoriesActivity activity) {
             activityWeakReference = new WeakReference<CategoriesActivity>(activity);
+            this.activity = activity;
         }
 
         @Override
@@ -100,8 +111,14 @@ public class CategoriesActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... strings) {
 
+            String type = strings[0];
+
+            if (type.matches("")) {
+                return "";
+            }
+
             CategoriesDatabaseHelper categoriesDatabaseHelper = new CategoriesDatabaseHelper(CategoriesActivity.this, CategoriesActivity.this);
-            Cursor cursorCategories = categoriesDatabaseHelper.readCategoriesByType(strings[0]);
+            Cursor cursorCategories = categoriesDatabaseHelper.readCategoriesByType(type);
 
             ArrayList<ShowCategoryItem> categoryItems = new ArrayList<>();
 
@@ -126,9 +143,9 @@ public class CategoriesActivity extends AppCompatActivity {
                 return;
             }
 
-            activity.categoryItems = values[0];
-            activity.categoriesAdapter = new ShowCategoryAdapter(activity, activity, values[0]);
-            activity.recyclerViewCategories.setAdapter(activity.categoriesAdapter);
+            this.activity.categoryItems = values[0];
+            this.activity.categoriesAdapter = new ShowCategoryAdapter(this.activity, this.activity, values[0], type);
+            this.activity.recyclerViewCategories.setAdapter(this.activity.categoriesAdapter);
 
         }
 

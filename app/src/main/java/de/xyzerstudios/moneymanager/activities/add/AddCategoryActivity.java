@@ -2,6 +2,7 @@ package de.xyzerstudios.moneymanager.activities.add;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -16,6 +17,7 @@ import com.jaredrummler.android.colorpicker.ColorPickerDialog;
 import com.jaredrummler.android.colorpicker.ColorPickerDialogListener;
 
 import de.xyzerstudios.moneymanager.R;
+import de.xyzerstudios.moneymanager.utils.database.CategoriesDatabaseHelper;
 
 public class AddCategoryActivity extends AppCompatActivity implements ColorPickerDialogListener {
 
@@ -25,16 +27,28 @@ public class AddCategoryActivity extends AppCompatActivity implements ColorPicke
     private EditText editTextCategoryName;
 
     private int chosenColor;
+    private String type = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_category);
 
-        chosenColor = getColor(R.color.ui_dark_purple);
+        Bundle bundle = getIntent().getExtras();
+        if (bundle == null) {
+            finish();
+            return;
+        }
+
+        type = bundle.getString("type");
+        if (bundle.get("color") != null) {
+            chosenColor = bundle.getInt("color");
+        } else {
+            chosenColor = getColor(R.color.ui_dark_purple);
+        }
 
         editTextCategoryName = findViewById(R.id.editTextCategoryName);
-        buttonChooseColor = findViewById(R.id.buttonChooseColor);
+        buttonChooseColor = findViewById(R.id.buttonChooseColorCategoryAdd);
         colorStripeCategoryAdd = findViewById(R.id.colorStripeCategoryAdd);
         colorCircleCategoryAdd = findViewById(R.id.colorCircleCategoryAdd);
         closeActivityAddCategory = findViewById(R.id.closeActivityAddCategory);
@@ -43,7 +57,7 @@ public class AddCategoryActivity extends AppCompatActivity implements ColorPicke
         buttonChooseColor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ColorPickerDialog.newBuilder().setColor(getColor(R.color.ui_dark_purple)).show(AddCategoryActivity.this);
+                ColorPickerDialog.newBuilder().setColor(chosenColor).show(AddCategoryActivity.this);
             }
         });
 
@@ -63,6 +77,19 @@ public class AddCategoryActivity extends AppCompatActivity implements ColorPicke
                     return;
                 }
 
+                CategoriesDatabaseHelper categoriesDatabase = new CategoriesDatabaseHelper(AddCategoryActivity.this,
+                        AddCategoryActivity.this);
+
+                Cursor categoriesCursor = categoriesDatabase.readCategoriesByTypeAndName(type, name);
+
+                if (categoriesCursor.getCount() != 0) {
+                    Toast.makeText(AddCategoryActivity.this, getString(R.string.category_needs_to_be_unique), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                categoriesDatabase.addNewCategory(name, type, chosenColor);
+
+                finish();
             }
         });
 

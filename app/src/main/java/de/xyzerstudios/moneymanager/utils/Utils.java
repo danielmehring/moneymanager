@@ -19,7 +19,7 @@ public class Utils {
         int nachKomma = amount % 100;
         double d = amount / 100 + (nachKomma / 100.0);
         NumberFormat numberFormatter = NumberFormat.getCurrencyInstance();
-        return numberFormatter.format(d).split(" ")[0];
+        return numberFormatter.format(d)/*.split(" ")[0]*/;
     }
 
     public String formatCurrency(long amount) {
