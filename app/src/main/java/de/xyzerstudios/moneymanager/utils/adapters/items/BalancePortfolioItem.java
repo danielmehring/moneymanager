@@ -2,8 +2,8 @@ package de.xyzerstudios.moneymanager.utils.adapters.items;
 
 public class BalancePortfolioItem {
 
-    private String title;
-    private int saldo;
+    private final String title;
+    private final int saldo;
     private int id;
 
     public BalancePortfolioItem(String title, int saldo) {

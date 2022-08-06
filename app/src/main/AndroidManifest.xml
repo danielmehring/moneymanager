@@ -14,6 +14,15 @@
         android:theme="@style/Theme.MoneyManager"
         tools:targetApi="31">
         <activity
+            android:name=".activities.add.AddBalanceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.edit.EditIncomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.add.AddIncomeActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.add.AddCategoryActivity"
             android:exported="false" />
         <activity

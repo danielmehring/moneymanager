@@ -91,17 +91,17 @@ public class LoadPortfolioAsyncTask extends AsyncTask<Integer, String, String> {
         Utils utils = new Utils();
         if (saldo < 0) {
             saldo = saldo * (-1);
-            dashboardFragment.dashboardSaldo.setText("- " + utils.formatCurrency(saldo) + " €");
+            dashboardFragment.dashboardSaldo.setText("- " + utils.formatCurrency(saldo) );
         } else {
-            dashboardFragment.dashboardSaldo.setText("+ " + utils.formatCurrency(saldo) + " €");
+            dashboardFragment.dashboardSaldo.setText("+ " + utils.formatCurrency(saldo) );
         }
 
-        dashboardFragment.dashboardIncome.setText("+ " + utils.formatCurrency(revenue) + " €");
+        dashboardFragment.dashboardIncome.setText("+ " + utils.formatCurrency(revenue) );
 
-        dashboardFragment.dashboardExpenses.setText("- " + utils.formatCurrency(expenses) + " €");
+        dashboardFragment.dashboardExpenses.setText("- " + utils.formatCurrency(expenses) );
 
-        dashboardFragment.centerTextIncomeChart.setText(utils.formatCurrency(revenue) + " €");
-        dashboardFragment.centerTextExpensesChart.setText(utils.formatCurrency(expenses) + " €");
+        dashboardFragment.centerTextIncomeChart.setText(utils.formatCurrency(revenue) );
+        dashboardFragment.centerTextExpensesChart.setText(utils.formatCurrency(expenses) );
     }
 
 }

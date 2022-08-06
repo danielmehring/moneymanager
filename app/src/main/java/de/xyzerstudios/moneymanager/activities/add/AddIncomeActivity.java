@@ -26,47 +26,44 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.Date;
 
 import de.xyzerstudios.moneymanager.R;
 import de.xyzerstudios.moneymanager.activities.CategoriesActivity;
-import de.xyzerstudios.moneymanager.utils.dialogs.DatePickerFragment;
 import de.xyzerstudios.moneymanager.utils.Utils;
 import de.xyzerstudios.moneymanager.utils.database.CategoriesDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.database.ExpensesDatabaseHelper;
+import de.xyzerstudios.moneymanager.utils.database.IncomeDatabaseHelper;
+import de.xyzerstudios.moneymanager.utils.dialogs.DatePickerFragment;
 import de.xyzerstudios.moneymanager.utils.dialogs.PaymentMethodDialog;
 
-public class AddExpenseActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, PaymentMethodDialog.PaymentMethodDialogListener {
+public class AddIncomeActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
-    public EditText editTextExpenseAmount, editTextExpenseName;
-    public ImageView closeActivityAddExpense, addExpense;
-    public TextView textViewExpenseAmount, textViewExpenseTimestamp, textViewExpenseCategory, textViewExpensePaymentMethod;
-    public FrameLayout chooserExpenseTimestamp, chooserExpenseCategory, chooserExpensePaymentMethod;
+    public EditText editTextIncomeAmount, editTextIncomeName;
+    public ImageView closeActivityAddIncome, addIncome;
+    public TextView textViewIncomeAmount, textViewIncomeTimestamp, textViewIncomeCategory;
+    public FrameLayout chooserIncomeTimestamp, chooserIncomeCategory;
     public LinearLayout displayCategoryColor;
 
     private final Utils utils = new Utils();
 
-    private int categoryId = 9;
-    private String paymentMethod = "";
+    private int categoryId = 38;
 
     private int amount = 0;
     private Date date;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_expense);
+        setContentView(R.layout.activity_add_income);
 
         initGui();
         initObjects();
         setClickListeners();
         setOtherListeners();
         manipulateGui();
-
     }
 
     private void initObjects() {
@@ -74,91 +71,80 @@ public class AddExpenseActivity extends AppCompatActivity implements DatePickerD
     }
 
     public ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-    new ActivityResultCallback<ActivityResult>() {
-        @Override
-        public void onActivityResult(ActivityResult result) {
-            if (result != null && result.getResultCode() == RESULT_OK) {
-                if (result.getData() != null) {
-                    String name = result.getData().getStringExtra("categoryName");
-                    int color = result.getData().getIntExtra("categoryColor", getColor(R.color.ui_text_faded));
-                    categoryId = result.getData().getIntExtra("categoryId", 9);
-                    textViewExpenseCategory.setText(name);
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result != null && result.getResultCode() == RESULT_OK) {
+                        if (result.getData() != null) {
+                            String name = result.getData().getStringExtra("categoryName");
+                            int color = result.getData().getIntExtra("categoryColor", getColor(R.color.ui_text_faded));
+                            categoryId = result.getData().getIntExtra("categoryId", 9);
+                            textViewIncomeCategory.setText(name);
 
-                    Drawable backgroundDrawableIndicator = getDrawable(R.drawable.circle);
-                    backgroundDrawableIndicator.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
+                            Drawable backgroundDrawableIndicator = getDrawable(R.drawable.circle);
+                            backgroundDrawableIndicator.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
 
-                    displayCategoryColor.setBackground(backgroundDrawableIndicator);
+                            displayCategoryColor.setBackground(backgroundDrawableIndicator);
+                        }
+                    }
                 }
-            }
-        }
-    });
+            });
 
     private void initGui() {
-        editTextExpenseAmount = findViewById(R.id.editTextExpenseAmount);
-        closeActivityAddExpense = findViewById(R.id.closeActivityAddExpense);
-        addExpense = findViewById(R.id.addExpense);
-        textViewExpenseAmount = findViewById(R.id.textViewExpenseAmount);
-        editTextExpenseName = findViewById(R.id.editTextExpenseName);
-        textViewExpenseTimestamp = findViewById(R.id.textViewExpenseTimestamp);
-        textViewExpenseCategory = findViewById(R.id.textViewExpenseCategory);
-        chooserExpenseTimestamp = findViewById(R.id.chooserExpenseTimestamp);
-        chooserExpenseCategory = findViewById(R.id.chooserExpenseCategory);
-        chooserExpensePaymentMethod = findViewById(R.id.chooserExpensePaymentMethod);
-        displayCategoryColor = findViewById(R.id.displayCategoryColor);
-        textViewExpensePaymentMethod = findViewById(R.id.textViewExpensePaymentMethod);
+        editTextIncomeAmount = findViewById(R.id.editTextIncomeAmount);
+        editTextIncomeName = findViewById(R.id.editTextIncomeName);
+        closeActivityAddIncome = findViewById(R.id.closeActivityAddIncome);
+        addIncome = findViewById(R.id.addIncome);
+        textViewIncomeAmount = findViewById(R.id.textViewIncomeAmount);
+        textViewIncomeTimestamp = findViewById(R.id.textViewIncomeTimestamp);
+        textViewIncomeCategory = findViewById(R.id.textViewIncomeCategory);
+        chooserIncomeTimestamp = findViewById(R.id.chooserIncomeTimestamp);
+        chooserIncomeCategory = findViewById(R.id.chooserIncomeCategory);
+        displayCategoryColor = findViewById(R.id.displayCategoryColorAddIncome);
     }
 
     private void setClickListeners() {
-        closeActivityAddExpense.setOnClickListener(new View.OnClickListener() {
+        closeActivityAddIncome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
 
-        chooserExpenseTimestamp.setOnClickListener(new View.OnClickListener() {
+        chooserIncomeTimestamp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showDialogDatePicker();
             }
         });
 
-        chooserExpenseCategory.setOnClickListener(new View.OnClickListener() {
+        chooserIncomeCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AddExpenseActivity.this, CategoriesActivity.class);
-                intent.putExtra("type", "expense");
+                Intent intent = new Intent(AddIncomeActivity.this, CategoriesActivity.class);
+                intent.putExtra("type", "income");
                 startForResult.launch(intent);
             }
         });
 
-        addExpense.setOnClickListener(new View.OnClickListener() {
+        addIncome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(categoryId == 0) {
+                if (categoryId == 0) {
                     return;
                 }
-                ExpensesDatabaseHelper expensesDatabaseHelper = new ExpensesDatabaseHelper(AddExpenseActivity.this);
-                expensesDatabaseHelper.addNewEntry(loadPortfolioIdFromSharedPrefs(), editTextExpenseName.getText().toString().trim(),
-                        amount, Utils.isoDateFormat.format(date), Integer.valueOf(Utils.monthDateFormat.format(date)),
-                        Integer.valueOf(Utils.yearDateFormat.format(date)), categoryId, paymentMethod);
-                Log.d("AddExpenseActivity__", loadPortfolioIdFromSharedPrefs() + ";" + editTextExpenseName.getText().toString().trim() + ";" +
-                        amount + ";" + Utils.isoDateFormat.format(date) + ";" + date.getMonth() + ";" + date.getYear() + ";" + categoryId + ";" + paymentMethod);
+                IncomeDatabaseHelper incomeDatabaseHelper = new IncomeDatabaseHelper(AddIncomeActivity.this);
+                incomeDatabaseHelper.addNewEntry(loadPortfolioIdFromSharedPrefs(), editTextIncomeName.getText().toString().trim(),
+                        amount, categoryId, Utils.isoDateFormat.format(date), Integer.valueOf(Utils.monthDateFormat.format(date)),
+                        Integer.valueOf(Utils.yearDateFormat.format(date)));
                 finish();
-            }
-        });
-
-        chooserExpensePaymentMethod.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDialogPaymentMethod();
             }
         });
     }
 
     private void setOtherListeners() {
 
-        editTextExpenseAmount.setOnKeyListener(new View.OnKeyListener() {
+        editTextIncomeAmount.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
                 if(keyEvent.getAction() == keyEvent.ACTION_UP) {
@@ -204,7 +190,7 @@ public class AddExpenseActivity extends AppCompatActivity implements DatePickerD
                             amount = amount * 10 + 9;
                             break;
                     }
-                    textViewExpenseAmount.setText(utils.formatCurrency(amount) );
+                    textViewIncomeAmount.setText(utils.formatCurrency(amount) );
                 }
                 return false;
             }
@@ -216,15 +202,16 @@ public class AddExpenseActivity extends AppCompatActivity implements DatePickerD
     private void manipulateGui() {
         CategoriesDatabaseHelper categoriesDatabaseHelper = new CategoriesDatabaseHelper(this, this);
         Cursor categoryCursor = categoriesDatabaseHelper.readCategoryById(categoryId);
+
         while (categoryCursor.moveToNext()) {
-            textViewExpenseCategory.setText(categoryCursor.getString(1));
+            textViewIncomeCategory.setText(categoryCursor.getString(1));
             Drawable backgroundDrawableIndicator = getDrawable(R.drawable.circle);
             backgroundDrawableIndicator.setColorFilter(categoryCursor.getInt(3), PorterDuff.Mode.SRC_ATOP);
             displayCategoryColor.setBackground(backgroundDrawableIndicator);
         }
 
-        textViewExpenseTimestamp.setText(Utils.timestampDateDisplayFormat.format(date));
-        textViewExpenseAmount.setText(utils.formatCurrency(amount) );
+        textViewIncomeTimestamp.setText(Utils.timestampDateDisplayFormat.format(date));
+        textViewIncomeAmount.setText(utils.formatCurrency(amount));
     }
 
     private int loadPortfolioIdFromSharedPrefs() {
@@ -237,11 +224,6 @@ public class AddExpenseActivity extends AppCompatActivity implements DatePickerD
         datePicker.show(getSupportFragmentManager(), "Date Picker");
     }
 
-    private void showDialogPaymentMethod() {
-        PaymentMethodDialog paymentMethodDialog = new PaymentMethodDialog();
-        paymentMethodDialog.show(getSupportFragmentManager(), "Payment Method Dialog");
-    }
-
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
         Calendar calendar = Calendar.getInstance();
@@ -249,24 +231,6 @@ public class AddExpenseActivity extends AppCompatActivity implements DatePickerD
         calendar.set(Calendar.MONTH, month);
         calendar.set(Calendar.DAY_OF_MONTH, day);
         date = calendar.getTime();
-        textViewExpenseTimestamp.setText(Utils.timestampDateDisplayFormat.format(date));
-    }
-
-    private void updatePaymentMethodTextView() {
-        String paymentMethodString = "";
-        if (paymentMethod.matches("CC")) {
-            paymentMethodString = getString(R.string.credit_card);
-        } else if (paymentMethod.matches("EC")) {
-            paymentMethodString = getString(R.string.ec_card);
-        } else if (paymentMethod.matches("CASH")) {
-            paymentMethodString = getString(R.string.cash);
-        }
-        textViewExpensePaymentMethod.setText(paymentMethodString);
-    }
-
-    @Override
-    public void applyPaymentMethod(String paymentMethodCode) {
-        paymentMethod = paymentMethodCode;
-        updatePaymentMethodTextView();
+        textViewIncomeTimestamp.setText(Utils.timestampDateDisplayFormat.format(date));
     }
 }

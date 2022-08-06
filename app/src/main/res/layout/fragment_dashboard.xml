@@ -207,7 +207,7 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:id="@+id/button_add_expense"
+                    android:id="@+id/buttonAddExpenseDashboard"
                     android:layout_width="fill_parent"
                     android:layout_height="30dp"
                     android:layout_margin="5dp"
@@ -221,7 +221,6 @@
                     android:textColor="@color/ui_icon">
 
                     <TextView
-                        android:id="@+id/button_add_expense_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:maxLines="1"
@@ -234,7 +233,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/button_add_revenue"
+                    android:id="@+id/buttonAddRevenueDashboard"
                     android:layout_width="fill_parent"
                     android:layout_height="30dp"
                     android:layout_margin="5dp"
@@ -248,7 +247,6 @@
                     android:textColor="@color/ui_icon">
 
                     <TextView
-                        android:id="@+id/button_add_revenue_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:maxLines="1"
@@ -334,8 +332,10 @@
                 android:layout_height="25dp" />
 
             <LinearLayout
+                android:id="@+id/linearLayoutIncome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clickable="true"
                 android:orientation="horizontal">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -386,7 +386,7 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="35dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -436,8 +436,10 @@
                 android:layout_height="25dp" />
 
             <LinearLayout
+                android:id="@+id/linearLayoutExpenses"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clickable="true"
                 android:orientation="horizontal">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -487,13 +489,14 @@
             
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="50dp"/>
+                android:layout_height="30dp"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/ui_black"
                 android:text="Test Activity"
+                android:visibility="gone"
                 android:id="@+id/testButton"/>
 
         </LinearLayout>

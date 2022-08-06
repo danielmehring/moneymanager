@@ -47,12 +47,12 @@ public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.ViewHold
             Drawable background = context.getDrawable(R.drawable.default_corners);
             background.setColorFilter(context.getColor(R.color.ui_lime_green), PorterDuff.Mode.SRC_ATOP);
             holder.cardView.setBackground(background);
-            holder.saldo.setText("+ " + utils.formatCurrency(balanceItem.getSaldo()) + " €");
+            holder.saldo.setText("+ " + utils.formatCurrency(balanceItem.getSaldo()) );
         } else {
             Drawable background = context.getDrawable(R.drawable.default_corners);
             background.setColorFilter(context.getColor(R.color.ui_lime_red), PorterDuff.Mode.SRC_ATOP);
             holder.cardView.setBackground(background);
-            holder.saldo.setText("- " + utils.formatCurrency(balanceItem.getSaldoTimesMinusOne()) + " €");
+            holder.saldo.setText("- " + utils.formatCurrency(balanceItem.getSaldoTimesMinusOne()) );
         }
         holder.title.setText(balanceItem.getTitle());
         holder.edit.setOnClickListener(new View.OnClickListener() {

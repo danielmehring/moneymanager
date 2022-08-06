@@ -29,6 +29,7 @@ import java.util.Arrays;
 import de.xyzerstudios.moneymanager.R;
 import de.xyzerstudios.moneymanager.fragments.AboutUsFragment;
 import de.xyzerstudios.moneymanager.fragments.BalancesFragment;
+import de.xyzerstudios.moneymanager.fragments.BudgetsFragment;
 import de.xyzerstudios.moneymanager.fragments.DashboardFragment;
 import de.xyzerstudios.moneymanager.fragments.DonateFragment;
 import de.xyzerstudios.moneymanager.fragments.PortfoliosFragment;
@@ -260,7 +261,9 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
                 slidingRootNav.closeMenu();
                 break;
             case POS_BUDGET:
-
+                Fragment budgetsFragment = new BudgetsFragment();
+                showFragment(budgetsFragment);
+                slidingRootNav.closeMenu();
                 break;
             case POS_PREMIUM:
                 Fragment premiumFragment = new PremiumFragment();

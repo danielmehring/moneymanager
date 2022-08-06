@@ -154,6 +154,21 @@ public class IncomeDatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    public Cursor readEntriesByPortfolioIdSortedByDate(int portfolioId, int month, int year) {
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE "
+                + COLUMN_PORTFOLIO_ID + "=" + portfolioId
+                + " AND " + COLUMN_MONTH + "=" + month
+                + " AND " + COLUMN_YEAR + "=" + year
+                + " ORDER BY " + COLUMN_TIMESTAMP + " DESC";
+        SQLiteDatabase database = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (database != null) {
+            cursor = database.rawQuery(query, null);
+        }
+        return cursor;
+    }
+
     public Cursor readEntriesByPortfolioIdSortedByCategoriesDesc(int portfolioId) {
         String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_PORTFOLIO_ID + "=" + portfolioId + " ORDER BY " + COLUMN_CATEGORY_ID + " DESC";
         SQLiteDatabase database = this.getReadableDatabase();
@@ -206,5 +221,4 @@ public class IncomeDatabaseHelper extends SQLiteOpenHelper {
         }
         return cursor;
     }
-
 }

@@ -2,9 +2,9 @@ package de.xyzerstudios.moneymanager.utils.adapters.items;
 
 public class ShowCategoryItem {
 
-    private int categoryId;
-    private int indicatorColor;
-    private String name;
+    private final int categoryId;
+    private final int indicatorColor;
+    private final String name;
 
     public ShowCategoryItem(int categoryId, int indicatorColor, String name) {
         this.categoryId = categoryId;

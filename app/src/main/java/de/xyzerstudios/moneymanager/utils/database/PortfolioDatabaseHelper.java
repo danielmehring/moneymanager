@@ -157,4 +157,15 @@ public class PortfolioDatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    public Cursor readPortfolioByIdMonthAndYear(int portfolioId, int month, int year) {
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_ID + "=" + portfolioId;
+        SQLiteDatabase database = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (database != null) {
+            cursor = database.rawQuery(query, null);
+        }
+        return cursor;
+    }
+
 }

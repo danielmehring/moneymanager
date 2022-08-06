@@ -65,9 +65,9 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
         holder.cardView.setBackground(background);
 
         if (balanceItem.getSaldo() >= 0) {
-            holder.saldo.setText("+ " + utils.formatCurrency(balanceItem.getSaldo()) + " €");
+            holder.saldo.setText("+ " + utils.formatCurrency(balanceItem.getSaldo()) );
         } else {
-            holder.saldo.setText("- " + utils.formatCurrency(balanceItem.getSaldoTimesMinusOne()) + " €");
+            holder.saldo.setText("- " + utils.formatCurrency(balanceItem.getSaldoTimesMinusOne()) );
         }
         holder.title.setText(balanceItem.getTitle());
         holder.edit.setOnClickListener(new View.OnClickListener() {

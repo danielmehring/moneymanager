@@ -19,7 +19,7 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/closeActivityAddExpense"
+            android:id="@+id/closeActivityEditIncome"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginLeft="10dp"
@@ -41,7 +41,7 @@
             android:fontFamily="@font/poppins_medium"
             android:textColor="@color/ui_black"
             android:textSize="20dp"
-            android:text="@string/add_expense"/>
+            android:text="@string/edit_revenue"/>
 
         <Space
             android:layout_width="fill_parent"
@@ -49,7 +49,7 @@
             android:layout_weight="1"/>
 
         <ImageView
-            android:id="@+id/addExpense"
+            android:id="@+id/editIncome"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginRight="10dp"
@@ -82,7 +82,7 @@
             android:layout_height="5dp"/>
 
         <EditText
-            android:id="@+id/editTextExpenseName"
+            android:id="@+id/editTextIncomeNameEdit"
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:paddingStart="12dp"
@@ -122,7 +122,7 @@
             android:layout_height="35dp">
 
             <EditText
-                android:id="@+id/editTextExpenseAmount"
+                android:id="@+id/editTextIncomeAmountEdit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="1dp"
@@ -134,7 +134,7 @@
                 android:textCursorDrawable="@null" />
 
             <TextView
-                android:id="@+id/textViewExpenseAmount"
+                android:id="@+id/textViewIncomeAmountEdit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingTop="3dp"
@@ -145,14 +145,7 @@
                 android:text="0" />
 
 
-
-
-
         </FrameLayout>
-
-
-
-
 
     </LinearLayout>
 
@@ -177,7 +170,7 @@
             android:layout_height="5dp"/>
 
         <FrameLayout
-            android:id="@+id/chooserExpenseTimestamp"
+            android:id="@+id/chooserIncomeTimestampEdit"
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:clickable="true"
@@ -187,7 +180,7 @@
 
 
             <TextView
-                android:id="@+id/textViewExpenseTimestamp"
+                android:id="@+id/textViewIncomeTimestampEdit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingTop="3dp"
@@ -232,7 +225,7 @@
             android:layout_height="5dp"/>
 
         <FrameLayout
-            android:id="@+id/chooserExpenseCategory"
+            android:id="@+id/chooserIncomeCategoryEdit"
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:clickable="true"
@@ -242,7 +235,7 @@
 
 
             <TextView
-                android:id="@+id/textViewExpenseCategory"
+                android:id="@+id/textViewIncomeCategoryEdit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingTop="3dp"
@@ -253,7 +246,7 @@
                 android:textSize="20dp" />
 
             <LinearLayout
-                android:id="@+id/displayCategoryColor"
+                android:id="@+id/displayCategoryColorEditIncome"
                 android:orientation="horizontal"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
@@ -270,57 +263,42 @@
         </FrameLayout>
     </LinearLayout>
 
+
     <Space
         android:layout_width="match_parent"
-        android:layout_height="20dp" />
+        android:layout_height="fill_parent"
+        android:layout_weight="1" />
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_medium"
-            android:textColor="@color/ui_text_faded"
-            android:textSize="15dp"
-            android:text="@string/payment_method" />
+        android:gravity="right"
+        android:orientation="horizontal">
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="5dp"/>
-
-        <FrameLayout
-            android:id="@+id/chooserExpensePaymentMethod"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
+        <LinearLayout
+            android:id="@+id/deleteIncomeEntry"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_marginBottom="30dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:elevation="2dp"
             android:clickable="true"
-            android:background="@drawable/invisible"
-            android:foreground="?android:attr/selectableItemBackground">
-
-
-
-            <TextView
-                android:id="@+id/textViewExpensePaymentMethod"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingTop="3dp"
-                android:paddingLeft="12dp"
-                android:background="@drawable/edit_text_custom_bg"
-                android:textSize="20dp" />
+            android:foreground="?android:attr/selectableItemBackground"
+            android:background="@drawable/circle"
+            android:backgroundTint="@color/ui_lime_red">
 
             <ImageView
-                android:layout_width="28dp"
-                android:layout_height="32dp"
-                android:layout_gravity="right"
-                android:layout_marginTop="2dp"
-                android:layout_marginRight="6dp"
-                android:src="@drawable/ic_expand_more"
-                app:tint="@color/ui_text_faded" />
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_delete_list"
+                app:tint="@color/ui_white" />
 
 
+        </LinearLayout>
 
-        </FrameLayout>
     </LinearLayout>
+
 
 </LinearLayout>

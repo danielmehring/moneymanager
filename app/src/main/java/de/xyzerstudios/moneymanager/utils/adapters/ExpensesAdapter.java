@@ -49,7 +49,7 @@ public class ExpensesAdapter extends RecyclerView.Adapter<ExpensesAdapter.ViewHo
         ExpensesItem expensesItem = expensesItems.get(position);
         Utils utils = new Utils();
         holder.expensesProductname.setText(expensesItem.getName());
-        holder.expensesPrice.setText(utils.formatCurrency(expensesItem.getAmount()) + " €");
+        holder.expensesPrice.setText(utils.formatCurrency(expensesItem.getAmount()) );
         holder.expensesDate.setText(expensesItem.getDate());
         holder.expensesCategory.setText(expensesItem.getCategory());
         holder.expensesCardView.setOnClickListener(new View.OnClickListener() {

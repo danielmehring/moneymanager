@@ -3,14 +3,8 @@ package de.xyzerstudios.moneymanager.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,21 +12,26 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.jaredrummler.android.colorpicker.ColorPickerDialog;
+import com.whiteelephant.monthpicker.MonthPickerDialog;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import de.xyzerstudios.moneymanager.R;
-import de.xyzerstudios.moneymanager.activities.DatabaseTestActivity;
 import de.xyzerstudios.moneymanager.activities.ExpensesActivity;
 import de.xyzerstudios.moneymanager.activities.IncomeActivity;
+import de.xyzerstudios.moneymanager.activities.add.AddExpenseActivity;
+import de.xyzerstudios.moneymanager.activities.add.AddIncomeActivity;
 import de.xyzerstudios.moneymanager.asynctasks.LoadPieChartsAsyncTask;
-import de.xyzerstudios.moneymanager.asynctasks.LoadPortfolioAsyncTask;
 import de.xyzerstudios.moneymanager.utils.Utils;
 import de.xyzerstudios.moneymanager.utils.charting.CategoryAdapter;
 import de.xyzerstudios.moneymanager.utils.charting.CategoryItem;
@@ -47,7 +46,13 @@ public class DashboardFragment extends Fragment {
     public TextView portfolioNameDisplay, dashboardSaldo, dashboardIncome, dashboardExpenses;
     public TextView centerTextIncomeChart, centerTextExpensesChart;
 
-    public LinearLayout buttonShowAllExpenses, buttonShowAllIncome;
+    public LinearLayout buttonShowAllExpenses, buttonShowAllIncome, linearLayoutExpenses, linearLayoutIncome;
+
+    public LinearLayout buttonCurrentMonth, buttonAddExpense, buttonAddRevenue;
+    public TextView textViewCurrentMonth;
+
+    public int currentMonth = 1;
+    public int currentYear = 2022;
 
     public DashboardFragment() {
 
@@ -84,12 +89,35 @@ public class DashboardFragment extends Fragment {
 
         buttonShowAllExpenses = view.findViewById(R.id.buttonShowAllExpenses);
         buttonShowAllIncome = view.findViewById(R.id.buttonShowAllIncome);
+        linearLayoutExpenses = view.findViewById(R.id.linearLayoutExpenses);
+        linearLayoutIncome = view.findViewById(R.id.linearLayoutIncome);
+
+        buttonCurrentMonth = view.findViewById(R.id.buttonCurrentMonth);
+        textViewCurrentMonth = view.findViewById(R.id.textViewCurrentMonth);
+        buttonAddExpense = view.findViewById(R.id.buttonAddExpenseDashboard);
+        buttonAddRevenue = view.findViewById(R.id.buttonAddRevenueDashboard);
 
         Button testButton = view.findViewById(R.id.testButton);
         testButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+            }
+        });
+
+        buttonAddRevenue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), AddIncomeActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        buttonAddExpense.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), AddExpenseActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -109,6 +137,57 @@ public class DashboardFragment extends Fragment {
                 getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
+        linearLayoutExpenses.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ExpensesActivity.class);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            }
+        });
+        linearLayoutIncome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), IncomeActivity.class);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            }
+        });
+
+        Date date = new Date();
+        Calendar calendar = Calendar.getInstance();
+        currentMonth = date.getMonth() + 1;
+        currentYear = Integer.valueOf(Utils.yearDateFormat.format(date));
+
+        textViewCurrentMonth.setText(getMonth(currentMonth));
+        buttonCurrentMonth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MonthPickerDialog.Builder builder = new MonthPickerDialog.Builder(getActivity(), new MonthPickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(int selectedMonth, int selectedYear) {
+                        int formattedSelectedMonth = selectedMonth + 1;
+                        currentMonth = formattedSelectedMonth;
+                        currentYear = selectedYear;
+                        String suffixString = "";
+                        if (Integer.valueOf(Utils.yearDateFormat.format(date)) != currentYear) {
+                            suffixString = ", " + currentYear;
+                        }
+                        textViewCurrentMonth.setText(getMonth(formattedSelectedMonth) + suffixString);
+                        loadPieChartsAndPortfolio();
+                    }
+                }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH));
+
+                int currentYear = Integer.valueOf(Utils.yearDateFormat.format(date));
+
+                builder.setActivatedMonth(currentMonth - 1)
+                        .setMinYear(currentYear - 5)
+                        .setActivatedYear(currentYear)
+                        .setMaxYear(currentYear + 5)
+                        .build()
+                        .show();
+            }
+        });
 
         setupPieCharts();
         loadIncomePieChartData();
@@ -121,13 +200,55 @@ public class DashboardFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        loadPieCharts();
+        loadPieChartsAndPortfolio();
     }
 
-    private void loadPieCharts() {
-        Date date = new Date();
+    private String getMonth(int selectedMonth) {
+        String month = "";
+        switch (selectedMonth) {
+            case 1:
+                month = getString(R.string.january);
+                break;
+            case 2:
+                month = getString(R.string.february);
+                break;
+            case 3:
+                month = getString(R.string.march);
+                break;
+            case 4:
+                month = getString(R.string.april);
+                break;
+            case 5:
+                month = getString(R.string.may);
+                break;
+            case 6:
+                month = getString(R.string.june);
+                break;
+            case 7:
+                month = getString(R.string.july);
+                break;
+            case 8:
+                month = getString(R.string.august);
+                break;
+            case 9:
+                month = getString(R.string.september);
+                break;
+            case 10:
+                month = getString(R.string.october);
+                break;
+            case 11:
+                month = getString(R.string.november);
+                break;
+            case 12:
+                month = getString(R.string.december);
+                break;
+        }
+        return month;
+    }
+
+    private void loadPieChartsAndPortfolio() {
         new LoadPieChartsAsyncTask(getActivity(), this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, loadPortfolioIdFromSharedPrefs(),
-                Integer.parseInt(Utils.monthDateFormat.format(date)), Integer.parseInt(Utils.yearDateFormat.format(date)));
+                currentMonth, currentYear);
     }
 
     private int loadPortfolioIdFromSharedPrefs() {

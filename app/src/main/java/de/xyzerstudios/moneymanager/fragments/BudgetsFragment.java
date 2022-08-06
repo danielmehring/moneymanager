@@ -1,12 +1,11 @@
 package de.xyzerstudios.moneymanager.fragments;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.fragment.app.Fragment;
 
 import de.xyzerstudios.moneymanager.R;
 
@@ -14,9 +13,7 @@ import de.xyzerstudios.moneymanager.R;
 public class BudgetsFragment extends Fragment {
 
     public BudgetsFragment() {
-        // Required empty public constructor
     }
-
 
     public static BudgetsFragment newInstance() {
         BudgetsFragment fragment = new BudgetsFragment();

@@ -145,7 +145,7 @@ public class EditExpenseActivity extends AppCompatActivity implements DatePicker
                             amount = amount * 10 + 9;
                             break;
                     }
-                    textViewExpenseAmount.setText(utils.formatCurrency(amount) + " €");
+                    textViewExpenseAmount.setText(utils.formatCurrency(amount) );
                 }
                 return false;
             }
@@ -273,7 +273,7 @@ public class EditExpenseActivity extends AppCompatActivity implements DatePicker
                 paymentMethod = cursor.getString(8);
                 editTextExpenseName.setText(cursor.getString(2));
                 textViewExpenseTimestamp.setText(Utils.timestampDateDisplayFormat.format(date));
-                textViewExpenseAmount.setText(utils.formatCurrency(amount) + " €");
+                textViewExpenseAmount.setText(utils.formatCurrency(amount) );
                 updatePaymentMethodTextView();
             } catch (Exception e) {
                 e.printStackTrace();
