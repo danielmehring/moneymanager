@@ -9,7 +9,6 @@
     android:paddingBottom="25dp"
     android:background="@drawable/bottom_sheet_dialog_background">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
