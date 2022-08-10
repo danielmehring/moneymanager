@@ -268,6 +268,24 @@ public class ExpensesDatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    public Cursor sumEntriesOfCategory(int portfolioId, int categoryId, int month, int year) {
+        String query = "SELECT Sum(" + COLUMN_AMOUNT + ") as sum_cat" +
+                " FROM " + TABLE_NAME +
+                " WHERE " + COLUMN_PORTFOLIO_ID + "=" + portfolioId +
+                " AND " + COLUMN_CATEGORY_ID + "=" + categoryId +
+                " AND " + COLUMN_MONTH + "=" + month +
+                " AND " + COLUMN_YEAR + "=" + year +
+                " GROUP BY " + COLUMN_CATEGORY_ID;
+
+        SQLiteDatabase database = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (database != null) {
+            cursor = database.rawQuery(query, null);
+        }
+        return cursor;
+    }
+
     public Cursor customQuery(String query) {
         SQLiteDatabase database = this.getReadableDatabase();
 

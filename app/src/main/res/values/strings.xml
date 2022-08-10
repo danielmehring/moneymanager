@@ -41,7 +41,7 @@
     <string name="descriptopn">Beschreibung</string>
     <string name="please_enter_a_name">Bitte gebe einen Namen an</string>
     <string name="only_letters_numbers">Bitte nur Buchstaben und Zahlen eingeben</string>
-    <string name="delete_confirmation">Sind Sie sich sicher, dass Sie den Eintrag löschen wollen?</string>
+    <string name="delete_confirmation">Sind Sie sich sicher, dass Sie diesen Eintrag löschen möchten?</string>
     <string name="cannot_be_deleted">Dieser Eintrag kann nicht gelöscht werden</string>
 
     <string name="category_food">Essen</string>
@@ -108,6 +108,9 @@
     <string name="credit_card">Kreditkarte</string>
     <string name="ec_card">EC-Karte</string>
     <string name="cash">Bargeld</string>
+    <string name="bank_transfer">Überweisung</string>
+    <string name="online_payment">Online Bezahlung</string>
+
     <string name="remove_filter">Filter entfernen</string>
     <string name="add_category">Kategorie hinzufügen</string>
     <string name="color">Farbe</string>
@@ -115,5 +118,12 @@
     <string name="category_needs_to_be_unique">Es existiert bereits eine Kategorie unter diesem Namen</string>
     <string name="edit_category">Kategorie bearbeiten</string>
     <string name="edit_revenue">Einnahme bearbeiten</string>
+    <string name="amount_left">Verbleibend</string>
+    <string name="amount_exceeded">Überschritten</string>
+    <string name="amount_limit">Limit</string>
+    <string name="amount_spent">Ausgegeben</string>
+    <string name="add_budget">Budget hinzufügen</string>
+    <string name="cant_add_two_budgets_same_cat">Man kann nur ein Budget pro Kategorie festlegen</string>
+    <string name="edit_budget">Budget bearbeiten</string>
 
 </resources>

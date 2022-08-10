@@ -29,12 +29,9 @@ import java.util.Arrays;
 import de.xyzerstudios.moneymanager.R;
 import de.xyzerstudios.moneymanager.fragments.AboutUsFragment;
 import de.xyzerstudios.moneymanager.fragments.BalancesFragment;
-import de.xyzerstudios.moneymanager.fragments.BudgetsFragment;
 import de.xyzerstudios.moneymanager.fragments.DashboardFragment;
 import de.xyzerstudios.moneymanager.fragments.DonateFragment;
-import de.xyzerstudios.moneymanager.fragments.PortfoliosFragment;
 import de.xyzerstudios.moneymanager.fragments.PremiumFragment;
-import de.xyzerstudios.moneymanager.utils.PublicValues;
 import de.xyzerstudios.moneymanager.utils.Utils;
 import de.xyzerstudios.moneymanager.utils.drawermenu.DrawerAdapter;
 import de.xyzerstudios.moneymanager.utils.drawermenu.HeadingItem;
@@ -261,9 +258,10 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
                 slidingRootNav.closeMenu();
                 break;
             case POS_BUDGET:
-                Fragment budgetsFragment = new BudgetsFragment();
-                showFragment(budgetsFragment);
                 slidingRootNav.closeMenu();
+                Intent intent2 = new Intent(HomeActivity.this, BudgetsActivity.class);
+                startActivity(intent2);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 break;
             case POS_PREMIUM:
                 Fragment premiumFragment = new PremiumFragment();

@@ -27,5 +27,6 @@
     <color name="ui_white_semitranslucent_text">#B3FFFFFF</color>
     <color name="ui_white_semi_translucent">#B3FFFFFF</color>
     <color name="ui_black_translucent">#1A000000</color>
+    <color name="ui_black_strongly_translucent">#0D000000</color>
     <color name="ui_black_semi_translucent">#B3000000</color>
 </resources>

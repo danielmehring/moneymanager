@@ -190,7 +190,7 @@ public class AddIncomeActivity extends AppCompatActivity implements DatePickerDi
                             amount = amount * 10 + 9;
                             break;
                     }
-                    textViewIncomeAmount.setText(utils.formatCurrency(amount) );
+                    textViewIncomeAmount.setText(utils.formatCurrency(amount));
                 }
                 return false;
             }

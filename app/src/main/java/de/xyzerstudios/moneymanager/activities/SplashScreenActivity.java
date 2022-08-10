@@ -23,6 +23,7 @@ import de.xyzerstudios.moneymanager.R;
 import de.xyzerstudios.moneymanager.utils.Utils;
 import de.xyzerstudios.moneymanager.utils.database.BalanceDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.database.BalanceTurnoversDatabaseHelper;
+import de.xyzerstudios.moneymanager.utils.database.BudgetsDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.database.Categories;
 import de.xyzerstudios.moneymanager.utils.database.CategoriesDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.database.ExpensesDatabaseHelper;
@@ -40,6 +41,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     private IncomeDatabaseHelper incomeDatabase;
     private PortfolioDatabaseHelper portfolioDatabase;
     private CategoriesDatabaseHelper categoriesDatabase;
+    private BudgetsDatabaseHelper budgetsDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +61,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         incomeDatabase = new IncomeDatabaseHelper(this);
         portfolioDatabase = new PortfolioDatabaseHelper(this);
         categoriesDatabase = new CategoriesDatabaseHelper(this, this);
+        budgetsDatabase = new BudgetsDatabaseHelper(this);
 
         balanceDatabase.getReadableDatabase();
         balanceTurnoversDatabase.getReadableDatabase();
@@ -66,6 +69,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         incomeDatabase.getReadableDatabase();
         portfolioDatabase.getReadableDatabase();
         categoriesDatabase.getReadableDatabase();
+        budgetsDatabase.getReadableDatabase();
     }
 
     private void manipulateGuiObjects() {

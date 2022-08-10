@@ -3,6 +3,7 @@ package de.xyzerstudios.moneymanager.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
@@ -27,6 +29,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import de.xyzerstudios.moneymanager.R;
+import de.xyzerstudios.moneymanager.activities.BudgetsActivity;
 import de.xyzerstudios.moneymanager.activities.ExpensesActivity;
 import de.xyzerstudios.moneymanager.activities.IncomeActivity;
 import de.xyzerstudios.moneymanager.activities.add.AddExpenseActivity;
@@ -35,6 +38,7 @@ import de.xyzerstudios.moneymanager.asynctasks.LoadPieChartsAsyncTask;
 import de.xyzerstudios.moneymanager.utils.Utils;
 import de.xyzerstudios.moneymanager.utils.charting.CategoryAdapter;
 import de.xyzerstudios.moneymanager.utils.charting.CategoryItem;
+import de.xyzerstudios.moneymanager.utils.database.BudgetsDatabaseHelper;
 
 
 public class DashboardFragment extends Fragment {
@@ -45,6 +49,8 @@ public class DashboardFragment extends Fragment {
 
     public TextView portfolioNameDisplay, dashboardSaldo, dashboardIncome, dashboardExpenses;
     public TextView centerTextIncomeChart, centerTextExpensesChart;
+
+    public SwipeRefreshLayout dashboardSwipeRefresh;
 
     public LinearLayout buttonShowAllExpenses, buttonShowAllIncome, linearLayoutExpenses, linearLayoutIncome;
 
@@ -97,11 +103,20 @@ public class DashboardFragment extends Fragment {
         buttonAddExpense = view.findViewById(R.id.buttonAddExpenseDashboard);
         buttonAddRevenue = view.findViewById(R.id.buttonAddRevenueDashboard);
 
-        Button testButton = view.findViewById(R.id.testButton);
-        testButton.setOnClickListener(new View.OnClickListener() {
+        dashboardSwipeRefresh = view.findViewById(R.id.dashboardSwipeRefresh);
+
+        view.findViewById(R.id.testButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+            }
+        });
+
+        dashboardSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadPieChartsAndPortfolio();
+                dashboardSwipeRefresh.setRefreshing(false);
             }
         });
 
@@ -356,7 +371,7 @@ public class DashboardFragment extends Fragment {
 
     private void inflateCategoriesIncome() {
         ArrayList<CategoryItem> categoryItems = new ArrayList<>();
-        categoryItems.add(new CategoryItem(getResources().getColor(R.color.ui_lime_green, null), getString(R.string.category), 100));
+        categoryItems.add(new CategoryItem(getResources().getColor(R.color.ui_lime_green, null), getString(R.string.category), 100, false));
 
         incomeRecyclerView.setHasFixedSize(false);
         incomeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -367,7 +382,7 @@ public class DashboardFragment extends Fragment {
 
     private void inflateCategoriesExpenses() {
         ArrayList<CategoryItem> categoryItems = new ArrayList<>();
-        categoryItems.add(new CategoryItem(getResources().getColor(R.color.ui_lime_green, null), getString(R.string.category), 100));
+        categoryItems.add(new CategoryItem(getResources().getColor(R.color.ui_lime_green, null), getString(R.string.category), 100, false));
 
         expensesRecyclerView.setHasFixedSize(false);
         expensesRecyclerViewAdapter = new CategoryAdapter(getContext(), categoryItems);

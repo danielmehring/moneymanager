@@ -7,500 +7,506 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.DashboardFragment">
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/dashboardSwipeRefresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/ui_light_background"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:paddingHorizontal="15dp">
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="15dp" />
+            android:background="@color/ui_light_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/portfolioNameDisplay"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:elevation="1dp"
-                    android:fontFamily="@font/poppins_semibold"
-                    android:text="Portfolio 1"
-                    android:textColor="@color/ui_black"
-                    android:textSize="28dp" />
-
-                <ImageButton
-                    android:id="@+id/changePortfolio"
-                    android:layout_width="27dp"
-                    android:layout_height="27dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginBottom="4dp"
-                    android:background="@drawable/image_button"
-                    android:clickable="true"
-                    android:elevation="1dp"
-                    android:visibility="gone"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    android:src="@drawable/ic_change_portfolio"
-                    app:tint="@color/ui_light_background" />
-            </LinearLayout>
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="10dp" />
-
-            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="2dp"
-                android:backgroundTint="@color/ui_lime_green"
-                app:cardCornerRadius="15dp">
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingHorizontal="15dp">
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp" />
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/portfolioNameDisplay"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:paddingLeft="15dp">
+                        android:layout_height="wrap_content"
+                        android:elevation="1dp"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="Portfolio 1"
+                        android:textColor="@color/ui_black"
+                        android:textSize="28dp" />
 
-                        <Space
-                            android:layout_width="0dp"
-                            android:layout_height="20dp" />
+                    <ImageButton
+                        android:id="@+id/changePortfolio"
+                        android:layout_width="27dp"
+                        android:layout_height="27dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginBottom="4dp"
+                        android:background="@drawable/image_button"
+                        android:clickable="true"
+                        android:elevation="1dp"
+                        android:visibility="gone"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:src="@drawable/ic_change_portfolio"
+                        app:tint="@color/ui_light_background" />
+                </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/dashboardSaldo"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_medium"
-                            android:text="+ 310,55 €"
-                            android:textColor="@color/ui_white"
-                            android:textSize="28dp" />
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="10dp" />
 
-                        <Space
-                            android:layout_width="0dp"
-                            android:layout_height="10dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:text="@string/income"
-                            android:textColor="@color/ui_white_semitranslucent_text"
-                            android:textSize="15dp" />
-
-                        <TextView
-                            android:id="@+id/dashboardIncome"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_regular"
-                            android:text="+ 1.105,46 €"
-                            android:textColor="@color/ui_white"
-                            android:textSize="15dp" />
-
-                        <Space
-                            android:layout_width="0dp"
-                            android:layout_height="5dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:text="@string/expenses"
-                            android:textColor="@color/ui_white_semitranslucent_text"
-                            android:textSize="15dp" />
-
-                        <TextView
-                            android:id="@+id/dashboardExpenses"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="10dp"
-                            android:fontFamily="@font/poppins_regular"
-                            android:text="- 805,98 €"
-                            android:textColor="@color/ui_white"
-                            android:textSize="15dp" />
-
-                    </LinearLayout>
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:backgroundTint="@color/ui_lime_green"
+                    app:cardCornerRadius="15dp">
 
                     <LinearLayout
-                        android:layout_width="fill_parent"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:orientation="horizontal">
 
                         <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="right"
-                            android:orientation="vertical">
-
-                            <LinearLayout
-                                android:layout_width="80dp"
-                                android:layout_height="80dp"
-                                android:background="@drawable/portfolio_circle_watermark" />
-                        </LinearLayout>
-
-                        <Space
-                            android:layout_width="match_parent"
-                            android:layout_height="fill_parent"
-                            android:layout_weight="1" />
-
-                        <LinearLayout
-                            android:id="@+id/buttonCurrentMonth"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="right"
-                            android:layout_marginRight="15dp"
-                            android:layout_marginBottom="12dp"
-                            android:background="@drawable/button_translucent_white"
-                            android:clickable="true"
-                            android:foreground="?android:attr/selectableItemBackground"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:paddingLeft="15dp">
+
+                            <Space
+                                android:layout_width="0dp"
+                                android:layout_height="20dp" />
 
                             <TextView
-                                android:id="@+id/textViewCurrentMonth"
+                                android:id="@+id/dashboardSaldo"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins_medium"
-                                android:paddingLeft="6dp"
-                                android:paddingTop="3dp"
-                                android:paddingRight="4dp"
-                                android:text="Oktober"
+                                android:text="+ 310,55 €"
                                 android:textColor="@color/ui_white"
-                                android:textSize="17dp" />
+                                android:textSize="28dp" />
 
-                            <ImageView
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:layout_marginRight="4dp"
-                                android:src="@drawable/ic_arrows_up_down"
-                                app:tint="@color/ui_light_background" />
+                            <Space
+                                android:layout_width="0dp"
+                                android:layout_height="10dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="@string/income"
+                                android:textColor="@color/ui_white_semitranslucent_text"
+                                android:textSize="15dp" />
+
+                            <TextView
+                                android:id="@+id/dashboardIncome"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_regular"
+                                android:text="+ 1.105,46 €"
+                                android:textColor="@color/ui_white"
+                                android:textSize="15dp" />
+
+                            <Space
+                                android:layout_width="0dp"
+                                android:layout_height="5dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="@string/expenses"
+                                android:textColor="@color/ui_white_semitranslucent_text"
+                                android:textSize="15dp" />
+
+                            <TextView
+                                android:id="@+id/dashboardExpenses"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10dp"
+                                android:fontFamily="@font/poppins_regular"
+                                android:text="- 805,98 €"
+                                android:textColor="@color/ui_white"
+                                android:textSize="15dp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="right"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="80dp"
+                                    android:layout_height="80dp"
+                                    android:background="@drawable/portfolio_circle_watermark" />
+                            </LinearLayout>
+
+                            <Space
+                                android:layout_width="match_parent"
+                                android:layout_height="fill_parent"
+                                android:layout_weight="1" />
+
+                            <LinearLayout
+                                android:id="@+id/buttonCurrentMonth"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="right"
+                                android:layout_marginRight="15dp"
+                                android:layout_marginBottom="12dp"
+                                android:background="@drawable/button_translucent_white"
+                                android:clickable="true"
+                                android:foreground="?android:attr/selectableItemBackground"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/textViewCurrentMonth"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins_medium"
+                                    android:paddingLeft="6dp"
+                                    android:paddingTop="3dp"
+                                    android:paddingRight="4dp"
+                                    android:text="Oktober"
+                                    android:textColor="@color/ui_white"
+                                    android:textSize="17dp" />
+
+                                <ImageView
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    android:layout_marginRight="4dp"
+                                    android:src="@drawable/ic_arrows_up_down"
+                                    app:tint="@color/ui_light_background" />
+                            </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="15dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:id="@+id/buttonAddExpenseDashboard"
-                    android:layout_width="fill_parent"
-                    android:layout_height="30dp"
-                    android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/light_button"
-                    android:clickable="true"
-                    android:elevation="2dp"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    android:gravity="center"
-                    android:paddingTop="4dp"
-                    android:textColor="@color/ui_icon">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:maxLines="1"
-                        android:ellipsize="end"
-                        android:fontFamily="@font/poppins_medium"
-                        android:text="@string/add_expense"
-                        android:textAlignment="center"
-                        android:textColor="@color/ui_icon"
-                        android:textSize="12dp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/buttonAddRevenueDashboard"
-                    android:layout_width="fill_parent"
-                    android:layout_height="30dp"
-                    android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/light_button"
-                    android:clickable="true"
-                    android:elevation="2dp"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    android:gravity="center"
-                    android:paddingTop="4dp"
-                    android:textColor="@color/ui_icon">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:maxLines="1"
-                        android:ellipsize="end"
-                        android:fontFamily="@font/poppins_medium"
-                        android:text="@string/add_revenue"
-                        android:textAlignment="center"
-                        android:textColor="@color/ui_icon"
-                        android:textSize="12dp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/button_add_balance_to_portfolio"
-                    android:layout_width="35dp"
-                    android:layout_height="30dp"
-                    android:layout_margin="5dp"
-                    android:background="@drawable/light_button"
-                    android:clickable="true"
-                    android:elevation="2dp"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    android:gravity="center">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins_medium"
-                        android:text="..."
-                        android:textAlignment="center"
-                        android:textColor="@color/ui_icon"
-                        android:textSize="12dp" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="30dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:fontFamily="@font/poppins_semibold"
-                    android:text="@string/income"
-                    android:textColor="@color/ui_black"
-                    android:textSize="26dp" />
+                </androidx.cardview.widget.CardView>
 
                 <Space
-                    android:layout_width="fill_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
+                    android:layout_width="match_parent"
+                    android:layout_height="15dp" />
 
                 <LinearLayout
-                    android:id="@+id/buttonShowAllIncome"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="2dp"
-                    android:layout_marginBottom="2dp"
-                    android:background="@drawable/image_button"
-                    android:clickable="true"
-                    android:elevation="2dp"
-                    android:foreground="?android:attr/selectableItemBackground">
+                    android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins_semibold"
-                        android:paddingHorizontal="7dp"
+                    <LinearLayout
+                        android:id="@+id/buttonAddExpenseDashboard"
+                        android:layout_width="fill_parent"
+                        android:layout_height="30dp"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/light_button"
+                        android:clickable="true"
+                        android:elevation="2dp"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:gravity="center"
                         android:paddingTop="4dp"
-                        android:text="Alle anzeigen"
-                        android:textColor="@color/ui_black"
-                        android:textSize="11dp" />
+                        android:textColor="@color/ui_icon">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            android:ellipsize="end"
+                            android:fontFamily="@font/poppins_medium"
+                            android:text="@string/add_expense"
+                            android:textAlignment="center"
+                            android:textColor="@color/ui_icon"
+                            android:textSize="12dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/buttonAddRevenueDashboard"
+                        android:layout_width="fill_parent"
+                        android:layout_height="30dp"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/light_button"
+                        android:clickable="true"
+                        android:elevation="2dp"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:gravity="center"
+                        android:paddingTop="4dp"
+                        android:textColor="@color/ui_icon">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            android:ellipsize="end"
+                            android:fontFamily="@font/poppins_medium"
+                            android:text="@string/add_revenue"
+                            android:textAlignment="center"
+                            android:textColor="@color/ui_icon"
+                            android:textSize="12dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/button_add_balance_to_portfolio"
+                        android:layout_width="35dp"
+                        android:layout_height="30dp"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/light_button"
+                        android:clickable="true"
+                        android:elevation="2dp"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:gravity="center">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_medium"
+                            android:text="..."
+                            android:textAlignment="center"
+                            android:textColor="@color/ui_icon"
+                            android:textSize="12dp" />
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="25dp" />
-
-            <LinearLayout
-                android:id="@+id/linearLayoutIncome"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:orientation="horizontal">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="160dp"
-                    android:layout_height="160dp">
-
-                    <com.github.mikephil.charting.charts.PieChart
-                        android:id="@+id/pieChartIncome"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/centerTextViewIncomeChart"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="20dp"
-                        android:textColor="@color/ui_black"
-                        android:fontFamily="@font/poppins_medium"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="125dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical">
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerViewIncomeCategories"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:paddingVertical="5dp"
-                        android:scrollbars="none" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="35dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:fontFamily="@font/poppins_semibold"
-                    android:text="@string/expenses"
-                    android:textColor="@color/ui_black"
-                    android:textSize="26dp" />
 
                 <Space
-                    android:layout_width="fill_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp" />
 
                 <LinearLayout
-                    android:id="@+id/buttonShowAllExpenses"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="@string/income"
+                        android:textColor="@color/ui_black"
+                        android:textSize="26dp" />
+
+                    <Space
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <LinearLayout
+                        android:id="@+id/buttonShowAllIncome"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="2dp"
+                        android:layout_marginBottom="2dp"
+                        android:background="@drawable/image_button"
+                        android:clickable="true"
+                        android:elevation="2dp"
+                        android:foreground="?android:attr/selectableItemBackground">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_medium"
+                            android:paddingHorizontal="7dp"
+                            android:paddingTop="4dp"
+                            android:text="Alle anzeigen"
+                            android:textColor="@color/ui_black"
+                            android:textSize="11dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp" />
+
+                <LinearLayout
+                    android:id="@+id/linearLayoutIncome"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:orientation="horizontal">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="160dp"
+                        android:layout_height="160dp">
+
+                        <com.github.mikephil.charting.charts.PieChart
+                            android:id="@+id/pieChartIncome"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/centerTextViewIncomeChart"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="20dp"
+                            android:textColor="@color/ui_black"
+                            android:fontFamily="@font/poppins_medium"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="125dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerViewIncomeCategories"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:paddingVertical="5dp"
+                            android:scrollbars="none" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="@string/expenses"
+                        android:textColor="@color/ui_black"
+                        android:textSize="26dp" />
+
+                    <Space
+                        android:layout_width="fill_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <LinearLayout
+                        android:id="@+id/buttonShowAllExpenses"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="2dp"
+                        android:layout_marginBottom="2dp"
+                        android:background="@drawable/image_button"
+                        android:clickable="true"
+                        android:elevation="2dp"
+                        android:foreground="?android:attr/selectableItemBackground">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_medium"
+                            android:paddingHorizontal="7dp"
+                            android:paddingTop="4dp"
+                            android:text="Alle anzeigen"
+                            android:textColor="@color/ui_black"
+                            android:textSize="11dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp" />
+
+                <LinearLayout
+                    android:id="@+id/linearLayoutExpenses"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:orientation="horizontal">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="160dp"
+                        android:layout_height="160dp">
+
+                        <com.github.mikephil.charting.charts.PieChart
+                            android:id="@+id/pieChartExpenses"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/centerTextViewExpensesChart"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="20dp"
+                            android:textColor="@color/ui_black"
+                            android:fontFamily="@font/poppins_medium"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="125dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerViewExpensesCategories"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:paddingVertical="5dp"
+                            android:scrollbars="none" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"/>
+
+                <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="2dp"
-                    android:layout_marginBottom="2dp"
-                    android:background="@drawable/image_button"
-                    android:clickable="true"
-                    android:elevation="2dp"
-                    android:foreground="?android:attr/selectableItemBackground">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins_semibold"
-                        android:paddingHorizontal="7dp"
-                        android:paddingTop="4dp"
-                        android:text="Alle anzeigen"
-                        android:textColor="@color/ui_black"
-                        android:textSize="11dp" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="25dp" />
-
-            <LinearLayout
-                android:id="@+id/linearLayoutExpenses"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:orientation="horizontal">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="160dp"
-                    android:layout_height="160dp">
-
-                    <com.github.mikephil.charting.charts.PieChart
-                        android:id="@+id/pieChartExpenses"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/centerTextViewExpensesChart"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="20dp"
-                        android:textColor="@color/ui_black"
-                        android:fontFamily="@font/poppins_medium"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="125dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical">
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerViewExpensesCategories"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:paddingVertical="5dp"
-                        android:scrollbars="none" />
-                </LinearLayout>
+                    android:textColor="@color/ui_black"
+                    android:text="Test Button"
+                    android:visibility="gone"
+                    android:id="@+id/testButton"/>
 
             </LinearLayout>
-            
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="30dp"/>
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/ui_black"
-                android:text="Test Activity"
-                android:visibility="gone"
-                android:id="@+id/testButton"/>
-
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

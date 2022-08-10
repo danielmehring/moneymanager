@@ -67,6 +67,10 @@ public class EditCategoryActivity extends AppCompatActivity implements ColorPick
         deleteCategoryEntry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (categoryId == 9 || categoryId == 38) {
+                    Toast.makeText(EditCategoryActivity.this, getString(R.string.cannot_be_deleted), Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 AlertDialog.Builder builder = new AlertDialog.Builder(EditCategoryActivity.this);
                 builder.setMessage(getString(R.string.delete_confirmation))
                         .setCancelable(false)

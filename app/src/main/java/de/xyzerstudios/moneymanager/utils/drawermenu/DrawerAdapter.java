@@ -76,7 +76,7 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
             }
         }
 
-        if(position == 2)
+        if (position == 2 || position == 4)
             newChecked.setChecked(false);
         else
             newChecked.setChecked(true);

@@ -14,6 +14,7 @@ import de.xyzerstudios.moneymanager.R;
 import de.xyzerstudios.moneymanager.fragments.DashboardFragment;
 import de.xyzerstudios.moneymanager.utils.Utils;
 import de.xyzerstudios.moneymanager.utils.charting.CategoryItem;
+import de.xyzerstudios.moneymanager.utils.database.BudgetsDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.database.CategoriesDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.database.ExpensesDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.database.IncomeDatabaseHelper;
@@ -70,16 +71,16 @@ public class LoadPieChartsAsyncTask extends AsyncTask<Integer, ArrayList<Categor
         boolean executeIncome = true;
 
 
-        if (cursorSumTotalExpenses.getCount() == 0 ||cursorSumCategoriesExpenses.getCount() == 0) {
+        if (cursorSumTotalExpenses.getCount() == 0 || cursorSumCategoriesExpenses.getCount() == 0) {
             executeExpenses = false;
             categoryItemsExpenses.add(new CategoryItem(activity.getColor(R.color.ui_lime_green),
-                    activity.getString(R.string.category), 100));
+                    activity.getString(R.string.category), 100, false));
         }
 
         if (cursorSumTotalIncome.getCount() == 0 ||cursorSumCategoriesIncome.getCount() == 0) {
             executeIncome = false;
             categoryItemsIncome.add(new CategoryItem(activity.getColor(R.color.ui_lime_green),
-                    activity.getString(R.string.category), 100));
+                    activity.getString(R.string.category), 100, false));
         }
 
         if (executeExpenses) {
@@ -91,6 +92,7 @@ public class LoadPieChartsAsyncTask extends AsyncTask<Integer, ArrayList<Categor
             while (cursorSumCategoriesExpenses.moveToNext()) {
                 int categoryId = cursorSumCategoriesExpenses.getInt(1);
                 CategoriesDatabaseHelper categoriesDatabaseHelper = new CategoriesDatabaseHelper(activity, activity);
+
                 Cursor cursor = categoriesDatabaseHelper.readCategoryById(categoryId);
                 int indicatorColor = 0;
                 String categoryText = "";
@@ -99,8 +101,18 @@ public class LoadPieChartsAsyncTask extends AsyncTask<Integer, ArrayList<Categor
                     categoryText = cursor.getString(1);
                 }
 
+                BudgetsDatabaseHelper budgetsDatabaseHelper = new BudgetsDatabaseHelper(activity);
+                int amountLimit = 0;
+                boolean isBudgetExceeded = false;
+                Cursor cursorBudgets = budgetsDatabaseHelper.readEntriesByCategoryId(categoryId);
+                while (cursorBudgets.moveToNext()) {
+                    amountLimit = cursorBudgets.getInt(2);
+                }
+                if (sumTotalExpenses > amountLimit && amountLimit != 0)
+                    isBudgetExceeded = true;
+
                 categoryItemsExpenses.add(new CategoryItem(indicatorColor, categoryText,
-                        (int) ((float) cursorSumCategoriesExpenses.getInt(0) / (float) sumTotalExpenses * 100f)));
+                        (int) ((float) cursorSumCategoriesExpenses.getInt(0) / (float) sumTotalExpenses * 100f), isBudgetExceeded));
             }
         }
 
@@ -121,7 +133,7 @@ public class LoadPieChartsAsyncTask extends AsyncTask<Integer, ArrayList<Categor
                 }
 
                 categoryItemsIncome.add(new CategoryItem(indicatorColor, categoryText,
-                        (int) ((float) cursorSumCategoriesIncome.getInt(0) / (float) sumTotalIncome * 100f)));
+                        (int) ((float) cursorSumCategoriesIncome.getInt(0) / (float) sumTotalIncome * 100f), false));
             }
         }
 

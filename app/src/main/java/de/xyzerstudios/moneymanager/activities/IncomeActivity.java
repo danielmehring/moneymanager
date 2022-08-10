@@ -190,8 +190,6 @@ public class IncomeActivity extends AppCompatActivity {
                         IncomeActivity.this.selectedYear = selectedYear;
                         textViewMonthAndYear.setText(getMonth(formattedSelectedMonth) + ", " + selectedYear);
 
-                        Toast.makeText(IncomeActivity.this, selectedMonth + ";" + selectedYear, Toast.LENGTH_SHORT).show();
-
                         new IncomeActivity.incomeAsyncTask(IncomeActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,
                                 formattedSelectedMonth + "", selectedYear + "", filterCategory);
                     }

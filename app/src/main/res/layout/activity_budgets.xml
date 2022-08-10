@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activities.ExpensesActivity">
+    tools:context=".activities.BudgetsActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
@@ -13,7 +13,7 @@
         android:background="@color/ui_white">
 
         <ImageButton
-            android:id="@+id/buttonExpensesGoBack"
+            android:id="@+id/buttonBudgetsGoBack"
             android:layout_width="42dp"
             android:layout_height="42dp"
             android:layout_gravity="left"
@@ -22,10 +22,8 @@
             android:src="@drawable/ic_arrow_back"
             android:backgroundTint="@color/transparent_white"/>
 
-
-
         <LinearLayout
-            android:id="@+id/buttonExpensesFilter"
+            android:id="@+id/buttonBudgetsFilter"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="right"
@@ -42,7 +40,6 @@
                 android:layout_height="25dp"
                 android:src="@drawable/ic_tune" />
         </LinearLayout>
-
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -73,9 +70,29 @@
                     android:elevation="1dp"
                     android:fontFamily="@font/poppins_semibold"
                     android:paddingTop="4dp"
-                    android:text="@string/expenses"
+                    android:text="@string/menu_title_budgets"
                     android:textColor="@color/ui_black"
                     android:textSize="28dp" />
+
+                <Space
+                    android:layout_width="8dp"
+                    android:layout_height="match_parent" />
+
+                <LinearLayout
+                    android:id="@+id/buttonInfoBudgets"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:gravity="center"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:background="@drawable/small_corners"
+                    android:backgroundTint="@color/ui_black_strongly_translucent">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_about_us"
+                        app:tint="@color/ui_black_semi_translucent" />
+                </LinearLayout>
 
                 <Space
                     android:layout_width="fill_parent"
@@ -83,7 +100,7 @@
                     android:layout_weight="1" />
 
                 <LinearLayout
-                    android:id="@+id/buttonAddNewExpense"
+                    android:id="@+id/buttonAddNewBudget"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -117,14 +134,13 @@
 
 
             <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                android:id="@+id/swipeRefreshExpenses"
+                android:id="@+id/swipeRefreshBudgets"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerViewExpenses"
+                    android:id="@+id/recyclerViewBudgets"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"/>
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 

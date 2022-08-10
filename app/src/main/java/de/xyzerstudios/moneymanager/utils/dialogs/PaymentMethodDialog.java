@@ -2,7 +2,6 @@ package de.xyzerstudios.moneymanager.utils.dialogs;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +17,7 @@ import de.xyzerstudios.moneymanager.R;
 
 public class PaymentMethodDialog extends AppCompatDialogFragment {
 
-    private CardView cardViewCreditCard, cardViewEcCard, cardViewCash;
+    private CardView cardViewCreditCard, cardViewEcCard, cardViewCash, cardViewOnlinePayment, cardViewBankTransfer;
     private ImageView closeDialogPaymentMethod;
     private PaymentMethodDialogListener dialogListener;
 
@@ -27,13 +26,15 @@ public class PaymentMethodDialog extends AppCompatDialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater layoutInflater = getActivity().getLayoutInflater();
-        View view = layoutInflater.inflate(R.layout.layout_dialog_payment_method, null);
+        View view = layoutInflater.inflate(R.layout.dialog_payment_method, null);
 
         builder.setView(view);
 
         cardViewCreditCard = view.findViewById(R.id.cardViewButtonCreditCard);
         cardViewEcCard = view.findViewById(R.id.cardViewButtonEC);
         cardViewCash = view.findViewById(R.id.cardViewButtonCash);
+        cardViewOnlinePayment = view.findViewById(R.id.cardViewButtonOnlinePayment);
+        cardViewBankTransfer = view.findViewById(R.id.cardViewButtonBankTransfer);
         closeDialogPaymentMethod = view.findViewById(R.id.closeDialogPaymentMethod);
         
         closeDialogPaymentMethod.setOnClickListener(new View.OnClickListener() {
@@ -63,6 +64,22 @@ public class PaymentMethodDialog extends AppCompatDialogFragment {
             @Override
             public void onClick(View view) {
                 dialogListener.applyPaymentMethod("EC");
+                dismiss();
+            }
+        });
+
+        cardViewBankTransfer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogListener.applyPaymentMethod("BT");
+                dismiss();
+            }
+        });
+
+        cardViewOnlinePayment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogListener.applyPaymentMethod("OP");
                 dismiss();
             }
         });

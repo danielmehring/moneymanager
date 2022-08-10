@@ -142,8 +142,6 @@ public class AddExpenseActivity extends AppCompatActivity implements DatePickerD
                 expensesDatabaseHelper.addNewEntry(loadPortfolioIdFromSharedPrefs(), editTextExpenseName.getText().toString().trim(),
                         amount, Utils.isoDateFormat.format(date), Integer.valueOf(Utils.monthDateFormat.format(date)),
                         Integer.valueOf(Utils.yearDateFormat.format(date)), categoryId, paymentMethod);
-                Log.d("AddExpenseActivity__", loadPortfolioIdFromSharedPrefs() + ";" + editTextExpenseName.getText().toString().trim() + ";" +
-                        amount + ";" + Utils.isoDateFormat.format(date) + ";" + date.getMonth() + ";" + date.getYear() + ";" + categoryId + ";" + paymentMethod);
                 finish();
             }
         });
@@ -204,7 +202,7 @@ public class AddExpenseActivity extends AppCompatActivity implements DatePickerD
                             amount = amount * 10 + 9;
                             break;
                     }
-                    textViewExpenseAmount.setText(utils.formatCurrency(amount) );
+                    textViewExpenseAmount.setText(utils.formatCurrency(amount));
                 }
                 return false;
             }
@@ -224,7 +222,7 @@ public class AddExpenseActivity extends AppCompatActivity implements DatePickerD
         }
 
         textViewExpenseTimestamp.setText(Utils.timestampDateDisplayFormat.format(date));
-        textViewExpenseAmount.setText(utils.formatCurrency(amount) );
+        textViewExpenseAmount.setText(utils.formatCurrency(amount));
     }
 
     private int loadPortfolioIdFromSharedPrefs() {
@@ -260,6 +258,10 @@ public class AddExpenseActivity extends AppCompatActivity implements DatePickerD
             paymentMethodString = getString(R.string.ec_card);
         } else if (paymentMethod.matches("CASH")) {
             paymentMethodString = getString(R.string.cash);
+        } else if (paymentMethod.matches("BT")) {
+            paymentMethodString = getString(R.string.bank_transfer);
+        } else if (paymentMethod.matches("OP")) {
+            paymentMethodString = getString(R.string.online_payment);
         }
         textViewExpensePaymentMethod.setText(paymentMethodString);
     }

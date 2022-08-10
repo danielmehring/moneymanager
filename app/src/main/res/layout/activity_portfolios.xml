@@ -56,6 +56,26 @@
                     android:textSize="28dp" />
 
                 <Space
+                    android:layout_width="8dp"
+                    android:layout_height="match_parent" />
+
+                <LinearLayout
+                    android:id="@+id/buttonInfoPortfolios"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:gravity="center"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:background="@drawable/small_corners"
+                    android:backgroundTint="@color/ui_black_strongly_translucent">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_about_us"
+                        app:tint="@color/ui_black_semi_translucent" />
+                </LinearLayout>
+
+                <Space
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />

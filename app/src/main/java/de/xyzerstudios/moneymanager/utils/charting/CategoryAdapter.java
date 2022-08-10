@@ -44,6 +44,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         holder.categoryIndicator.setBackground(backgroundDrawableIndicator);
         holder.categoryTextView.setText(categoryItem.getCategoryText());
         holder.categoryTextViewPercentage.setText(categoryItem.getCategoryPercentage() + " %");
+        if (categoryItem.isBudgetExceeded()) {
+            holder.categoryTextView.setTextColor(context.getColor(R.color.ui_lime_red));
+            holder.categoryTextViewPercentage.setTextColor(context.getColor(R.color.ui_lime_red));
+        }
     }
 
     @Override

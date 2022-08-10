@@ -18,14 +18,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -33,7 +30,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.whiteelephant.monthpicker.MonthPickerDialog;
 
@@ -239,17 +235,19 @@ public class ExpensesActivity extends AppCompatActivity {
                 dialog.dismiss();
                 AlertDialog builder = new AlertDialog.Builder(ExpensesActivity.this).create();
                 LayoutInflater layoutInflater = ExpensesActivity.this.getLayoutInflater();
-                View view2 = layoutInflater.inflate(R.layout.layout_dialog_payment_method, null);
+                View view2 = layoutInflater.inflate(R.layout.dialog_payment_method, null);
 
                 builder.setView(view2);
 
                 ImageView closeDialogPaymentMethod;
-                CardView cardViewCreditCard, cardViewEcCard, cardViewCash, cardViewButtonRemoveFilter;
+                CardView cardViewCreditCard, cardViewEcCard, cardViewCash, cardViewBankTransfer, cardViewOnlinePayment;
 
                 cardViewCreditCard = view2.findViewById(R.id.cardViewButtonCreditCard);
                 cardViewEcCard = view2.findViewById(R.id.cardViewButtonEC);
                 cardViewCash = view2.findViewById(R.id.cardViewButtonCash);
                 closeDialogPaymentMethod = view2.findViewById(R.id.closeDialogPaymentMethod);
+                cardViewBankTransfer = view2.findViewById(R.id.cardViewButtonBankTransfer);
+                cardViewOnlinePayment = view2.findViewById(R.id.cardViewButtonOnlinePayment);
 
                 closeDialogPaymentMethod.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -288,6 +286,25 @@ public class ExpensesActivity extends AppCompatActivity {
                     }
                 });
 
+                cardViewBankTransfer.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        filterPaymentMethod = "BT";
+                        textViewPaymentMethodExpenses.setText(getString(R.string.bank_transfer));
+                        updatePaymentMethod();
+                        builder.dismiss();
+                    }
+                });
+
+                cardViewOnlinePayment.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        filterPaymentMethod = "OP";
+                        textViewPaymentMethodExpenses.setText(getString(R.string.online_payment));
+                        updatePaymentMethod();
+                        builder.dismiss();
+                    }
+                });
 
                 builder.show();
             }
@@ -386,6 +403,7 @@ public class ExpensesActivity extends AppCompatActivity {
         }
         return month;
     }
+
 
     private class expensesAsyncTask extends AsyncTask<String, ArrayList<ExpensesItem>, String> {
         private final WeakReference<ExpensesActivity> activityWeakReference;
