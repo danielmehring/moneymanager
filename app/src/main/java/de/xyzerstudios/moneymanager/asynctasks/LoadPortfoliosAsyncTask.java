@@ -8,15 +8,17 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 import de.xyzerstudios.moneymanager.activities.PortfoliosActivity;
+import de.xyzerstudios.moneymanager.utils.adapters.PortfolioChooseAdapter;
 import de.xyzerstudios.moneymanager.utils.adapters.items.BalancePortfolioItem;
 import de.xyzerstudios.moneymanager.utils.adapters.PortfolioAdapter;
 import de.xyzerstudios.moneymanager.utils.database.PortfolioDatabaseHelper;
 
 
-public class LoadPortfoliosAsyncTask extends AsyncTask<Integer, String, ArrayList<BalancePortfolioItem>> {
+public class LoadPortfoliosAsyncTask extends AsyncTask<Boolean, String, ArrayList<BalancePortfolioItem>> {
 
     private WeakReference<PortfoliosActivity> activityWeakReference;
     private PortfoliosActivity activity;
+    private boolean choosePortfolio = false;
 
     public LoadPortfoliosAsyncTask(PortfoliosActivity activity) {
         activityWeakReference = new WeakReference<PortfoliosActivity>(activity);
@@ -33,8 +35,9 @@ public class LoadPortfoliosAsyncTask extends AsyncTask<Integer, String, ArrayLis
     }
 
     @Override
-    protected ArrayList<BalancePortfolioItem> doInBackground(Integer... integers) {
+    protected ArrayList<BalancePortfolioItem> doInBackground(Boolean... booleans) {
 
+        choosePortfolio = booleans[0];
 
         //Reading Name and Saldo of Portfolio
         PortfolioDatabaseHelper portfolioDatabaseHelper = new PortfolioDatabaseHelper(activity);
@@ -74,7 +77,10 @@ public class LoadPortfoliosAsyncTask extends AsyncTask<Integer, String, ArrayLis
 
         activity.swipeRefreshPortfolio.setRefreshing(false);
         activity.portfolioItems = a;
-        activity.portfolioAdapter = new PortfolioAdapter(activity, activity, activity.portfolioItems, activity.loadPortfolioIdFromSharedPrefs());
+        if (choosePortfolio)
+            activity.portfolioAdapter = new PortfolioChooseAdapter(activity, activity, activity.portfolioItems);
+        else
+            activity.portfolioAdapter = new PortfolioAdapter(activity, activity, activity.portfolioItems, activity.loadPortfolioIdFromSharedPrefs());
         activity.portfolioRecyclerView.swapAdapter(activity.portfolioAdapter, false);
 
     }

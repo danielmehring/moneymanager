@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activities.PortfoliosActivity">
+    tools:context=".activities.BalancesActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
@@ -17,22 +17,22 @@
             android:layout_width="42dp"
             android:layout_height="42dp"
             android:layout_gravity="left"
+            android:backgroundTint="@color/transparent_white"
             android:clickable="true"
             android:foreground="?android:attr/selectableItemBackground"
-            android:src="@drawable/ic_arrow_back"
-            android:backgroundTint="@color/transparent_white"/>
+            android:src="@drawable/ic_arrow_back" />
 
     </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@color/ui_light_background">
+        android:layout_height="match_parent"
+        android:background="@color/ui_light_background"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingHorizontal="15dp">
 
@@ -52,29 +52,9 @@
                     android:elevation="1dp"
                     android:fontFamily="@font/poppins_semibold"
                     android:paddingTop="4dp"
-                    android:text="@string/menu_title_portfolios"
+                    android:text="@string/menu_title_bilanzen"
                     android:textColor="@color/ui_black"
                     android:textSize="28dp" />
-
-                <Space
-                    android:layout_width="8dp"
-                    android:layout_height="match_parent" />
-
-                <LinearLayout
-                    android:id="@+id/buttonInfoPortfolios"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:gravity="center"
-                    android:clickable="true"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    android:background="@drawable/small_corners"
-                    android:backgroundTint="@color/ui_black_strongly_translucent">
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/ic_about_us"
-                        app:tint="@color/ui_black_semi_translucent" />
-                </LinearLayout>
 
                 <Space
                     android:layout_width="fill_parent"
@@ -82,7 +62,7 @@
                     android:layout_weight="1" />
 
                 <LinearLayout
-                    android:id="@+id/buttonAddNewPortfolioActivity"
+                    android:id="@+id/buttonAddNewBalance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -110,21 +90,22 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="20dp"/>
-
         </LinearLayout>
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swipeRefreshPortfoliosActivity"
+            android:id="@+id/swipeRefreshBalances"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewPortfoliosActivity"
+                android:id="@+id/recyclerViewBalances"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingHorizontal="15dp"/>
+                android:paddingHorizontal="15dp" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     </LinearLayout>

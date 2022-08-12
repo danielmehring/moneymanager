@@ -29,14 +29,17 @@
         <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/drawable/portfolio_circle_watermark.xml" value="0.3135" />
         <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/drawable/selector_button.xml" value="0.1575" />
         <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/drawable/small_corners.xml" value="0.1585" />
+        <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/layout/activity_add_balance.xml" value="0.3009833262077811" />
         <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/layout/activity_add_budget.xml" value="0.22" />
         <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/layout/activity_add_category.xml" value="0.3009833262077811" />
         <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/layout/activity_add_expense.xml" value="0.25" />
         <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/layout/activity_add_portfolio.xml" value="0.1" />
+        <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/layout/activity_balances.xml" value="0.3009833262077811" />
         <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/layout/activity_bilanzen.xml" value="1.9555555555555555" />
         <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/layout/activity_budgets.xml" value="0.3009833262077811" />
         <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/layout/activity_categories.xml" value="0.3009833262077811" />
         <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/layout/activity_database_test.xml" value="0.18" />
+        <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/layout/activity_edit_balance.xml" value="0.3009833262077811" />
         <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/layout/activity_edit_budget.xml" value="0.25" />
         <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/layout/activity_edit_category.xml" value="0.3009833262077811" />
         <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/layout/activity_edit_expense.xml" value="0.25" />

@@ -7,7 +7,7 @@
     android:background="@color/ui_white"
     android:orientation="vertical"
     android:paddingHorizontal="15dp"
-    tools:context=".activities.add.AddBalanceActivity">
+    tools:context=".activities.edit.EditBalanceActivity">
 
     <Space
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/closeActivityAddBalance"
+            android:id="@+id/closeActivityEditBalance"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginLeft="10dp"
@@ -49,7 +49,7 @@
             android:layout_weight="1"/>
 
         <ImageView
-            android:id="@+id/addBalance"
+            android:id="@+id/editBalance"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginRight="10dp"
@@ -82,7 +82,7 @@
             android:layout_height="5dp"/>
 
         <EditText
-            android:id="@+id/editTextBalanceName"
+            android:id="@+id/editTextBalanceNameEdit"
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:paddingStart="12dp"
@@ -118,7 +118,7 @@
             android:layout_height="5dp"/>
 
         <FrameLayout
-            android:id="@+id/chooserBalanceTimestamp"
+            android:id="@+id/chooserBalanceTimestampEdit"
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:clickable="true"
@@ -128,7 +128,7 @@
 
 
             <TextView
-                android:id="@+id/textViewBalanceTimestamp"
+                android:id="@+id/textViewBalanceTimestampEdit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingTop="3dp"
@@ -173,7 +173,7 @@
             android:layout_height="5dp"/>
 
         <FrameLayout
-            android:id="@+id/chooserBalancePortfolio"
+            android:id="@+id/chooserBalancePortfolioEdit"
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:clickable="true"
@@ -183,7 +183,7 @@
 
 
             <TextView
-                android:id="@+id/textViewBalancePortfolio"
+                android:id="@+id/textViewBalancePortfolioEdit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingTop="3dp"

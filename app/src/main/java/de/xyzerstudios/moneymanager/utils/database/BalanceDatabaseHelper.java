@@ -57,12 +57,16 @@ public class BalanceDatabaseHelper extends SQLiteOpenHelper {
         onCreate(database);
     }
 
-    public void addNewBalance(String name, String timestampOfCreation) {
+    public void addNewBalance(String name, String timestampOfCreation, int portfolioId) {
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
         contentValues.put(COLUMN_NAME, name);
         contentValues.put(COLUMN_TIMESTAMP_CREATED, timestampOfCreation);
+        contentValues.put(COLUMN_PORTFOLIO_ID, portfolioId);
+        contentValues.put(COLUMN_REVENUES_SUM, 0);
+        contentValues.put(COLUMN_EXPENSES_SUM, 0);
+        contentValues.put(COLUMN_SALDO, 0);
 
         long result = database.insert(TABLE_NAME, null, contentValues);
         if (result == -1) {

@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import de.xyzerstudios.moneymanager.activities.HomeActivity;
+
 public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder> {
 
     private List<DrawerItem> items;
@@ -76,7 +78,8 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
             }
         }
 
-        if (position == 2 || position == 4)
+        if (position == HomeActivity.POS_PORTFOLIOS || position == HomeActivity.POS_BILANZEN ||
+                position == HomeActivity.POS_BUDGET)
             newChecked.setChecked(false);
         else
             newChecked.setChecked(true);

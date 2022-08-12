@@ -166,6 +166,22 @@ public class BalanceTurnoversDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public Cursor sumEntriesGroupedByType(int balanceId, TurnoverType turnoverType) {
+        String query = "SELECT Sum(" + COLUMN_AMOUNT + ") as sum_cat" +
+                " FROM " + TABLE_NAME +
+                " WHERE " + COLUMN_BALANCE_ID + "=" + balanceId +
+                " AND " + COLUMN_TYPE_IS_EXPENSE + "=" + (turnoverType == TurnoverType.EXPENSE ? "1" : "0") +
+                " GROUP BY " + COLUMN_TYPE_IS_EXPENSE;
+
+        SQLiteDatabase database = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (database != null) {
+            cursor = database.rawQuery(query, null);
+        }
+        return cursor;
+    }
+
     public Cursor readAllData() {
         String query = "SELECT * FROM " + TABLE_NAME;
         SQLiteDatabase database = this.getReadableDatabase();

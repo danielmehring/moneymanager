@@ -69,6 +69,7 @@
                 android:layout_weight="1"/>
 
             <LinearLayout
+                android:id="@+id/containerEditDeletePortfolio"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginRight="15dp"
@@ -78,7 +79,7 @@
                 <Space
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
-                    android:layout_weight="19"/>
+                    android:layout_weight="19" />
 
                 <ImageButton
                     android:id="@+id/editItem"
@@ -97,7 +98,7 @@
                 <Space
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
-                    android:layout_weight="20"/>
+                    android:layout_weight="20" />
 
                 <ImageButton
                     android:id="@+id/deleteItem"
@@ -116,7 +117,7 @@
                 <Space
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
-                    android:layout_weight="19"/>
+                    android:layout_weight="19" />
 
             </LinearLayout>
         </LinearLayout>

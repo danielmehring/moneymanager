@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import de.xyzerstudios.moneymanager.R;
+import de.xyzerstudios.moneymanager.activities.PortfoliosActivity;
 import de.xyzerstudios.moneymanager.activities.edit.EditPortfolioActivity;
+import de.xyzerstudios.moneymanager.asynctasks.LoadPortfoliosAsyncTask;
 import de.xyzerstudios.moneymanager.utils.adapters.items.BalancePortfolioItem;
 import de.xyzerstudios.moneymanager.utils.PublicValues;
 import de.xyzerstudios.moneymanager.utils.Utils;
@@ -31,12 +34,12 @@ import de.xyzerstudios.moneymanager.utils.database.PortfolioDatabaseHelper;
 
 public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.ViewHolder> {
 
-    private Activity activity;
+    private PortfoliosActivity activity;
     private Context context;
     private ArrayList<BalancePortfolioItem> portfolioItems;
     private int activeId;
 
-    public PortfolioAdapter(Activity activity, Context context, ArrayList<BalancePortfolioItem> portfolioItems, int activeId) {
+    public PortfolioAdapter(PortfoliosActivity activity, Context context, ArrayList<BalancePortfolioItem> portfolioItems, int activeId) {
         this.activity = activity;
         this.context = context;
         this.portfolioItems = portfolioItems;
@@ -110,7 +113,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
                         if (portfolioId == loadPortfolioIdFromSharedPrefs()) {
                             savePortfolioId(1);
                         }
-                        activity.finish();
+                        new LoadPortfoliosAsyncTask(activity).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, false);
                     }
                 })
                 .setNegativeButton(activity.getString(R.string.cancel), new DialogInterface.OnClickListener() {

@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import de.xyzerstudios.moneymanager.R;
 import de.xyzerstudios.moneymanager.activities.add.AddPortfolioActivity;
 import de.xyzerstudios.moneymanager.asynctasks.LoadPortfoliosAsyncTask;
+import de.xyzerstudios.moneymanager.utils.adapters.PortfolioChooseAdapter;
 import de.xyzerstudios.moneymanager.utils.adapters.items.BalancePortfolioItem;
 import de.xyzerstudios.moneymanager.utils.adapters.PortfolioAdapter;
 import de.xyzerstudios.moneymanager.utils.Utils;
@@ -36,10 +37,20 @@ public class PortfoliosActivity extends AppCompatActivity {
     public SwipeRefreshLayout swipeRefreshPortfolio;
     public static ArrayList<BalancePortfolioItem> portfolioItems;
 
+    private boolean choosePortfolio = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_portfolios);
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle == null) {
+            finish();
+            return;
+        }
+
+        choosePortfolio = bundle.getBoolean("choosePortfolio");
 
         buttonPortfolioGoBack = findViewById(R.id.buttonPortfolioGoBack);
         buttonAddNewPortfolioActivity = findViewById(R.id.buttonAddNewPortfolioActivity);
@@ -67,14 +78,18 @@ public class PortfoliosActivity extends AppCompatActivity {
 
         portfolioRecyclerView.setHasFixedSize(true);
         portfolioRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        portfolioAdapter = new PortfolioAdapter(this, this, portfolioItems, loadPortfolioIdFromSharedPrefs());
+
+        if (choosePortfolio)
+            portfolioAdapter = new PortfolioChooseAdapter(this, this, portfolioItems);
+        else
+            portfolioAdapter = new PortfolioAdapter(this, this, portfolioItems, loadPortfolioIdFromSharedPrefs());
 
         portfolioRecyclerView.setAdapter(portfolioAdapter);
 
         swipeRefreshPortfolio.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new LoadPortfoliosAsyncTask(PortfoliosActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, loadPortfolioIdFromSharedPrefs());
+                new LoadPortfoliosAsyncTask(PortfoliosActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, choosePortfolio);
             }
         });
     }
@@ -82,14 +97,14 @@ public class PortfoliosActivity extends AppCompatActivity {
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        new LoadPortfoliosAsyncTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, loadPortfolioIdFromSharedPrefs());
+        new LoadPortfoliosAsyncTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, choosePortfolio);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RESULT_OK) {
-            new LoadPortfoliosAsyncTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, loadPortfolioIdFromSharedPrefs());
+            new LoadPortfoliosAsyncTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, choosePortfolio);
         }
     }
 

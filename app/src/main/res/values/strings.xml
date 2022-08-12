@@ -125,5 +125,6 @@
     <string name="add_budget">Budget hinzufügen</string>
     <string name="cant_add_two_budgets_same_cat">Man kann nur ein Budget pro Kategorie festlegen</string>
     <string name="edit_budget">Budget bearbeiten</string>
+    <string name="portfolio">Portfolio</string>
 
 </resources>

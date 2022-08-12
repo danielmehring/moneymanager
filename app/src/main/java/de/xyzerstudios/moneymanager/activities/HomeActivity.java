@@ -28,7 +28,6 @@ import java.util.Arrays;
 
 import de.xyzerstudios.moneymanager.R;
 import de.xyzerstudios.moneymanager.fragments.AboutUsFragment;
-import de.xyzerstudios.moneymanager.fragments.BalancesFragment;
 import de.xyzerstudios.moneymanager.fragments.DashboardFragment;
 import de.xyzerstudios.moneymanager.fragments.DonateFragment;
 import de.xyzerstudios.moneymanager.fragments.PremiumFragment;
@@ -40,9 +39,9 @@ import de.xyzerstudios.moneymanager.utils.drawermenu.SimpleItem;
 public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnItemSelectedListener {
 
     private static final int POS_DASHBOARD = 1;
-    private static final int POS_PORTFOLIOS = 2;
-    private static final int POS_BILANZEN = 3;
-    private static final int POS_BUDGET = 4;
+    public static final int POS_PORTFOLIOS = 2;
+    public static final int POS_BILANZEN = 3;
+    public static final int POS_BUDGET = 4;
     private static final int POS_PREMIUM = 6;
     private static final int POS_DONATE = 7;
     private static final int POS_ABOUT_US = 9;
@@ -249,18 +248,20 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
             case POS_PORTFOLIOS:
                 slidingRootNav.closeMenu();
                 Intent intent = new Intent(HomeActivity.this, PortfoliosActivity.class);
+                intent.putExtra("choosePortfolio", false);
                 startActivity(intent);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 break;
             case POS_BILANZEN:
-                Fragment bilanzenFragment = new BalancesFragment();
-                showFragment(bilanzenFragment);
                 slidingRootNav.closeMenu();
+                Intent intent2 = new Intent(HomeActivity.this, BalancesActivity.class);
+                startActivity(intent2);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 break;
             case POS_BUDGET:
                 slidingRootNav.closeMenu();
-                Intent intent2 = new Intent(HomeActivity.this, BudgetsActivity.class);
-                startActivity(intent2);
+                Intent intent3 = new Intent(HomeActivity.this, BudgetsActivity.class);
+                startActivity(intent3);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 break;
             case POS_PREMIUM:
