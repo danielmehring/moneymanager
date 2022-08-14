@@ -1,6 +1,8 @@
 package de.xyzerstudios.moneymanager.asynctasks;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -88,6 +90,7 @@ public class LoadPieChartsAsyncTask extends AsyncTask<Integer, ArrayList<Categor
                 sumTotalExpenses = cursorSumTotalExpenses.getInt(0);
             }
 
+            boolean isBudgetExceedSomewhere = false;
 
             while (cursorSumCategoriesExpenses.moveToNext()) {
                 int categoryId = cursorSumCategoriesExpenses.getInt(1);
@@ -108,12 +111,15 @@ public class LoadPieChartsAsyncTask extends AsyncTask<Integer, ArrayList<Categor
                 while (cursorBudgets.moveToNext()) {
                     amountLimit = cursorBudgets.getInt(2);
                 }
-                if (sumTotalExpenses > amountLimit && amountLimit != 0)
+                if (sumTotalExpenses > amountLimit && amountLimit != 0) {
                     isBudgetExceeded = true;
+                    isBudgetExceedSomewhere = true;
+                }
 
                 categoryItemsExpenses.add(new CategoryItem(indicatorColor, categoryText,
                         (int) ((float) cursorSumCategoriesExpenses.getInt(0) / (float) sumTotalExpenses * 100f), isBudgetExceeded));
             }
+            setBudgetExceeded(isBudgetExceedSomewhere);
         }
 
         if (executeIncome) {
@@ -182,6 +188,13 @@ public class LoadPieChartsAsyncTask extends AsyncTask<Integer, ArrayList<Categor
         }
 
         new LoadPortfolioAsyncTask(activity, dashboardFragment).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, i);
+    }
+
+    private void setBudgetExceeded(boolean isExceeded) {
+        SharedPreferences sharedPreferences = activity.getSharedPreferences(Utils.SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(Utils.SHARED_PREFS_IS_BUDGET_EXCEEDED, isExceeded);
+        editor.apply();
     }
 
 }

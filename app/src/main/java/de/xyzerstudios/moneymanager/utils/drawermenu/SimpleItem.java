@@ -1,5 +1,7 @@
 package de.xyzerstudios.moneymanager.utils.drawermenu;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import de.xyzerstudios.moneymanager.R;
+import de.xyzerstudios.moneymanager.utils.Utils;
 
 
 public class SimpleItem extends DrawerItem<SimpleItem.ViewHolder> {
@@ -22,13 +25,17 @@ public class SimpleItem extends DrawerItem<SimpleItem.ViewHolder> {
     private Drawable icon;
     private Drawable iconactive;
     private String title;
+    private Context context;
 
     private boolean notification = false;
+    private boolean isBudgetItem;
 
-    public SimpleItem(Drawable icon, String title) {
+    public SimpleItem(Drawable icon, String title, Context context, boolean isBudgetItem) {
         this.icon = icon;
         this.iconactive = icon;
         this.title = title;
+        this.context = context;
+        this.isBudgetItem = isBudgetItem;
     }
 
     @Override
@@ -46,7 +53,16 @@ public class SimpleItem extends DrawerItem<SimpleItem.ViewHolder> {
         holder.title.setTextColor(isChecked ? selectedItemTextTint : normalItemTextTint);
         holder.icon.setColorFilter(isChecked ? selectedItemIconTint : normalItemIconTint);
 
-        if(notification)
+        if (isBudgetItem) {
+            if (isBudgetExceeded()) {
+                holder.notification.setVisibility(View.VISIBLE);
+            } else {
+                holder.notification.setVisibility(View.INVISIBLE);
+            }
+            return;
+        }
+
+        if (notification)
             holder.notification.setVisibility(View.VISIBLE);
         else
             holder.notification.setVisibility(View.GONE);
@@ -80,6 +96,11 @@ public class SimpleItem extends DrawerItem<SimpleItem.ViewHolder> {
     public SimpleItem hideNotification() {
         this.notification = false;
         return this;
+    }
+
+    private boolean isBudgetExceeded() {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(Utils.SHARED_PREFS, Context.MODE_PRIVATE);
+        return sharedPreferences.getBoolean(Utils.SHARED_PREFS_IS_BUDGET_EXCEEDED, false);
     }
 
     static class ViewHolder extends DrawerAdapter.ViewHolder {

@@ -37,7 +37,7 @@ import de.xyzerstudios.moneymanager.utils.database.ExpensesDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.database.PortfolioDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.dialogs.DatePickerFragment;
 
-public class AddBalanceActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
+public class AddBalanceActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     public EditText editTextBalanceName;
     public ImageView closeActivityAddBalance, addBalance;

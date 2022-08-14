@@ -76,6 +76,22 @@ public class BalanceDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public void updateBalance(int balanceId, String name, int portfolioId, String timestamp) {
+        SQLiteDatabase database = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(COLUMN_NAME, name);
+        contentValues.put(COLUMN_PORTFOLIO_ID, portfolioId);
+        contentValues.put(COLUMN_TIMESTAMP_CREATED, timestamp);
+
+        long result = database.update(TABLE_NAME, contentValues, "_id=?", new String[]{String.valueOf(balanceId)});
+        if (result == -1) {
+            Log.d(tag, "Something went wrong.");
+        } else {
+            Log.d(tag, "Entry updated.");
+        }
+    }
+
     public void updateBalance(int balanceId, String name) {
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();

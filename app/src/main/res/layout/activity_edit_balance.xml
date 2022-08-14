@@ -41,7 +41,7 @@
             android:fontFamily="@font/poppins_medium"
             android:textColor="@color/ui_black"
             android:textSize="20dp"
-            android:text="@string/add_balance"/>
+            android:text="@string/edit_balance"/>
 
         <Space
             android:layout_width="fill_parent"

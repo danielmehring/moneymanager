@@ -1,5 +1,6 @@
 package de.xyzerstudios.moneymanager.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -66,6 +67,7 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
 
     private SlidingRootNav slidingRootNav;
     private DrawerAdapter adapter;
+    private RecyclerView recyclerView;
 
     private Toolbar toolbar;
     private Configuration mPrevConfig;
@@ -136,16 +138,22 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
                 createNewDrawerItem(RESOURCE_ABOUT_US).hideNotification()));
         adapter.setListener(this);
 
-        RecyclerView list = findViewById(R.id.list);
-        list.setNestedScrollingEnabled(false);
-        list.setLayoutManager(new LinearLayoutManager(this));
-        list.setAdapter(adapter);
+        recyclerView = findViewById(R.id.list);
+        recyclerView.setNestedScrollingEnabled(false);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
 
 
         adapter.setSelected(POS_DASHBOARD);
 
         Fragment dashboardFragment = new DashboardFragment();
         showFragment(dashboardFragment);
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        loadSlidingRootNav();
     }
 
     @Override
@@ -181,7 +189,8 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
     }
 
     private SimpleItem createNewDrawerItem(int positionOfResourcesInArray) {
-        return new SimpleItem(simpleItemIcons[positionOfResourcesInArray], simpleItemTitles[positionOfResourcesInArray])
+        return new SimpleItem(simpleItemIcons[positionOfResourcesInArray], simpleItemTitles[positionOfResourcesInArray],
+                this, positionOfResourcesInArray == RESOURCE_BUDGET ? true : false)
                 .withIconTint(color(R.color.ui_side_menu))
                 .withTextTint(color(R.color.ui_side_menu))
                 .withSelectedIconTint(color(R.color.ui_side_menu))
