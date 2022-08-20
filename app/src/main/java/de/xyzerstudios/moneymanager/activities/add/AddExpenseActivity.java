@@ -1,12 +1,5 @@
 package de.xyzerstudios.moneymanager.activities.add;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
-
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -15,9 +8,6 @@ import android.database.Cursor;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.DatePicker;
@@ -26,35 +16,56 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 import java.util.Calendar;
 import java.util.Date;
 
 import de.xyzerstudios.moneymanager.R;
 import de.xyzerstudios.moneymanager.activities.CategoriesActivity;
-import de.xyzerstudios.moneymanager.utils.dialogs.DatePickerFragment;
 import de.xyzerstudios.moneymanager.utils.Utils;
 import de.xyzerstudios.moneymanager.utils.database.CategoriesDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.database.ExpensesDatabaseHelper;
+import de.xyzerstudios.moneymanager.utils.dialogs.DatePickerFragment;
 import de.xyzerstudios.moneymanager.utils.dialogs.PaymentMethodDialog;
 
 public class AddExpenseActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, PaymentMethodDialog.PaymentMethodDialogListener {
 
+    private final Utils utils = new Utils();
     public EditText editTextExpenseAmount, editTextExpenseName;
     public ImageView closeActivityAddExpense, addExpense;
     public TextView textViewExpenseAmount, textViewExpenseTimestamp, textViewExpenseCategory, textViewExpensePaymentMethod;
     public FrameLayout chooserExpenseTimestamp, chooserExpenseCategory, chooserExpensePaymentMethod;
     public LinearLayout displayCategoryColor;
-
-    private final Utils utils = new Utils();
-
     private int categoryId = 9;
-    private String paymentMethod = "";
+    public ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result != null && result.getResultCode() == RESULT_OK) {
+                        if (result.getData() != null) {
+                            String name = result.getData().getStringExtra("categoryName");
+                            int color = result.getData().getIntExtra("categoryColor", getColor(R.color.ui_text_faded));
+                            categoryId = result.getData().getIntExtra("categoryId", 9);
+                            textViewExpenseCategory.setText(name);
 
+                            Drawable backgroundDrawableIndicator = getDrawable(R.drawable.circle);
+                            backgroundDrawableIndicator.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
+
+                            displayCategoryColor.setBackground(backgroundDrawableIndicator);
+                        }
+                    }
+                }
+            });
+    private String paymentMethod = "";
     private int amount = 0;
     private Date date;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,26 +83,6 @@ public class AddExpenseActivity extends AppCompatActivity implements DatePickerD
     private void initObjects() {
         date = new Date();
     }
-
-    public ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-    new ActivityResultCallback<ActivityResult>() {
-        @Override
-        public void onActivityResult(ActivityResult result) {
-            if (result != null && result.getResultCode() == RESULT_OK) {
-                if (result.getData() != null) {
-                    String name = result.getData().getStringExtra("categoryName");
-                    int color = result.getData().getIntExtra("categoryColor", getColor(R.color.ui_text_faded));
-                    categoryId = result.getData().getIntExtra("categoryId", 9);
-                    textViewExpenseCategory.setText(name);
-
-                    Drawable backgroundDrawableIndicator = getDrawable(R.drawable.circle);
-                    backgroundDrawableIndicator.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
-
-                    displayCategoryColor.setBackground(backgroundDrawableIndicator);
-                }
-            }
-        }
-    });
 
     private void initGui() {
         editTextExpenseAmount = findViewById(R.id.editTextExpenseAmount);
@@ -113,6 +104,7 @@ public class AddExpenseActivity extends AppCompatActivity implements DatePickerD
             @Override
             public void onClick(View view) {
                 finish();
+                overridePendingTransition(R.anim.fade_in, R.anim.slide_out_bottom);
             }
         });
 
@@ -135,7 +127,7 @@ public class AddExpenseActivity extends AppCompatActivity implements DatePickerD
         addExpense.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(categoryId == 0) {
+                if (categoryId == 0) {
                     return;
                 }
                 ExpensesDatabaseHelper expensesDatabaseHelper = new ExpensesDatabaseHelper(AddExpenseActivity.this);
@@ -159,15 +151,15 @@ public class AddExpenseActivity extends AppCompatActivity implements DatePickerD
         editTextExpenseAmount.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                if(keyEvent.getAction() == keyEvent.ACTION_UP) {
+                if (keyEvent.getAction() == keyEvent.ACTION_UP) {
 
 
                     String s = amount + "";
 
-                    if(i == KeyEvent.KEYCODE_DEL)
+                    if (i == KeyEvent.KEYCODE_DEL)
                         amount = amount / 10;
 
-                    if(s.length() >= 12)
+                    if (s.length() >= 12)
                         return false;
 
                     switch (i) {

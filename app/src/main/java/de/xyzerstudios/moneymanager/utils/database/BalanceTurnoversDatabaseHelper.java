@@ -23,8 +23,7 @@ public class BalanceTurnoversDatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_TIMESTAMP = "timestamp";
     private static final String COLUMN_AMOUNT = "amount";
     private static final String COLUMN_TYPE_IS_EXPENSE = "is_expense"; // 1=expense or 0=revenue
-    private static final String COLUMN_CATEGORY = "category";
-    private static final String COLUMN_CATEGORY_COLOR = "category_color";
+    private static final String COLUMN_CATEGORY_ID = "category_id";
     private static final String COLUMN_PAYMENT_METHOD = "payment_method";
     private final Context context;
 
@@ -43,8 +42,7 @@ public class BalanceTurnoversDatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_TIMESTAMP + " TEXT, " +
                 COLUMN_AMOUNT + " INTEGER, " +
                 COLUMN_TYPE_IS_EXPENSE + " INTEGER, " +
-                COLUMN_CATEGORY + " TEXT, " +
-                COLUMN_CATEGORY_COLOR + " INTEGER, " +
+                COLUMN_CATEGORY_ID + " INTEGER, " +
                 COLUMN_PAYMENT_METHOD + " TEXT);";
         database.execSQL(query);
 
@@ -58,7 +56,7 @@ public class BalanceTurnoversDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public void addNewEntry(int balanceId, String name, int amount, String timestamp,
-                            TurnoverType turnoverType, String category, int categoryColor) {
+                            TurnoverType turnoverType, int categoryId) {
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
@@ -67,8 +65,7 @@ public class BalanceTurnoversDatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(COLUMN_AMOUNT, amount);
         contentValues.put(COLUMN_TIMESTAMP, timestamp);
         contentValues.put(COLUMN_TYPE_IS_EXPENSE, turnoverType == TurnoverType.EXPENSE ? 1 : 0);
-        contentValues.put(COLUMN_CATEGORY, category);
-        contentValues.put(COLUMN_CATEGORY_COLOR, categoryColor);
+        contentValues.put(COLUMN_CATEGORY_ID, categoryId);
 
         long result = database.insert(TABLE_NAME, null, contentValues);
         if (result == -1) {
@@ -79,7 +76,7 @@ public class BalanceTurnoversDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public void addNewEntry(int balanceId, String name, int amount, String timestamp,
-                            TurnoverType turnoverType, String paymentMethod, String category, int categoryColor) {
+                            TurnoverType turnoverType, String paymentMethod, int categoryId) {
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
@@ -89,8 +86,7 @@ public class BalanceTurnoversDatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(COLUMN_TIMESTAMP, timestamp);
         contentValues.put(COLUMN_TYPE_IS_EXPENSE, turnoverType == TurnoverType.EXPENSE ? 1 : 0);
         contentValues.put(COLUMN_PAYMENT_METHOD, paymentMethod);
-        contentValues.put(COLUMN_CATEGORY, category);
-        contentValues.put(COLUMN_CATEGORY_COLOR, categoryColor);
+        contentValues.put(COLUMN_CATEGORY_ID, categoryId);
 
         long result = database.insert(TABLE_NAME, null, contentValues);
         if (result == -1) {
@@ -101,7 +97,7 @@ public class BalanceTurnoversDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public void updateEntry(int balanceEntryId, String name, int amount, String timestamp,
-                            TurnoverType turnoverType, String paymentMethod, String category, int categoryColor) {
+                            TurnoverType turnoverType, String paymentMethod, int categoryId) {
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
@@ -110,28 +106,7 @@ public class BalanceTurnoversDatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(COLUMN_TIMESTAMP, timestamp);
         contentValues.put(COLUMN_TYPE_IS_EXPENSE, turnoverType == TurnoverType.EXPENSE ? 1 : 0);
         contentValues.put(COLUMN_PAYMENT_METHOD, paymentMethod);
-        contentValues.put(COLUMN_CATEGORY, category);
-        contentValues.put(COLUMN_CATEGORY_COLOR, categoryColor);
-
-        long result = database.update(TABLE_NAME, contentValues, "_id=?", new String[]{String.valueOf(balanceEntryId)});
-        if (result == -1) {
-            Log.d(tag, "Something went wrong.");
-        } else {
-            Log.d(tag, "Entry updated.");
-        }
-    }
-
-    public void updateEntry(int balanceEntryId, String name, int amount, String timestamp,
-                            TurnoverType turnoverType, String category, int categoryColor) {
-        SQLiteDatabase database = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-
-        contentValues.put(COLUMN_NAME, name);
-        contentValues.put(COLUMN_AMOUNT, amount);
-        contentValues.put(COLUMN_TIMESTAMP, timestamp);
-        contentValues.put(COLUMN_TYPE_IS_EXPENSE, turnoverType == TurnoverType.EXPENSE ? 1 : 0);
-        contentValues.put(COLUMN_CATEGORY, category);
-        contentValues.put(COLUMN_CATEGORY_COLOR, categoryColor);
+        contentValues.put(COLUMN_CATEGORY_ID, categoryId);
 
         long result = database.update(TABLE_NAME, contentValues, "_id=?", new String[]{String.valueOf(balanceEntryId)});
         if (result == -1) {
@@ -167,7 +142,7 @@ public class BalanceTurnoversDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public Cursor sumEntriesGroupedByType(int balanceId, TurnoverType turnoverType) {
-        String query = "SELECT Sum(" + COLUMN_AMOUNT + ") as sum_cat" +
+        String query = "SELECT Sum(" + COLUMN_AMOUNT + ") as summe" +
                 " FROM " + TABLE_NAME +
                 " WHERE " + COLUMN_BALANCE_ID + "=" + balanceId +
                 " AND " + COLUMN_TYPE_IS_EXPENSE + "=" + (turnoverType == TurnoverType.EXPENSE ? "1" : "0") +
@@ -206,6 +181,21 @@ public class BalanceTurnoversDatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor readEntriesByBalanceId(int balanceId) {
         String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_BALANCE_ID + "=" + balanceId;
+
+        SQLiteDatabase database = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (database != null) {
+            cursor = database.rawQuery(query, null);
+        }
+        return cursor;
+    }
+
+    public Cursor readEntriesByBalanceIdAndType(int balanceId, TurnoverType turnoverType) {
+        String query = "SELECT * FROM " + TABLE_NAME +
+                " WHERE " + COLUMN_BALANCE_ID + "=" + balanceId +
+                " AND " + COLUMN_TYPE_IS_EXPENSE + "=" + (turnoverType == TurnoverType.EXPENSE ? "1" : "0");
+
         SQLiteDatabase database = this.getReadableDatabase();
 
         Cursor cursor = null;

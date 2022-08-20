@@ -15,8 +15,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Space;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -38,14 +38,18 @@ import de.xyzerstudios.moneymanager.utils.adapters.items.BudgetItem;
 import de.xyzerstudios.moneymanager.utils.database.BudgetsDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.database.CategoriesDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.database.ExpensesDatabaseHelper;
+import de.xyzerstudios.moneymanager.utils.database.RepeatedIncomeDatabaseHelper;
+import de.xyzerstudios.moneymanager.utils.dialogs.InformationDialog;
 
 public class BudgetsActivity extends AppCompatActivity {
 
     private ImageButton buttonBudgetsGoBack;
-    private LinearLayout buttonBudgetsFilter, buttonAddNewBudget;
+    private LinearLayout buttonBudgetsFilter, buttonAddNewBudget, buttonInfoBudgets, containerBudgetsSumAndLeft;
     private BudgetsAdapter budgetsAdapter;
     private RecyclerView recyclerViewBudgets;
     private ArrayList<BudgetItem> budgetItems;
+    private TextView availableAmountBudget, sumOfBudget, textViewBudgetExceededLeft, exceededOrLeftBudget;
+    private Space budgetsSpacerBottom1, budgetsSpacerBottom2;
 
     private SwipeRefreshLayout budgetsSwipeRefresh;
 
@@ -68,6 +72,16 @@ public class BudgetsActivity extends AppCompatActivity {
         recyclerViewBudgets = findViewById(R.id.recyclerViewBudgets);
         budgetsSwipeRefresh = findViewById(R.id.swipeRefreshBudgets);
         buttonAddNewBudget = findViewById(R.id.buttonAddNewBudget);
+        availableAmountBudget = findViewById(R.id.availableAmountBudget);
+        buttonInfoBudgets = findViewById(R.id.buttonInfoBudgets);
+        containerBudgetsSumAndLeft = findViewById(R.id.containerBudgetsSumAndLeft);
+
+        sumOfBudget = findViewById(R.id.sumOfBudget);
+        textViewBudgetExceededLeft = findViewById(R.id.textViewBudgetExceededLeft);
+        exceededOrLeftBudget = findViewById(R.id.exceededOrLeftBudget);
+
+        budgetsSpacerBottom1 = findViewById(R.id.budgetsSpacerBottom1);
+        budgetsSpacerBottom2 = findViewById(R.id.budgetsSpacerBottom2);
 
         recyclerViewBudgets.setHasFixedSize(true);
         recyclerViewBudgets.setLayoutManager(new LinearLayoutManager(this));
@@ -102,6 +116,14 @@ public class BudgetsActivity extends AppCompatActivity {
             @Override
             public void onRefresh() {
                 loadBudgetItem(month, year);
+            }
+        });
+
+        buttonInfoBudgets.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                InformationDialog informationDialog = new InformationDialog(getString(R.string.menu_title_budgets), getString(R.string.budgets_explanation));
+                informationDialog.show(getSupportFragmentManager(), "Information Budgets");
             }
         });
 
@@ -218,9 +240,11 @@ public class BudgetsActivity extends AppCompatActivity {
 
     private class budgetsActivity extends AsyncTask<Integer, String, ArrayList<BudgetItem>> {
         private final WeakReference<BudgetsActivity> activityWeakReference;
+        private final Utils utils;
 
         budgetsActivity(BudgetsActivity activity) {
             activityWeakReference = new WeakReference<BudgetsActivity>(activity);
+            utils = new Utils();
         }
 
         @Override
@@ -260,6 +284,61 @@ public class BudgetsActivity extends AppCompatActivity {
                 budgetItems.add(new BudgetItem(budgetEntryId, categoryId, categoryName, amountLimit, amountSpent));
             }
 
+            Cursor sumCursor = budgetsDatabaseHelper.sumAllEntries();
+            int sumOfAllBudets = 0;
+            while (sumCursor.moveToNext()) sumOfAllBudets = sumCursor.getInt(0);
+
+            RepeatedIncomeDatabaseHelper repeatedIncomeDatabaseHelper = new RepeatedIncomeDatabaseHelper(BudgetsActivity.this);
+            Cursor cursorRepeated = repeatedIncomeDatabaseHelper.sumEntriesByIntervalFromPortfolioId(portfolioId);
+
+            if (cursorRepeated.getCount() == 0) {
+                publishProgress(utils.formatCurrency(0));
+                return budgetItems;
+            }
+
+            int availableAmount = 0;
+
+            while (cursorRepeated.moveToNext()) {
+                int amountInRow = cursorRepeated.getInt(0);
+                String interval = cursorRepeated.getString(1);
+                int quantity = Integer.valueOf(interval.split("_")[0]);
+                String unit = interval.split("_")[1];
+                double multiplier = 1;
+                switch (unit) {
+                    case "d":
+                        multiplier = 30.44;
+                        break;
+                    case "w":
+                        multiplier = 4.28;
+                        break;
+                    case "m":
+                    default:
+                        multiplier = 1;
+                        break;
+                    case "y":
+                        multiplier = 0.08333;
+                        break;
+                }
+                availableAmount += Math.round((double) amountInRow / (double) quantity * multiplier);
+            }
+
+            if (cursor.getCount() == 0 || cursorRepeated.getCount() == 0) {
+                publishProgress(utils.formatCurrency(availableAmount));
+                return budgetItems;
+            }
+
+            int amountLeftOrExceeded = availableAmount - sumOfAllBudets;
+
+            String budgetLeftExceeded = "";
+            if (amountLeftOrExceeded < 0) {
+                budgetLeftExceeded = getString(R.string.amount_exceeded);
+                amountLeftOrExceeded = amountLeftOrExceeded * (-1);
+            } else {
+                budgetLeftExceeded = getString(R.string.amount_left);
+            }
+
+            publishProgress(utils.formatCurrency(availableAmount), utils.formatCurrency(sumOfAllBudets),
+                    budgetLeftExceeded, utils.formatCurrency(amountLeftOrExceeded));
 
             return budgetItems;
         }
@@ -271,7 +350,24 @@ public class BudgetsActivity extends AppCompatActivity {
             if (activity == null) {
                 return;
             }
-            Toast.makeText(activity, values[0], Toast.LENGTH_SHORT).show();
+            activity.availableAmountBudget.setText(values[0]);
+            if (values.length == 1) {
+                activity.containerBudgetsSumAndLeft.setVisibility(View.GONE);
+                activity.budgetsSpacerBottom1.setVisibility(View.GONE);
+                activity.budgetsSpacerBottom2.setVisibility(View.GONE);
+                return;
+            }
+            activity.containerBudgetsSumAndLeft.setVisibility(View.VISIBLE);
+            activity.budgetsSpacerBottom1.setVisibility(View.VISIBLE);
+            activity.budgetsSpacerBottom2.setVisibility(View.VISIBLE);
+            activity.sumOfBudget.setText(values[1]);
+            activity.textViewBudgetExceededLeft.setText(values[2]);
+            activity.exceededOrLeftBudget.setText(values[3]);
+            if (values[2].matches(getString(R.string.amount_exceeded))) {
+                activity.exceededOrLeftBudget.setTextColor(getColor(R.color.ui_money_text_red));
+            } else {
+                activity.exceededOrLeftBudget.setTextColor(getColor(R.color.ui_money_text_green));
+            }
         }
 
         @Override

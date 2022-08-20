@@ -1,12 +1,5 @@
 package de.xyzerstudios.moneymanager.activities.add;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
-
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -14,18 +7,27 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
+import android.transition.TransitionManager;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
+
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -34,41 +36,23 @@ import de.xyzerstudios.moneymanager.R;
 import de.xyzerstudios.moneymanager.activities.CategoriesActivity;
 import de.xyzerstudios.moneymanager.utils.Utils;
 import de.xyzerstudios.moneymanager.utils.database.CategoriesDatabaseHelper;
-import de.xyzerstudios.moneymanager.utils.database.ExpensesDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.database.IncomeDatabaseHelper;
+import de.xyzerstudios.moneymanager.utils.database.RepeatedIncomeDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.dialogs.DatePickerFragment;
-import de.xyzerstudios.moneymanager.utils.dialogs.PaymentMethodDialog;
+import de.xyzerstudios.moneymanager.utils.dialogs.IntervalPickerDialog;
 
-public class AddIncomeActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
-
-    public EditText editTextIncomeAmount, editTextIncomeName;
-    public ImageView closeActivityAddIncome, addIncome;
-    public TextView textViewIncomeAmount, textViewIncomeTimestamp, textViewIncomeCategory;
-    public FrameLayout chooserIncomeTimestamp, chooserIncomeCategory;
-    public LinearLayout displayCategoryColor;
+public class AddIncomeActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, IntervalPickerDialog.IntervalPickerDialogListener {
 
     private final Utils utils = new Utils();
-
+    public EditText editTextIncomeAmount, editTextIncomeName;
+    public ImageView closeActivityAddIncome, addIncome;
+    public TextView textViewIncomeAmount, textViewIncomeTimestamp, textViewIncomeCategory, textViewIncomeInterval,
+            textViewRepeatedIncome;
+    public FrameLayout chooserIncomeTimestamp, chooserIncomeCategory, chooserIncomeInterval;
+    public LinearLayout displayCategoryColor;
+    public ViewGroup containerAddIncomeInterval;
+    public Switch switchRepeatedIncome;
     private int categoryId = 38;
-
-    private int amount = 0;
-    private Date date;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_income);
-
-        initGui();
-        initObjects();
-        setClickListeners();
-        setOtherListeners();
-        manipulateGui();
-    }
-
-    private void initObjects() {
-        date = new Date();
-    }
 
     public ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
@@ -90,6 +74,29 @@ public class AddIncomeActivity extends AppCompatActivity implements DatePickerDi
                 }
             });
 
+    private String interval = "1_m";
+
+    private int amount = 0;
+    private Date date;
+
+    private boolean repeated = false;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_add_income);
+
+        initGui();
+        initObjects();
+        setClickListeners();
+        setOtherListeners();
+        manipulateGui();
+    }
+
+    private void initObjects() {
+        date = new Date();
+    }
+
     private void initGui() {
         editTextIncomeAmount = findViewById(R.id.editTextIncomeAmount);
         editTextIncomeName = findViewById(R.id.editTextIncomeName);
@@ -101,6 +108,13 @@ public class AddIncomeActivity extends AppCompatActivity implements DatePickerDi
         chooserIncomeTimestamp = findViewById(R.id.chooserIncomeTimestamp);
         chooserIncomeCategory = findViewById(R.id.chooserIncomeCategory);
         displayCategoryColor = findViewById(R.id.displayCategoryColorAddIncome);
+        switchRepeatedIncome = findViewById(R.id.switchRepeatedIncome);
+
+        containerAddIncomeInterval = findViewById(R.id.containerAddIncomeInterval);
+        textViewIncomeInterval = containerAddIncomeInterval.findViewById(R.id.textViewIncomeInterval);
+        chooserIncomeInterval = containerAddIncomeInterval.findViewById(R.id.chooserIncomeInterval);
+        containerAddIncomeInterval.setVisibility(View.INVISIBLE);
+        textViewRepeatedIncome = findViewById(R.id.textViewRepeatedIncomeAdd);
     }
 
     private void setClickListeners() {
@@ -108,6 +122,7 @@ public class AddIncomeActivity extends AppCompatActivity implements DatePickerDi
             @Override
             public void onClick(View view) {
                 finish();
+                overridePendingTransition(R.anim.fade_in, R.anim.slide_out_bottom);
             }
         });
 
@@ -134,28 +149,49 @@ public class AddIncomeActivity extends AppCompatActivity implements DatePickerDi
                     return;
                 }
                 IncomeDatabaseHelper incomeDatabaseHelper = new IncomeDatabaseHelper(AddIncomeActivity.this);
-                incomeDatabaseHelper.addNewEntry(loadPortfolioIdFromSharedPrefs(), editTextIncomeName.getText().toString().trim(),
+                int incomeEntryId = incomeDatabaseHelper.addNewEntryAndReturnId(loadPortfolioIdFromSharedPrefs(), editTextIncomeName.getText().toString().trim(),
                         amount, categoryId, Utils.isoDateFormat.format(date), Integer.valueOf(Utils.monthDateFormat.format(date)),
                         Integer.valueOf(Utils.yearDateFormat.format(date)));
+                if (!repeated) {
+                    finish();
+                    return;
+                }
+                RepeatedIncomeDatabaseHelper repeatedIncomeDatabase = new RepeatedIncomeDatabaseHelper(AddIncomeActivity.this);
+                repeatedIncomeDatabase.addNewEntry(incomeEntryId, amount, loadPortfolioIdFromSharedPrefs(), interval, Utils.isoDateFormat.format(date), categoryId);
                 finish();
+            }
+        });
+
+        chooserIncomeInterval.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showIntervalPicker();
             }
         });
     }
 
     private void setOtherListeners() {
+        switchRepeatedIncome.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean switched) {
+                TransitionManager.beginDelayedTransition(containerAddIncomeInterval);
+                containerAddIncomeInterval.setVisibility(switched ? View.VISIBLE : View.INVISIBLE);
+                repeated = switched;
+            }
+        });
 
         editTextIncomeAmount.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                if(keyEvent.getAction() == keyEvent.ACTION_UP) {
+                if (keyEvent.getAction() == KeyEvent.ACTION_UP) {
 
 
                     String s = amount + "";
 
-                    if(i == KeyEvent.KEYCODE_DEL)
+                    if (i == KeyEvent.KEYCODE_DEL)
                         amount = amount / 10;
 
-                    if(s.length() >= 12)
+                    if (s.length() >= 12)
                         return false;
 
                     switch (i) {
@@ -198,7 +234,6 @@ public class AddIncomeActivity extends AppCompatActivity implements DatePickerDi
         });
     }
 
-
     private void manipulateGui() {
         CategoriesDatabaseHelper categoriesDatabaseHelper = new CategoriesDatabaseHelper(this, this);
         Cursor categoryCursor = categoriesDatabaseHelper.readCategoryById(categoryId);
@@ -212,11 +247,25 @@ public class AddIncomeActivity extends AppCompatActivity implements DatePickerDi
 
         textViewIncomeTimestamp.setText(Utils.timestampDateDisplayFormat.format(date));
         textViewIncomeAmount.setText(utils.formatCurrency(amount));
+        switchRepeatedIncome.setChecked(repeated);
+        containerAddIncomeInterval.setVisibility(repeated ? View.VISIBLE : View.INVISIBLE);
+        applyInterval(interval);
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            switchRepeatedIncome.setVisibility(View.GONE);
+            textViewRepeatedIncome.setTextColor(getColor(R.color.ui_lime_red));
+            textViewRepeatedIncome.setText(getString(R.string.repeated_income_not_available));
+        }
     }
 
     private int loadPortfolioIdFromSharedPrefs() {
         SharedPreferences sharedPreferences = getSharedPreferences(Utils.SHARED_PREFS, Context.MODE_PRIVATE);
         return sharedPreferences.getInt(Utils.SHARED_PREFS_CURRENT_PORTFOLIO, 1);
+    }
+
+    private void showIntervalPicker() {
+        IntervalPickerDialog intervalPickerDialog = new IntervalPickerDialog(interval);
+        intervalPickerDialog.show(getSupportFragmentManager(), "Interval Picker Dialog");
     }
 
     private void showDialogDatePicker() {
@@ -233,4 +282,29 @@ public class AddIncomeActivity extends AppCompatActivity implements DatePickerDi
         date = calendar.getTime();
         textViewIncomeTimestamp.setText(Utils.timestampDateDisplayFormat.format(date));
     }
+
+    @Override
+    public void applyInterval(String interval) {
+        this.interval = interval;
+        int number = Integer.valueOf(interval.split("_")[0]);
+        String unit = interval.split("_")[1];
+
+        String displayText = "";
+        switch (unit) {
+            case "d":
+                displayText = number > 1 ? getString(R.string.days) : getString(R.string.day);
+                break;
+            case "w":
+                displayText = number > 1 ? getString(R.string.weeks) : getString(R.string.week);
+                break;
+            case "m":
+                displayText = number > 1 ? getString(R.string.months) : getString(R.string.month);
+                break;
+            case "y":
+                displayText = number > 1 ? getString(R.string.years) : getString(R.string.year);
+                break;
+        }
+        textViewIncomeInterval.setText(number + " " + displayText);
+    }
+
 }

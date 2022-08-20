@@ -29,6 +29,7 @@ import de.xyzerstudios.moneymanager.utils.database.CategoriesDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.database.ExpensesDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.database.IncomeDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.database.PortfolioDatabaseHelper;
+import de.xyzerstudios.moneymanager.utils.database.RepeatedIncomeDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.database.TurnoverType;
 
 public class SplashScreenActivity extends AppCompatActivity {
@@ -39,6 +40,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     private BalanceTurnoversDatabaseHelper balanceTurnoversDatabase;
     private ExpensesDatabaseHelper expensesDatabase;
     private IncomeDatabaseHelper incomeDatabase;
+    private RepeatedIncomeDatabaseHelper repeatedIncomeDatabase;
     private PortfolioDatabaseHelper portfolioDatabase;
     private CategoriesDatabaseHelper categoriesDatabase;
     private BudgetsDatabaseHelper budgetsDatabase;
@@ -59,6 +61,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         balanceTurnoversDatabase = new BalanceTurnoversDatabaseHelper(this);
         expensesDatabase = new ExpensesDatabaseHelper(this);
         incomeDatabase = new IncomeDatabaseHelper(this);
+        repeatedIncomeDatabase = new RepeatedIncomeDatabaseHelper(this);
         portfolioDatabase = new PortfolioDatabaseHelper(this);
         categoriesDatabase = new CategoriesDatabaseHelper(this, this);
         budgetsDatabase = new BudgetsDatabaseHelper(this);
@@ -67,6 +70,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         balanceTurnoversDatabase.getReadableDatabase();
         expensesDatabase.getReadableDatabase();
         incomeDatabase.getReadableDatabase();
+        repeatedIncomeDatabase.getReadableDatabase();
         portfolioDatabase.getReadableDatabase();
         categoriesDatabase.getReadableDatabase();
         budgetsDatabase.getReadableDatabase();

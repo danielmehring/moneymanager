@@ -8,12 +8,14 @@ import android.database.Cursor;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.jaredrummler.android.colorpicker.ColorPickerDialog;
 import com.jaredrummler.android.colorpicker.ColorPickerDialogListener;
 
@@ -21,6 +23,8 @@ import de.xyzerstudios.moneymanager.R;
 import de.xyzerstudios.moneymanager.activities.add.AddCategoryActivity;
 import de.xyzerstudios.moneymanager.utils.database.CategoriesDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.database.ExpensesDatabaseHelper;
+import de.xyzerstudios.moneymanager.utils.database.IncomeDatabaseHelper;
+import de.xyzerstudios.moneymanager.utils.database.RepeatedIncomeDatabaseHelper;
 
 public class EditCategoryActivity extends AppCompatActivity implements ColorPickerDialogListener {
 
@@ -71,26 +75,32 @@ public class EditCategoryActivity extends AppCompatActivity implements ColorPick
                     Toast.makeText(EditCategoryActivity.this, getString(R.string.cannot_be_deleted), Toast.LENGTH_SHORT).show();
                     return;
                 }
-                AlertDialog.Builder builder = new AlertDialog.Builder(EditCategoryActivity.this);
-                builder.setMessage(getString(R.string.delete_confirmation))
-                        .setCancelable(false)
-                        .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+
+                MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(EditCategoryActivity.this);
+                builder.setMessage(Html.fromHtml("<font color='"
+                                + String.format("#%06X", (0xFFFFFF & getColor(R.color.ui_text)))
+                                + "'>" + getString(R.string.delete_confirmation) + "</font>"))
+                        .setPositiveButton(Html.fromHtml("<font color='"
+                                + String.format("#%06X", (0xFFFFFF & getColor(R.color.ui_text)))
+                                + "'>" + getString(R.string.yes) + "</font>"), new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialog, int which) {
+                            public void onClick(DialogInterface dialogInterface, int i) {
                                 CategoriesDatabaseHelper categoriesDatabase = new CategoriesDatabaseHelper
                                         (EditCategoryActivity.this, EditCategoryActivity.this);
                                 categoriesDatabase.deleteCategory(categoryId);
                                 finish();
                             }
                         })
-                        .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                        .setNegativeButton(Html.fromHtml("<font color='"
+                                + String.format("#%06X", (0xFFFFFF & getColor(R.color.ui_text)))
+                                + "'>" + getString(R.string.cancel) + "</font>"), new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
                             }
-                        });
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
+                        })
+                        .setBackground(getDrawable(R.drawable.dialog_background))
+                        .show();
             }
         });
 

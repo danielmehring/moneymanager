@@ -111,6 +111,17 @@ public class BudgetsDatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    public Cursor sumAllEntries() {
+        String query = "SELECT Sum(" + COLUMN_AMOUNT_LIMIT + ") FROM " + TABLE_NAME;
+        SQLiteDatabase database = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (database != null) {
+            cursor = database.rawQuery(query, null);
+        }
+        return cursor;
+    }
+
     public Cursor readEntryById(int budgetEntryId) {
         String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_ID + "=" + budgetEntryId;
         SQLiteDatabase database = this.getReadableDatabase();

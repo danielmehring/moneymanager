@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ui_white"
+    android:background="@color/ui_white_background"
     android:orientation="vertical"
     android:paddingHorizontal="15dp"
     tools:context=".activities.edit.EditBalanceActivity">
@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:elevation="2dp"
             android:fontFamily="@font/poppins_medium"
-            android:textColor="@color/ui_black"
+            android:textColor="@color/ui_text_high_contrast"
             android:textSize="20dp"
             android:text="@string/edit_balance"/>
 
@@ -172,37 +172,72 @@
             android:layout_width="match_parent"
             android:layout_height="5dp"/>
 
-        <FrameLayout
-            android:id="@+id/chooserBalancePortfolioEdit"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="35dp"
-            android:clickable="true"
-            android:background="@drawable/invisible"
-            android:foreground="?android:attr/selectableItemBackground">
+            android:orientation="horizontal">
 
-
-
-            <TextView
-                android:id="@+id/textViewBalancePortfolioEdit"
-                android:layout_width="match_parent"
+            <FrameLayout
+                android:id="@+id/chooserBalancePortfolioEdit"
+                android:layout_width="fill_parent"
                 android:layout_height="match_parent"
-                android:paddingTop="3dp"
-                android:paddingLeft="12dp"
-                android:background="@drawable/edit_text_custom_bg"
-                android:textSize="20dp" />
-
-            <ImageView
-                android:layout_width="28dp"
-                android:layout_height="32dp"
-                android:layout_gravity="right"
-                android:layout_marginTop="2dp"
-                android:layout_marginRight="6dp"
-                android:src="@drawable/ic_expand_more"
-                app:tint="@color/ui_text_faded" />
+                android:layout_weight="1"
+                android:clickable="true"
+                android:background="@drawable/invisible"
+                android:foreground="?android:attr/selectableItemBackground">
 
 
 
-        </FrameLayout>
+                <TextView
+                    android:id="@+id/textViewBalancePortfolioEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingTop="3dp"
+                    android:paddingLeft="12dp"
+                    android:background="@drawable/edit_text_custom_bg"
+                    android:textSize="20dp" />
+
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginRight="6dp"
+                    android:src="@drawable/ic_expand_more"
+                    app:tint="@color/ui_text_faded" />
+
+
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:id="@+id/removeEditFilterPortfolio"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="5dp"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:padding="6dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:background="@drawable/circle"
+                    android:backgroundTint="@color/ui_lime_red" >
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_close"
+                        app:tint="@color/ui_white_semi_translucent" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>

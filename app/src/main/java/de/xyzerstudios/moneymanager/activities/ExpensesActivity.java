@@ -21,6 +21,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,6 +71,15 @@ public class ExpensesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expenses);
 
+        Bundle bundle = getIntent().getExtras();
+        if (bundle == null) {
+            finish();
+            return;
+        }
+
+        selectedMonth = bundle.getInt("month", 0);
+        selectedYear = bundle.getInt("year", 0);
+
         initGui();
         initObjects();
         setOnClickListeners();
@@ -77,11 +87,15 @@ public class ExpensesActivity extends AppCompatActivity {
         manipulateGui();
     }
 
+    private void launchAsyncTask() {
+        new ExpensesActivity.expensesAsyncTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,
+                selectedMonth + "", selectedYear + "", filterCategory, filterPaymentMethod);
+    }
+
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        new ExpensesActivity.expensesAsyncTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,
-                selectedMonth + "", selectedYear + "", filterCategory, filterPaymentMethod);
+        launchAsyncTask();
     }
 
     private void manipulateGui() {
@@ -94,8 +108,7 @@ public class ExpensesActivity extends AppCompatActivity {
         swipeRefreshExpenses.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new ExpensesActivity.expensesAsyncTask(ExpensesActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,
-                        selectedMonth + "", selectedYear + "", filterCategory, filterPaymentMethod);
+                launchAsyncTask();
                 swipeRefreshExpenses.setRefreshing(false);
             }
         });
@@ -129,8 +142,6 @@ public class ExpensesActivity extends AppCompatActivity {
     private void initObjects() {
         date = new Date();
         expensesItems = new ArrayList<>();
-        selectedMonth = Integer.valueOf(Utils.monthDateFormat.format(date));
-        selectedYear = Integer.valueOf(Utils.yearDateFormat.format(date));
         filterPaymentMethod = "";
         filterCategory = "";
     }
@@ -144,13 +155,11 @@ public class ExpensesActivity extends AppCompatActivity {
     }
 
     private void updatePaymentMethod() {
-        new ExpensesActivity.expensesAsyncTask(ExpensesActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,
-                selectedMonth + "", selectedYear + "", filterCategory, filterPaymentMethod);
+        launchAsyncTask();
     }
 
     private void updateCategory() {
-        new ExpensesActivity.expensesAsyncTask(ExpensesActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,
-                selectedMonth + "", selectedYear + "", filterCategory, filterPaymentMethod);
+        launchAsyncTask();
     }
 
     private void showBottomDialog() {
@@ -211,10 +220,7 @@ public class ExpensesActivity extends AppCompatActivity {
                         ExpensesActivity.this.selectedMonth = formattedSelectedMonth;
                         ExpensesActivity.this.selectedYear = selectedYear;
                         textViewMonthAndYearExpenses.setText(getMonth(formattedSelectedMonth) + ", " + selectedYear);
-                        new ExpensesActivity.expensesAsyncTask(ExpensesActivity.this)
-                                .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,
-                                        ExpensesActivity.this.selectedMonth + "", ExpensesActivity.this.selectedYear + "",
-                                        filterCategory, filterPaymentMethod);
+                        launchAsyncTask();
                     }
                 }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH));
 

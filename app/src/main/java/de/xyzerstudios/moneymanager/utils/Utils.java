@@ -13,6 +13,7 @@ public class Utils {
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String SHARED_PREFS_CURRENT_PORTFOLIO = "currentPortfolio";
     public static final String SHARED_PREFS_IS_BUDGET_EXCEEDED = "isBudgetExceeded";
+    public static final String SHARED_PREFS_COUNT_HOMEACTIVITY_CREATED = "countHomeActivityCreated";
 
     public String formatCurrency(int amount) {
         int nachKomma = amount % 100;

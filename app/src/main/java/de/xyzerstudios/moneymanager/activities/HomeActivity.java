@@ -22,10 +22,16 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.Task;
+import com.google.android.play.core.review.ReviewInfo;
+import com.google.android.play.core.review.ReviewManager;
+import com.google.android.play.core.review.ReviewManagerFactory;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import de.xyzerstudios.moneymanager.R;
 import de.xyzerstudios.moneymanager.fragments.AboutUsFragment;
@@ -34,18 +40,21 @@ import de.xyzerstudios.moneymanager.fragments.DonateFragment;
 import de.xyzerstudios.moneymanager.fragments.PremiumFragment;
 import de.xyzerstudios.moneymanager.utils.Utils;
 import de.xyzerstudios.moneymanager.utils.drawermenu.DrawerAdapter;
+import de.xyzerstudios.moneymanager.utils.drawermenu.DrawerItem;
 import de.xyzerstudios.moneymanager.utils.drawermenu.HeadingItem;
 import de.xyzerstudios.moneymanager.utils.drawermenu.SimpleItem;
 
 public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnItemSelectedListener {
 
-    private static final int POS_DASHBOARD = 1;
     public static final int POS_PORTFOLIOS = 2;
     public static final int POS_BILANZEN = 3;
     public static final int POS_BUDGET = 4;
+    private static final String tag = "HomeActivity";
+    private static final int POS_DASHBOARD = 1;
     private static final int POS_PREMIUM = 6;
     private static final int POS_DONATE = 7;
-    private static final int POS_ABOUT_US = 9;
+    private static final int POS_SETTINGS = 9;
+    private static final int POS_ABOUT_US = 10;
 
     private static final int RESOURCE_DASHBOARD = 0;
     private static final int RESOURCE_PORTFOLIOS = 1;
@@ -53,7 +62,8 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
     private static final int RESOURCE_BUDGET = 3;
     private static final int RESOURCE_PREMIUM = 4;
     private static final int RESOURCE_DONATE = 5;
-    private static final int RESOURCE_ABOUT_US = 6;
+    private static final int RESOURCE_SETTINGS = 6;
+    private static final int RESOURCE_ABOUT_US = 7;
 
     private static final int RESOURCE_HEADING_GENERAL = 0;
     private static final int RESOURCE_HEADING_ACTIONS = 1;
@@ -72,6 +82,8 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
     private Toolbar toolbar;
     private Configuration mPrevConfig;
 
+    private ReviewInfo reviewInfo;
+    private ReviewManager reviewManager;
 
     public static boolean darkModeChanged(Configuration mPrevConfig, Configuration configuration) {
         if (mPrevConfig != null) {
@@ -83,10 +95,6 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
         }
     }
 
-    public static boolean isOnLightMode(Configuration configuration) {
-        return (configuration.uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_NO;
-    }
-
     public static boolean isOnDarkMode(Configuration configuration) {
         return (configuration.uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
     }
@@ -95,6 +103,9 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        activateReviewInfo();
+        addCreatedCount();
+
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -103,7 +114,7 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
         slidingRootNav = new SlidingRootNavBuilder(this)
                 .withToolbarMenuToggle(toolbar)
                 .withMenuOpened(false)
-                .withRootViewScale(0.8f)
+                .withRootViewScale(0.84f)
                 .withContentClickableWhenMenuOpened(false)
                 .withSavedState(savedInstanceState)
                 .withMenuLayout(R.layout.drawer_menu)
@@ -111,31 +122,36 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
 
         loadSlidingRootNav();
 
+        if (getCreatedCount() % 10 == 0) {
+            startReviewFlow();
+        }
     }
 
-
-    private void loadSlidingRootNav() {
+    public void loadSlidingRootNav() {
 
         simpleItemTitles = loadSimpleItemTitles();
         simpleItemIcons = loadSimpleItemIcons();
         headingItemTitles = loadHeadingItemTitles();
 
-        adapter = new DrawerAdapter(Arrays.asList(
-                createNewHeadingItem(RESOURCE_HEADING_GENERAL),
+        List<DrawerItem> drawerItems = new ArrayList<>();
 
-                createNewDrawerItem(RESOURCE_DASHBOARD).hideNotification().setChecked(true),
-                createNewDrawerItem(RESOURCE_PORTFOLIOS).hideNotification(),
-                createNewDrawerItem(RESOURCE_BILANZEN).hideNotification(),
-                createNewDrawerItem(RESOURCE_BUDGET).hideNotification(),
+        drawerItems.add(createNewHeadingItem(RESOURCE_HEADING_GENERAL));
+        drawerItems.add(createNewDrawerItem(RESOURCE_DASHBOARD).hideNotification().setChecked(true));
+        drawerItems.add(createNewDrawerItem(RESOURCE_PORTFOLIOS).hideNotification());
+        drawerItems.add(createNewDrawerItem(RESOURCE_BILANZEN).hideNotification());
+        drawerItems.add(createNewDrawerItem(RESOURCE_BUDGET).hideNotification());
 
-                createNewHeadingItem(RESOURCE_HEADING_ACTIONS),
+        drawerItems.add(createNewHeadingItem(RESOURCE_HEADING_ACTIONS));
 
-                createNewDrawerItem(RESOURCE_PREMIUM).showNotification(),
-                createNewDrawerItem(RESOURCE_DONATE).hideNotification(),
+        drawerItems.add(createNewDrawerItem(RESOURCE_PREMIUM).showNotification());
+        drawerItems.add(createNewDrawerItem(RESOURCE_DONATE).hideNotification());
 
-                createNewHeadingItem(RESOURCE_HEADING_OTHER),
+        drawerItems.add(createNewHeadingItem(RESOURCE_HEADING_OTHER));
 
-                createNewDrawerItem(RESOURCE_ABOUT_US).hideNotification()));
+        drawerItems.add(createNewDrawerItem(RESOURCE_SETTINGS).hideNotification());
+        drawerItems.add(createNewDrawerItem(RESOURCE_ABOUT_US).hideNotification());
+
+        adapter = new DrawerAdapter(drawerItems);
         adapter.setListener(this);
 
         recyclerView = findViewById(R.id.list);
@@ -177,6 +193,20 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
         return sharedPreferences.getInt(Utils.SHARED_PREFS_CURRENT_PORTFOLIO, 1);
     }
 
+    private int getCreatedCount() {
+        SharedPreferences sharedPreferences = getSharedPreferences(Utils.SHARED_PREFS, MODE_PRIVATE);
+        return sharedPreferences.getInt(Utils.SHARED_PREFS_COUNT_HOMEACTIVITY_CREATED, 0);
+    }
+
+    private void addCreatedCount() {
+        SharedPreferences sharedPreferences = getSharedPreferences(Utils.SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        int newCount = getCreatedCount() + 1;
+        editor.putInt(Utils.SHARED_PREFS_COUNT_HOMEACTIVITY_CREATED, newCount);
+        editor.apply();
+        Log.d(tag, "HomeActivity created count changed to: " + newCount);
+    }
+
     private void showFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(
@@ -190,7 +220,7 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
 
     private SimpleItem createNewDrawerItem(int positionOfResourcesInArray) {
         return new SimpleItem(simpleItemIcons[positionOfResourcesInArray], simpleItemTitles[positionOfResourcesInArray],
-                this, positionOfResourcesInArray == RESOURCE_BUDGET ? true : false)
+                this, positionOfResourcesInArray == RESOURCE_BUDGET)
                 .withIconTint(color(R.color.ui_side_menu))
                 .withTextTint(color(R.color.ui_side_menu))
                 .withSelectedIconTint(color(R.color.ui_side_menu))
@@ -283,6 +313,10 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
                 showFragment(donateFragment);
                 slidingRootNav.closeMenu();
                 break;
+            case POS_SETTINGS:
+
+                slidingRootNav.closeMenu();
+                break;
             case POS_ABOUT_US:
                 Fragment aboutUsFragment = new AboutUsFragment();
                 showFragment(aboutUsFragment);
@@ -290,4 +324,24 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
                 break;
         }
     }
+
+    private void activateReviewInfo() {
+        reviewManager = ReviewManagerFactory.create(this);
+        Task<ReviewInfo> request = reviewManager.requestReviewFlow();
+        request.addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                reviewInfo = task.getResult();
+            } else {
+                Log.e(tag, "Review Dialog failed to start.");
+            }
+        });
+    }
+
+    private void startReviewFlow() {
+        Log.d(tag, "Trying to start review flow.");
+        if (reviewInfo != null) {
+            reviewManager.launchReviewFlow(this, reviewInfo);
+        }
+    }
+
 }

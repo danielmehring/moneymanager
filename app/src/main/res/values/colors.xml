@@ -8,14 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="sportslabs">#36AFE2</color>
-    <color name="sportslabsdark">#2F9CC6</color>
-    <color name="whitetransparent">#99FFFFFF</color>
-    <color name="whitedarktransparent">#99F5F5F5</color>
-    <color name="whitedark">#FFFAFAFA</color>
     <color name="blacktransparent">#99000000</color>
-    <color name="blacklighttransparent">#990A0A0A</color>
-    <color name="blacklight">#0A0A0A</color>
 
     <color name="transparent_black">#00000000</color>
     <color name="transparent_white">#00FFFFFF</color>

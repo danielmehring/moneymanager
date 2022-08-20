@@ -10,7 +10,8 @@
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/ui_white">
+        android:elevation="1dp"
+        android:background="@color/ui_toolbar">
 
         <ImageButton
             android:id="@+id/buttonBudgetsGoBack"
@@ -20,7 +21,8 @@
             android:clickable="true"
             android:foreground="?android:attr/selectableItemBackground"
             android:src="@drawable/ic_arrow_back"
-            android:backgroundTint="@color/transparent_white"/>
+            android:backgroundTint="@color/transparent_white"
+            app:tint="@color/ui_black" />
 
         <LinearLayout
             android:id="@+id/buttonBudgetsFilter"
@@ -38,7 +40,8 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
-                android:src="@drawable/ic_tune" />
+                android:src="@drawable/ic_tune"
+                app:tint="@color/ui_icon" />
         </LinearLayout>
 
     </androidx.appcompat.widget.Toolbar>
@@ -46,6 +49,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         android:background="@color/ui_light_background">
 
         <LinearLayout
@@ -71,7 +75,7 @@
                     android:fontFamily="@font/poppins_semibold"
                     android:paddingTop="4dp"
                     android:text="@string/menu_title_budgets"
-                    android:textColor="@color/ui_black"
+                    android:textColor="@color/ui_text_high_contrast"
                     android:textSize="28dp" />
 
                 <Space
@@ -128,23 +132,141 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="22dp"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="@string/available_amount"
+                android:textColor="@color/ui_text_high_contrast"
+                android:textSize="14dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/availableAmountBudget"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:elevation="1dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:paddingTop="4dp"
+                    android:text="--,-- €"
+                    android:textColor="@color/ui_money_text_green"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="3dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textColor="@color/ui_money_text_green"
+                    android:textSize="15dp"
+                    android:text="/" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textColor="@color/ui_money_text_green"
+                    android:textSize="15dp"
+                    android:text="@string/month" />
+
+
+            </LinearLayout>
+
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="20dp"/>
+                android:layout_height="10dp"/>
 
 
             <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                 android:id="@+id/swipeRefreshBudgets"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="fill_parent"
+                android:layout_weight="1">
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerViewBudgets"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
+            <Space
+                android:id="@+id/budgetsSpacerBottom1"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:visibility="gone"/>
+
+            <LinearLayout
+                android:id="@+id/containerBudgetsSumAndLeft"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:visibility="gone"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="@string/sum_budgets"
+                        android:textColor="@color/ui_text_high_contrast"
+                        android:textSize="12dp"/>
+                    <TextView
+                        android:id="@+id/sumOfBudget"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:elevation="1dp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:paddingTop="4dp"
+                        android:text="--,-- €"
+                        android:textColor="@color/ui_money_text_green"
+                        android:textSize="16dp" />
+                </LinearLayout>
+                <Space
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/textViewBudgetExceededLeft"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="@string/amount_left"
+                        android:textColor="@color/ui_text_high_contrast"
+                        android:textSize="12dp"/>
+                    <TextView
+                        android:id="@+id/exceededOrLeftBudget"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:elevation="1dp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:paddingTop="4dp"
+                        android:text="--,-- €"
+                        android:textColor="@color/ui_money_text_green"
+                        android:textSize="16dp" />
+                </LinearLayout>
+            </LinearLayout>
+            <Space
+                android:id="@+id/budgetsSpacerBottom2"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:visibility="gone"/>
 
         </LinearLayout>
+
+
 
     </LinearLayout>
 

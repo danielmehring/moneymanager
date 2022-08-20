@@ -76,6 +76,45 @@ public class IncomeDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public int addNewEntryAndReturnId(int portfolioId, String name, int amount, int categoryId, String timestamp,
+                            int month, int year) {
+        SQLiteDatabase writableDatabase = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(COLUMN_PORTFOLIO_ID, portfolioId);
+        contentValues.put(COLUMN_NAME, name);
+        contentValues.put(COLUMN_AMOUNT, amount);
+        contentValues.put(COLUMN_TIMESTAMP, timestamp);
+        contentValues.put(COLUMN_MONTH, month);
+        contentValues.put(COLUMN_CATEGORY_ID, categoryId);
+        contentValues.put(COLUMN_YEAR, year);
+
+        long result = writableDatabase.insert(TABLE_NAME, null, contentValues);
+        if (result == -1) {
+            Log.d(tag, "Something went wrong.");
+            return 0;
+        } else {
+            Log.d(tag, "Added new entry.");
+        }
+
+        String query = "SELECT " + COLUMN_ID + " FROM " + TABLE_NAME
+                + " ORDER BY " + COLUMN_ID + " DESC"
+                + " LIMIT 1";
+        SQLiteDatabase readableDatabase = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (readableDatabase != null)
+            cursor = readableDatabase.rawQuery(query, null);
+        if (cursor == null)
+            return 0;
+
+        int entryId = 0;
+
+        while (cursor.moveToNext()) entryId = cursor.getInt(0);
+
+        return entryId;
+    }
+
     public void updateEntry(int incomeEntryId, String name, int amount, int categoryId, String timestamp,
                             int month, int year) {
         SQLiteDatabase database = this.getWritableDatabase();

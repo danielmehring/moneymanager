@@ -13,6 +13,7 @@
     <string name="menu_title_premium">Premium</string>
     <string name="menu_title_donate">Spenden</string>
     <string name="menu_heading_other">Anderes</string>
+    <string name="menu_title_settings">Einstellungen</string>
     <string name="menu_title_about_us">Über uns</string>
     <string name="menu_title_budgets">Budgets</string>
 
@@ -87,7 +88,15 @@
     <string name="time_stamp">Zeitstempel</string>
     <string name="edit_expense">Ausgabe bearbeiten</string>
     <string name="delete">löschen</string>
+
+    <string name="day">Tag</string>
+    <string name="days">Tage</string>
+    <string name="week">Woche</string>
+    <string name="weeks">Wochen</string>
     <string name="month">Monat</string>
+    <string name="months">Monate</string>
+    <string name="year">Jahr</string>
+    <string name="years">Jahre</string>
 
     <string name="choose_month_and_year">Monat und Jahr auswählen</string>
     <string name="choose_payment_method">Zahlungsmittel auswählen</string>
@@ -118,14 +127,40 @@
     <string name="category_needs_to_be_unique">Es existiert bereits eine Kategorie unter diesem Namen</string>
     <string name="edit_category">Kategorie bearbeiten</string>
     <string name="edit_revenue">Einnahme bearbeiten</string>
+
     <string name="amount_left">Verbleibend</string>
     <string name="amount_exceeded">Überschritten</string>
     <string name="amount_limit">Limit</string>
     <string name="amount_spent">Ausgegeben</string>
+
     <string name="add_budget">Budget hinzufügen</string>
     <string name="cant_add_two_budgets_same_cat">Man kann nur ein Budget pro Kategorie festlegen</string>
     <string name="edit_budget">Budget bearbeiten</string>
     <string name="portfolio">Portfolio</string>
     <string name="edit_balance">Bilanz bearbeiten</string>
+    <string name="add_amount">Betrag hinzufügen</string>
+    <string name="repeated_income">Regelmäßiges Einkommen</string> <!-- Wiederkehrende Einnahme -->
+    <string name="repeated_income_not_available">\"Regelmäßiges Einkommen\" ist mit dieser Android-Version nicht verfügbar.</string>
+    <string name="repeated">Wiederkehrend</string>
+    <string name="interval">Intervall</string>
+    <string name="available_amount">Verfügbarer Betrag</string>
+    <string name="sum_budgets">Summe der Budgets</string>
+
+    <string name="select">Auswählen</string>
+    <string name="apply">Anwenden</string>
+
+    <string name="budgets_explanation">Mit \"Budgets\" kannst du super leicht budgetieren.
+        Wähle eine Kategorie und ein monatliches Limit aus. Sobald du diesen Betrag überschreitest,
+        färbt sich das Budget rot. Unter \"verfügbarer Betrag\" siehst du dein durchschnittliches Budget pro Monat.
+        Hierzu zählt lediglich regelmäßiges Einkommen. </string>
+    <string name="portfolios_explanation">Mit \"Portfolios\" kannst du Umsätze voneinander trennen. Mit mehreren Portfolios behälst du leicht den Überblick.</string>
+
+
+    <string-array name="interval_units">
+        <item>@string/days</item>
+        <item>@string/weeks</item>
+        <item>@string/months</item>
+        <item>@string/years</item>
+    </string-array>
 
 </resources>

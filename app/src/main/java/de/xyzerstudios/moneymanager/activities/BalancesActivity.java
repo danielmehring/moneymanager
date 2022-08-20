@@ -34,7 +34,7 @@ import de.xyzerstudios.moneymanager.utils.database.TurnoverType;
 
 public class BalancesActivity extends AppCompatActivity {
 
-    private ImageButton buttonPortfolioGoBack;
+    private ImageButton buttonBalancesGoBack;
     private LinearLayout buttonAddNewBalance;
     private RecyclerView recyclerViewBalances;
     private BalanceAdapter balanceAdapter;
@@ -47,7 +47,7 @@ public class BalancesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_balances);
 
-        buttonPortfolioGoBack = findViewById(R.id.buttonPortfolioGoBack);
+        buttonBalancesGoBack = findViewById(R.id.buttonBalancesGoBack);
         buttonAddNewBalance = findViewById(R.id.buttonAddNewBalance);
         recyclerViewBalances = findViewById(R.id.recyclerViewBalances);
         swipeRefreshBalance = findViewById(R.id.swipeRefreshBalances);
@@ -76,7 +76,7 @@ public class BalancesActivity extends AppCompatActivity {
             }
         });
 
-        buttonPortfolioGoBack.setOnClickListener(new View.OnClickListener() {
+        buttonBalancesGoBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();

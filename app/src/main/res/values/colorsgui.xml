@@ -1,23 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="gui_background">#FFFFFF</color>
-    <color name="gui_drawer">#FAFAFA</color>
     <color name="gui_elevation1">#F5F5F5</color>
-    <color name="gui_elevation2">#EBEBEB</color>
-    <color name="gui_text">#131313</color>
-    <color name="gui_fadedtext">#666666</color>
+
+    <color name="static_neutral_grey">#7F7F7F</color>
+
+    <color name="ui_toolbar">#FFFFFF</color>
+    <color name="ui_drawer">#FFFFFF</color>
+    <color name="ui_dialog_background">#FFFFFF</color>
+    <color name="ui_light_background">#F9F9FF</color>
+    <color name="ui_white_background">#FFFFFF</color>
+    <color name="ui_light_button">#EEEEEE</color>
+    <color name="ui_recycler_item_background">#FFFFFF</color>
+
+    <color name="ui_text">#1B1B1B</color>
+    <color name="ui_text_white">#FFFFFF</color>
+    <color name="ui_text_high_contrast">#040404</color>
+    <color name="ui_text_translucent">#1A000000</color>
+    <color name="ui_text_semi_translucent">#80000000</color>
+    <color name="ui_text_highly_translucent">#0D000000</color>
+    <color name="ui_text_faded">#353535</color>
+    <color name="ui_text_strongly_faded">#AEAEAE</color>
+    <color name="ui_money_text_green">#398E6F</color>
+    <color name="ui_money_text_red">#F04036</color>
+
+    <color name="ui_side_menu">#2F2F2F</color>
+    <color name="ui_side_menu_purple">#35355E</color>
+    <color name="ui_icon">#181818</color>
 
     <color name="ui_white">#FFFFFF</color>
     <color name="ui_black">#000000</color>
-    <color name="ui_light_background">#F3F3FF</color>
-    <color name="ui_light_button">#E0E0E0</color>
-    <color name="ui_text_faded">#4D4C4C</color>
-    <color name="ui_text_strongly_faded">#AEAEAE</color>
-    <color name="ui_text">#1B1B1B</color>
-    <color name="ui_icon">#181818</color>
     <color name="ui_dark_purple">#35355E</color>
-    <color name="ui_lime_green_text">#BFFFE8</color>
-    <color name="ui_side_menu">#2F2F2F</color>
     <color name="ui_link_blue">#2C80FF</color>
     <color name="ui_soft_red">#FF3737</color>
     <color name="ui_lime_green">#63C8A6</color>

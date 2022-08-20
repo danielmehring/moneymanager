@@ -1,16 +1,13 @@
 package de.xyzerstudios.moneymanager.asynctasks;
 
 import android.app.Activity;
-import android.content.Context;
 import android.database.Cursor;
-import android.media.AudioManager;
 import android.os.AsyncTask;
-import android.os.Vibrator;
+import android.transition.TransitionManager;
 import android.widget.Toast;
 
 import java.lang.ref.WeakReference;
 
-import de.xyzerstudios.moneymanager.R;
 import de.xyzerstudios.moneymanager.fragments.DashboardFragment;
 import de.xyzerstudios.moneymanager.utils.Utils;
 import de.xyzerstudios.moneymanager.utils.database.PortfolioDatabaseHelper;
@@ -89,19 +86,24 @@ public class LoadPortfolioAsyncTask extends AsyncTask<Integer, String, String> {
         int revenue = Integer.valueOf(strings[2]);
         int expenses = Integer.valueOf(strings[3]);
         Utils utils = new Utils();
+
+        TransitionManager.beginDelayedTransition(dashboardFragment.transitionContainerDashboard);
+        TransitionManager.beginDelayedTransition(dashboardFragment.linearLayoutIncome);
+        TransitionManager.beginDelayedTransition(dashboardFragment.linearLayoutExpenses);
+
         if (saldo < 0) {
             saldo = saldo * (-1);
-            dashboardFragment.dashboardSaldo.setText("- " + utils.formatCurrency(saldo) );
+            dashboardFragment.dashboardSaldo.setText("- " + utils.formatCurrency(saldo));
         } else {
-            dashboardFragment.dashboardSaldo.setText("+ " + utils.formatCurrency(saldo) );
+            dashboardFragment.dashboardSaldo.setText("+ " + utils.formatCurrency(saldo));
         }
 
-        dashboardFragment.dashboardIncome.setText("+ " + utils.formatCurrency(revenue) );
+        dashboardFragment.dashboardIncome.setText("+ " + utils.formatCurrency(revenue));
 
-        dashboardFragment.dashboardExpenses.setText("- " + utils.formatCurrency(expenses) );
+        dashboardFragment.dashboardExpenses.setText("- " + utils.formatCurrency(expenses));
 
-        dashboardFragment.centerTextIncomeChart.setText(utils.formatCurrency(revenue) );
-        dashboardFragment.centerTextExpensesChart.setText(utils.formatCurrency(expenses) );
+        dashboardFragment.centerTextIncomeChart.setText(utils.formatCurrency(revenue));
+        dashboardFragment.centerTextExpensesChart.setText(utils.formatCurrency(expenses));
     }
 
 }

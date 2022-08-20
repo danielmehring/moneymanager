@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/ui_dialog_background"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/ui_link_blue"
+        android:paddingTop="11dp"
+        android:paddingBottom="15dp"
+        android:paddingHorizontal="15dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:maxLines="1"
+                android:elevation="1dp"
+                android:fontFamily="@font/poppins_medium"
+                android:paddingTop="4dp"
+                android:text="@string/interval"
+                android:textColor="@color/ui_white"
+                android:textSize="26dp" />
+            <LinearLayout
+                android:id="@+id/closeDialogIntervalPicker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="7dp"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:gravity="center">
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_marginLeft="10dp"
+                    android:contentDescription="@string/payment_method"
+                    android:elevation="2dp"
+                    android:src="@drawable/ic_close"
+                    app:tint="@color/ui_white" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="15dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="15dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <NumberPicker
+                android:id="@+id/numberPickerInterval"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Space
+                android:layout_width="25dp"
+                android:layout_height="wrap_content" />
+
+            <NumberPicker
+                android:id="@+id/unitPickerInterval"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="15dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right">
+
+            <LinearLayout
+                android:id="@+id/buttonApplyInterval"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_margin="5dp"
+                android:paddingHorizontal="10dp"
+                android:background="@drawable/light_button"
+                android:clickable="true"
+                android:elevation="2dp"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:gravity="center"
+                android:paddingTop="4dp"
+                android:textColor="@color/ui_text_high_contrast">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/poppins_medium"
+                    android:maxLines="1"
+                    android:text="@string/apply"
+                    android:textAlignment="center"
+                    android:textColor="@color/ui_text_high_contrast"
+                    android:textSize="15dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="15dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

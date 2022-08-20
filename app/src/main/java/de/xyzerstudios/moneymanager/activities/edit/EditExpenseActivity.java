@@ -18,6 +18,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
@@ -29,12 +30,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 import de.xyzerstudios.moneymanager.R;
 import de.xyzerstudios.moneymanager.activities.CategoriesActivity;
+import de.xyzerstudios.moneymanager.utils.database.BalanceTurnoversDatabaseHelper;
+import de.xyzerstudios.moneymanager.utils.database.BudgetsDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.dialogs.DatePickerFragment;
 import de.xyzerstudios.moneymanager.utils.Utils;
 import de.xyzerstudios.moneymanager.utils.database.CategoriesDatabaseHelper;
@@ -230,25 +235,31 @@ public class EditExpenseActivity extends AppCompatActivity implements DatePicker
         deleteExpenseEntry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(EditExpenseActivity.this);
-                builder.setMessage(getString(R.string.delete_confirmation))
-                        .setCancelable(false)
-                        .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+                MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(EditExpenseActivity.this);
+                builder.setMessage(Html.fromHtml("<font color='"
+                                + String.format("#%06X", (0xFFFFFF & getColor(R.color.ui_text)))
+                                + "'>" + getString(R.string.delete_confirmation) + "</font>"))
+                        .setPositiveButton(Html.fromHtml("<font color='"
+                                + String.format("#%06X", (0xFFFFFF & getColor(R.color.ui_text)))
+                                + "'>" + getString(R.string.yes) + "</font>"), new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialog, int which) {
+                            public void onClick(DialogInterface dialogInterface, int i) {
                                 ExpensesDatabaseHelper expensesDatabaseHelper = new ExpensesDatabaseHelper(EditExpenseActivity.this);
                                 expensesDatabaseHelper.deleteEntry(expensesEntryId);
                                 finish();
                             }
                         })
-                        .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                        .setNegativeButton(Html.fromHtml("<font color='"
+                                + String.format("#%06X", (0xFFFFFF & getColor(R.color.ui_text)))
+                                + "'>" + getString(R.string.cancel) + "</font>"), new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
                             }
-                        });
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
+                        })
+                        .setBackground(getDrawable(R.drawable.dialog_background))
+                        .show();
+
             }
         });
 

@@ -10,6 +10,7 @@
         android:clickable="true"
         android:foreground="?android:attr/selectableItemBackground"
         android:background="@drawable/default_corners"
+        android:backgroundTint="@color/ui_recycler_item_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:cardCornerRadius="15dp">

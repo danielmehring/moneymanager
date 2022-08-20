@@ -21,6 +21,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +44,7 @@ public class AddBalanceActivity extends AppCompatActivity implements DatePickerD
     public ImageView closeActivityAddBalance, addBalance;
     public TextView textViewBalanceTimestamp, textViewBalancePortfolio;
     public FrameLayout chooserBalanceTimestamp, chooserBalancePortfolio;
+    public LinearLayout removeAddFilterPortfolio;
 
     private final Utils utils = new Utils();
 
@@ -86,6 +88,7 @@ public class AddBalanceActivity extends AppCompatActivity implements DatePickerD
         textViewBalancePortfolio = findViewById(R.id.textViewBalancePortfolio);
         chooserBalanceTimestamp = findViewById(R.id.chooserBalanceTimestamp);
         chooserBalancePortfolio = findViewById(R.id.chooserBalancePortfolio);
+        removeAddFilterPortfolio = findViewById(R.id.removeAddFilterPortfolio);
     }
 
     private void setClickListeners() {
@@ -128,10 +131,23 @@ public class AddBalanceActivity extends AppCompatActivity implements DatePickerD
             }
         });
 
+        removeAddFilterPortfolio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                portfolioId = 0;
+                updatePortfolioChooser();
+            }
+        });
+
     }
 
 
     private void manipulateGui() {
+        textViewBalanceTimestamp.setText(Utils.timestampDateDisplayFormat.format(date));
+        updatePortfolioChooser();
+    }
+
+    public void updatePortfolioChooser() {
         if (portfolioId != 0) {
             PortfolioDatabaseHelper portfolioDatabaseHelper = new PortfolioDatabaseHelper(AddBalanceActivity.this);
             Cursor cursor = portfolioDatabaseHelper.readPortfolioById(portfolioId);
@@ -140,9 +156,11 @@ public class AddBalanceActivity extends AppCompatActivity implements DatePickerD
                 portfolioName = cursor.getString(1);
             }
             textViewBalancePortfolio.setText(portfolioName);
+            removeAddFilterPortfolio.setVisibility(View.VISIBLE);
+        } else {
+            textViewBalancePortfolio.setText("");
+            removeAddFilterPortfolio.setVisibility(View.GONE);
         }
-
-        textViewBalanceTimestamp.setText(Utils.timestampDateDisplayFormat.format(date));
     }
 
     private void showDialogDatePicker() {

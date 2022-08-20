@@ -2,22 +2,16 @@ package de.xyzerstudios.moneymanager.utils.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,12 +19,8 @@ import java.util.ArrayList;
 
 import de.xyzerstudios.moneymanager.R;
 import de.xyzerstudios.moneymanager.activities.PortfoliosActivity;
-import de.xyzerstudios.moneymanager.activities.edit.EditPortfolioActivity;
-import de.xyzerstudios.moneymanager.asynctasks.LoadPortfoliosAsyncTask;
-import de.xyzerstudios.moneymanager.utils.PublicValues;
 import de.xyzerstudios.moneymanager.utils.Utils;
 import de.xyzerstudios.moneymanager.utils.adapters.items.BalancePortfolioItem;
-import de.xyzerstudios.moneymanager.utils.database.PortfolioDatabaseHelper;
 
 
 public class PortfolioChooseAdapter extends RecyclerView.Adapter<PortfolioChooseAdapter.ViewHolder> {

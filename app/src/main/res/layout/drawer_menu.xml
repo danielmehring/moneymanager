@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ui_white"
+    android:background="@color/ui_drawer"
     android:orientation="vertical">
 
 
@@ -29,13 +29,13 @@
             android:text="Free"
             android:textSize="24dp"
             android:layout_marginTop="2dp"
-            android:textColor="@color/ui_dark_purple"
+            android:textColor="@color/ui_side_menu_purple"
             android:fontFamily="@font/poppins_medium"/>
     </LinearLayout>
 
     <Space
         android:layout_width="0dp"
-        android:layout_height="15dp"/>
+        android:layout_height="5dp"/>
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -61,7 +61,7 @@
             android:layout_marginBottom="15dp"
             android:layout_marginRight="7dp"
             android:src="@drawable/ic_xyzerstudios_logo"
-            app:tint="@color/ui_dark_purple" />
+            app:tint="@color/ui_side_menu_purple" />
     </LinearLayout>
 
 

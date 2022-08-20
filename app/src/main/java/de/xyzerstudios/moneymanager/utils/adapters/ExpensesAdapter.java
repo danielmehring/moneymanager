@@ -68,6 +68,10 @@ public class ExpensesAdapter extends RecyclerView.Adapter<ExpensesAdapter.ViewHo
             holder.expensesPaymentMethod.setText(activity.getString(R.string.ec_card));
         } else if (expensesItem.getPaymentMethod().matches("CASH")) {
             holder.expensesPaymentMethod.setText(activity.getString(R.string.cash));
+        } else if (expensesItem.getPaymentMethod().matches("BT")) {
+            holder.expensesPaymentMethod.setText(activity.getString(R.string.bank_transfer));
+        } else if (expensesItem.getPaymentMethod().matches("OP")) {
+            holder.expensesPaymentMethod.setText(activity.getString(R.string.online_payment));
         }
     }
 

@@ -3,13 +3,12 @@ package de.xyzerstudios.moneymanager.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -29,8 +28,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 import de.xyzerstudios.moneymanager.R;
-import de.xyzerstudios.moneymanager.activities.BudgetsActivity;
 import de.xyzerstudios.moneymanager.activities.ExpensesActivity;
+import de.xyzerstudios.moneymanager.activities.HomeActivity;
 import de.xyzerstudios.moneymanager.activities.IncomeActivity;
 import de.xyzerstudios.moneymanager.activities.add.AddExpenseActivity;
 import de.xyzerstudios.moneymanager.activities.add.AddIncomeActivity;
@@ -38,7 +37,6 @@ import de.xyzerstudios.moneymanager.asynctasks.LoadPieChartsAsyncTask;
 import de.xyzerstudios.moneymanager.utils.Utils;
 import de.xyzerstudios.moneymanager.utils.charting.CategoryAdapter;
 import de.xyzerstudios.moneymanager.utils.charting.CategoryItem;
-import de.xyzerstudios.moneymanager.utils.database.BudgetsDatabaseHelper;
 
 
 public class DashboardFragment extends Fragment {
@@ -52,19 +50,22 @@ public class DashboardFragment extends Fragment {
 
     public SwipeRefreshLayout dashboardSwipeRefresh;
 
-    public LinearLayout buttonShowAllExpenses, buttonShowAllIncome, linearLayoutExpenses, linearLayoutIncome;
+    public LinearLayout buttonShowAllExpenses, buttonShowAllIncome;
+
+    public ViewGroup transitionContainerDashboard, linearLayoutExpenses, linearLayoutIncome;
 
     public LinearLayout buttonCurrentMonth, buttonAddExpense, buttonAddRevenue;
     public TextView textViewCurrentMonth;
-
     public int currentMonth = 1;
     public int currentYear = 2022;
+    private HomeActivity homeActivity;
 
     public DashboardFragment() {
 
     }
 
     public static DashboardFragment newInstance() {
+        //DashboardFragment fragment = new DashboardFragment(newInstance().homeActivity);
         DashboardFragment fragment = new DashboardFragment();
         return fragment;
     }
@@ -72,6 +73,7 @@ public class DashboardFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        homeActivity = (HomeActivity) getActivity();
     }
 
     @Override
@@ -79,24 +81,28 @@ public class DashboardFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
-        pieChartIncome = view.findViewById(R.id.pieChartIncome);
-        pieChartExpenses = view.findViewById(R.id.pieChartExpenses);
+        linearLayoutIncome = view.findViewById(R.id.linearLayoutIncome);
+        linearLayoutExpenses = view.findViewById(R.id.linearLayoutExpenses);
 
-        incomeRecyclerView = view.findViewById(R.id.recyclerViewIncomeCategories);
-        expensesRecyclerView = view.findViewById(R.id.recyclerViewExpensesCategories);
+        pieChartIncome = linearLayoutIncome.findViewById(R.id.pieChartIncome);
+        pieChartExpenses = linearLayoutExpenses.findViewById(R.id.pieChartExpenses);
+
+        incomeRecyclerView = linearLayoutIncome.findViewById(R.id.recyclerViewIncomeCategories);
+        expensesRecyclerView = linearLayoutExpenses.findViewById(R.id.recyclerViewExpensesCategories);
 
         portfolioNameDisplay = view.findViewById(R.id.portfolioNameDisplay);
-        dashboardSaldo = view.findViewById(R.id.dashboardSaldo);
-        dashboardIncome = view.findViewById(R.id.dashboardIncome);
-        dashboardExpenses = view.findViewById(R.id.dashboardExpenses);
 
-        centerTextIncomeChart = view.findViewById(R.id.centerTextViewIncomeChart);
-        centerTextExpensesChart = view.findViewById(R.id.centerTextViewExpensesChart);
+        transitionContainerDashboard = view.findViewById(R.id.transitionContainerDashboard);
 
-        buttonShowAllExpenses = view.findViewById(R.id.buttonShowAllExpenses);
+        dashboardSaldo = transitionContainerDashboard.findViewById(R.id.dashboardSaldo);
+        dashboardIncome = transitionContainerDashboard.findViewById(R.id.dashboardIncome);
+        dashboardExpenses = transitionContainerDashboard.findViewById(R.id.dashboardExpenses);
+
+        centerTextIncomeChart = linearLayoutIncome.findViewById(R.id.centerTextViewIncomeChart);
+        centerTextExpensesChart = linearLayoutExpenses.findViewById(R.id.centerTextViewExpensesChart);
+
         buttonShowAllIncome = view.findViewById(R.id.buttonShowAllIncome);
-        linearLayoutExpenses = view.findViewById(R.id.linearLayoutExpenses);
-        linearLayoutIncome = view.findViewById(R.id.linearLayoutIncome);
+        buttonShowAllExpenses = view.findViewById(R.id.buttonShowAllExpenses);
 
         buttonCurrentMonth = view.findViewById(R.id.buttonCurrentMonth);
         textViewCurrentMonth = view.findViewById(R.id.textViewCurrentMonth);
@@ -104,13 +110,6 @@ public class DashboardFragment extends Fragment {
         buttonAddRevenue = view.findViewById(R.id.buttonAddRevenueDashboard);
 
         dashboardSwipeRefresh = view.findViewById(R.id.dashboardSwipeRefresh);
-
-        view.findViewById(R.id.testButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
 
         dashboardSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -140,6 +139,8 @@ public class DashboardFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), ExpensesActivity.class);
+                intent.putExtra("month", currentMonth);
+                intent.putExtra("year", currentYear);
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
@@ -148,6 +149,8 @@ public class DashboardFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), IncomeActivity.class);
+                intent.putExtra("month", currentMonth);
+                intent.putExtra("year", currentYear);
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
@@ -156,6 +159,8 @@ public class DashboardFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), ExpensesActivity.class);
+                intent.putExtra("month", currentMonth);
+                intent.putExtra("year", currentYear);
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
@@ -164,6 +169,8 @@ public class DashboardFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), IncomeActivity.class);
+                intent.putExtra("month", currentMonth);
+                intent.putExtra("year", currentYear);
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
@@ -182,8 +189,8 @@ public class DashboardFragment extends Fragment {
                     @Override
                     public void onDateSet(int selectedMonth, int selectedYear) {
                         int formattedSelectedMonth = selectedMonth + 1;
-                        currentMonth = formattedSelectedMonth;
-                        currentYear = selectedYear;
+                        DashboardFragment.this.currentMonth = formattedSelectedMonth;
+                        DashboardFragment.this.currentYear = selectedYear;
                         String suffixString = "";
                         if (Integer.valueOf(Utils.yearDateFormat.format(date)) != currentYear) {
                             suffixString = ", " + currentYear;
@@ -197,7 +204,7 @@ public class DashboardFragment extends Fragment {
 
                 builder.setActivatedMonth(currentMonth - 1)
                         .setMinYear(currentYear - 5)
-                        .setActivatedYear(currentYear)
+                        .setActivatedYear(DashboardFragment.this.currentYear)
                         .setMaxYear(currentYear + 5)
                         .build()
                         .show();
@@ -216,6 +223,167 @@ public class DashboardFragment extends Fragment {
     public void onResume() {
         super.onResume();
         loadPieChartsAndPortfolio();
+    }
+
+    private void loadPieChartsAndPortfolio() {
+        new LoadPieChartsAsyncTask(getActivity(), homeActivity, this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, loadPortfolioIdFromSharedPrefs(),
+                currentMonth, currentYear);
+    }
+
+    private int loadPortfolioIdFromSharedPrefs() {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Utils.SHARED_PREFS, Context.MODE_PRIVATE);
+        return sharedPreferences.getInt(Utils.SHARED_PREFS_CURRENT_PORTFOLIO, 1);
+    }
+
+    private void setupPieCharts() {
+        pieChartIncome.setDrawHoleEnabled(true);
+        pieChartIncome.setHoleColor(getResources().getColor(R.color.ui_light_background, null));
+        pieChartIncome.setHoleRadius(90);
+        pieChartIncome.setDrawEntryLabels(false);
+        pieChartIncome.setDrawSliceText(false);
+        pieChartIncome.getDescription().setEnabled(false);
+        pieChartIncome.setTouchEnabled(false);
+        pieChartIncome.getLegend().setEnabled(false);
+        pieChartIncome.setRotationAngle(90);
+
+        pieChartExpenses.setDrawHoleEnabled(true);
+        pieChartExpenses.setHoleColor(getResources().getColor(R.color.ui_light_background, null));
+        pieChartExpenses.setHoleRadius(90);
+        pieChartExpenses.setDrawEntryLabels(false);
+        pieChartExpenses.setDrawSliceText(false);
+        pieChartExpenses.getDescription().setEnabled(false);
+        pieChartExpenses.setTouchEnabled(false);
+        pieChartExpenses.getLegend().setEnabled(false);
+        pieChartExpenses.setRotationAngle(90);
+    }
+
+    private void loadExpensesPieChartData() {
+        TransitionManager.beginDelayedTransition(linearLayoutExpenses);
+
+        ArrayList<PieEntry> entries = new ArrayList<>();
+        entries.add(new PieEntry(1f, getString(R.string.category)));
+
+        ArrayList<Integer> colors = new ArrayList<>();
+        colors.add(getResources().getColor(R.color.ui_lime_green, null));
+
+        PieDataSet dataSet = new PieDataSet(entries, "Kategorien");
+        dataSet.setColors(colors);
+        dataSet.setSliceSpace(2);
+
+        PieData data = new PieData(dataSet);
+        data.setDrawValues(false);
+
+        pieChartIncome.setData(data);
+        pieChartIncome.invalidate();
+    }
+
+    private void loadIncomePieChartData() {
+        TransitionManager.beginDelayedTransition(linearLayoutIncome);
+
+        ArrayList<PieEntry> entries = new ArrayList<>();
+        entries.add(new PieEntry(1f, getString(R.string.category)));
+
+        ArrayList<Integer> colors = new ArrayList<>();
+        colors.add(getResources().getColor(R.color.ui_lime_green, null));
+
+        PieDataSet dataSet = new PieDataSet(entries, "Kategorien");
+        dataSet.setColors(colors);
+        dataSet.setSliceSpace(2);
+
+        PieData data = new PieData(dataSet);
+        data.setDrawValues(false);
+
+        pieChartExpenses.setData(data);
+        pieChartExpenses.invalidate();
+    }
+
+    public void loadExpensesPieChartData(ArrayList<CategoryItem> categories) {
+        TransitionManager.beginDelayedTransition(linearLayoutExpenses);
+
+        ArrayList<PieEntry> entries = new ArrayList<>();
+        ArrayList<Integer> colors = new ArrayList<>();
+        for (CategoryItem categoryItem : categories) {
+            entries.add(new PieEntry((float) categoryItem.getCategoryPercentage() / 100f, ""));
+            colors.add(categoryItem.getIndicatorColor());
+        }
+
+        PieDataSet dataSet = new PieDataSet(entries, "Categories");
+        dataSet.setColors(colors);
+        dataSet.setSliceSpace(2);
+
+        PieData data = new PieData(dataSet);
+        data.setDrawValues(false);
+
+        pieChartExpenses.setData(data);
+        pieChartExpenses.invalidate();
+    }
+
+    public void loadIncomePieChartData(ArrayList<CategoryItem> categories) {
+        TransitionManager.beginDelayedTransition(linearLayoutIncome);
+
+        ArrayList<PieEntry> entries = new ArrayList<>();
+        ArrayList<Integer> colors = new ArrayList<>();
+        for (CategoryItem categoryItem : categories) {
+            entries.add(new PieEntry((float) categoryItem.getCategoryPercentage() / 100f, ""));
+            colors.add(categoryItem.getIndicatorColor());
+        }
+
+        PieDataSet dataSet = new PieDataSet(entries, "Categories");
+        dataSet.setColors(colors);
+        dataSet.setSliceSpace(2);
+
+        PieData data = new PieData(dataSet);
+        data.setDrawValues(false);
+
+        pieChartIncome.setData(data);
+        pieChartIncome.invalidate();
+    }
+
+    private void inflateCategoriesIncome() {
+        TransitionManager.beginDelayedTransition(linearLayoutIncome);
+
+        ArrayList<CategoryItem> categoryItems = new ArrayList<>();
+        categoryItems.add(new CategoryItem(getResources().getColor(R.color.ui_lime_green, null), getString(R.string.category), 100, false));
+
+        incomeRecyclerView.setHasFixedSize(false);
+        incomeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        incomeRecyclerViewAdapter = new CategoryAdapter(getActivity(), categoryItems);
+
+        incomeRecyclerView.setAdapter(incomeRecyclerViewAdapter);
+    }
+
+    private void inflateCategoriesExpenses() {
+        TransitionManager.beginDelayedTransition(linearLayoutExpenses);
+
+        ArrayList<CategoryItem> categoryItems = new ArrayList<>();
+        categoryItems.add(new CategoryItem(getResources().getColor(R.color.ui_lime_green, null), getString(R.string.category), 100, false));
+
+        expensesRecyclerView.setHasFixedSize(false);
+        expensesRecyclerViewAdapter = new CategoryAdapter(getContext(), categoryItems);
+        expensesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        expensesRecyclerView.setAdapter(expensesRecyclerViewAdapter);
+    }
+
+    public void inflateCategoriesIncome(ArrayList<CategoryItem> categories) {
+        TransitionManager.beginDelayedTransition(linearLayoutIncome);
+
+        incomeRecyclerView.setHasFixedSize(false);
+        incomeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        incomeRecyclerViewAdapter = new CategoryAdapter(getActivity(), categories);
+
+        incomeRecyclerView.setAdapter(incomeRecyclerViewAdapter);
+    }
+
+
+    public void inflateCategoriesExpenses(ArrayList<CategoryItem> categories) {
+        TransitionManager.beginDelayedTransition(linearLayoutExpenses);
+
+        expensesRecyclerView.setHasFixedSize(false);
+        expensesRecyclerViewAdapter = new CategoryAdapter(getActivity(), categories);
+        expensesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        expensesRecyclerView.setAdapter(expensesRecyclerViewAdapter);
     }
 
     private String getMonth(int selectedMonth) {
@@ -259,152 +427,5 @@ public class DashboardFragment extends Fragment {
                 break;
         }
         return month;
-    }
-
-    private void loadPieChartsAndPortfolio() {
-        new LoadPieChartsAsyncTask(getActivity(), this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, loadPortfolioIdFromSharedPrefs(),
-                currentMonth, currentYear);
-    }
-
-    private int loadPortfolioIdFromSharedPrefs() {
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Utils.SHARED_PREFS, Context.MODE_PRIVATE);
-        return sharedPreferences.getInt(Utils.SHARED_PREFS_CURRENT_PORTFOLIO, 1);
-    }
-
-    private void setupPieCharts() {
-        pieChartIncome.setDrawHoleEnabled(true);
-        pieChartIncome.setHoleColor(getResources().getColor(R.color.ui_light_background, null));
-        pieChartIncome.setHoleRadius(90);
-        pieChartIncome.setDrawEntryLabels(false);
-        pieChartIncome.setDrawSliceText(false);
-        pieChartIncome.getDescription().setEnabled(false);
-        pieChartIncome.setTouchEnabled(false);
-        pieChartIncome.getLegend().setEnabled(false);
-        pieChartIncome.setRotationAngle(90);
-
-        pieChartExpenses.setDrawHoleEnabled(true);
-        pieChartExpenses.setHoleColor(getResources().getColor(R.color.ui_light_background, null));
-        pieChartExpenses.setHoleRadius(90);
-        pieChartExpenses.setDrawEntryLabels(false);
-        pieChartExpenses.setDrawSliceText(false);
-        pieChartExpenses.getDescription().setEnabled(false);
-        pieChartExpenses.setTouchEnabled(false);
-        pieChartExpenses.getLegend().setEnabled(false);
-        pieChartExpenses.setRotationAngle(90);
-    }
-
-    private void loadExpensesPieChartData() {
-        ArrayList<PieEntry> entries = new ArrayList<>();
-        entries.add(new PieEntry(1f, getString(R.string.category)));
-
-        ArrayList<Integer> colors = new ArrayList<>();
-        colors.add(getResources().getColor(R.color.ui_lime_green, null));
-
-        PieDataSet dataSet = new PieDataSet(entries, "Kategorien");
-        dataSet.setColors(colors);
-        dataSet.setSliceSpace(2);
-
-        PieData data = new PieData(dataSet);
-        data.setDrawValues(false);
-
-        pieChartIncome.setData(data);
-        pieChartIncome.invalidate();
-    }
-
-    private void loadIncomePieChartData() {
-        ArrayList<PieEntry> entries = new ArrayList<>();
-        entries.add(new PieEntry(1f, getString(R.string.category)));
-
-        ArrayList<Integer> colors = new ArrayList<>();
-        colors.add(getResources().getColor(R.color.ui_lime_green, null));
-
-        PieDataSet dataSet = new PieDataSet(entries, "Kategorien");
-        dataSet.setColors(colors);
-        dataSet.setSliceSpace(2);
-
-        PieData data = new PieData(dataSet);
-        data.setDrawValues(false);
-
-        pieChartExpenses.setData(data);
-        pieChartExpenses.invalidate();
-    }
-
-    public void loadExpensesPieChartData(ArrayList<CategoryItem> categories) {
-
-        ArrayList<PieEntry> entries = new ArrayList<>();
-        ArrayList<Integer> colors = new ArrayList<>();
-        for (CategoryItem categoryItem : categories) {
-            entries.add(new PieEntry((float) categoryItem.getCategoryPercentage() / 100f, ""));
-            colors.add(categoryItem.getIndicatorColor());
-        }
-
-        PieDataSet dataSet = new PieDataSet(entries, "Categories");
-        dataSet.setColors(colors);
-        dataSet.setSliceSpace(2);
-
-        PieData data = new PieData(dataSet);
-        data.setDrawValues(false);
-
-        pieChartExpenses.setData(data);
-        pieChartExpenses.invalidate();
-    }
-
-    public void loadIncomePieChartData(ArrayList<CategoryItem> categories) {
-
-        ArrayList<PieEntry> entries = new ArrayList<>();
-        ArrayList<Integer> colors = new ArrayList<>();
-        for (CategoryItem categoryItem : categories) {
-            entries.add(new PieEntry((float) categoryItem.getCategoryPercentage() / 100f, ""));
-            colors.add(categoryItem.getIndicatorColor());
-        }
-
-        PieDataSet dataSet = new PieDataSet(entries, "Categories");
-        dataSet.setColors(colors);
-        dataSet.setSliceSpace(2);
-
-        PieData data = new PieData(dataSet);
-        data.setDrawValues(false);
-
-        pieChartIncome.setData(data);
-        pieChartIncome.invalidate();
-    }
-
-    private void inflateCategoriesIncome() {
-        ArrayList<CategoryItem> categoryItems = new ArrayList<>();
-        categoryItems.add(new CategoryItem(getResources().getColor(R.color.ui_lime_green, null), getString(R.string.category), 100, false));
-
-        incomeRecyclerView.setHasFixedSize(false);
-        incomeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        incomeRecyclerViewAdapter = new CategoryAdapter(getActivity(), categoryItems);
-
-        incomeRecyclerView.setAdapter(incomeRecyclerViewAdapter);
-    }
-
-    private void inflateCategoriesExpenses() {
-        ArrayList<CategoryItem> categoryItems = new ArrayList<>();
-        categoryItems.add(new CategoryItem(getResources().getColor(R.color.ui_lime_green, null), getString(R.string.category), 100, false));
-
-        expensesRecyclerView.setHasFixedSize(false);
-        expensesRecyclerViewAdapter = new CategoryAdapter(getContext(), categoryItems);
-        expensesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        expensesRecyclerView.setAdapter(expensesRecyclerViewAdapter);
-    }
-
-    public void inflateCategoriesIncome(ArrayList<CategoryItem> categories) {
-        incomeRecyclerView.setHasFixedSize(false);
-        incomeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        incomeRecyclerViewAdapter = new CategoryAdapter(getActivity(), categories);
-
-        incomeRecyclerView.setAdapter(incomeRecyclerViewAdapter);
-    }
-
-
-    public void inflateCategoriesExpenses(ArrayList<CategoryItem> categories) {
-        expensesRecyclerView.setHasFixedSize(false);
-        expensesRecyclerViewAdapter = new CategoryAdapter(getActivity(), categories);
-        expensesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        expensesRecyclerView.setAdapter(expensesRecyclerViewAdapter);
     }
 }

@@ -15,7 +15,7 @@
         android:clickable="true"
         android:foreground="?android:attr/selectableItemBackground"
         android:background="@drawable/default_corners"
-        android:backgroundTint="@color/ui_white"
+        android:backgroundTint="@color/ui_recycler_item_background"
         app:cardCornerRadius="15dp">
 
         <LinearLayout
@@ -38,7 +38,7 @@
                     android:ellipsize="end"
                     android:fontFamily="@font/poppins_medium"
                     android:text="Produktname"
-                    android:textColor="@color/ui_black"
+                    android:textColor="@color/ui_text_high_contrast"
                     android:textSize="26dp" />
 
 
@@ -50,7 +50,7 @@
                     android:layout_marginRight="15dp"
                     android:fontFamily="@font/poppins_medium"
                     android:text="19,99 €"
-                    android:textColor="@color/ui_black"
+                    android:textColor="@color/ui_text_high_contrast"
                     android:textSize="22dp" />
 
             </LinearLayout>
@@ -80,7 +80,7 @@
                         android:ellipsize="end"
                         android:text="@string/date"
                         android:textSize="14dp"
-                        android:textColor="@color/ui_text_strongly_faded"
+                        android:textColor="@color/ui_text_semi_translucent"
                         android:fontFamily="@font/poppins_medium"/>
 
                     <TextView
@@ -93,7 +93,7 @@
                         android:ellipsize="end"
                         android:text="20. Jan. 2022"
                         android:textSize="14dp"
-                        android:textColor="@color/ui_icon"
+                        android:textColor="@color/ui_text_high_contrast"
                         android:fontFamily="@font/poppins_medium"/>
                 </LinearLayout>
 
@@ -103,6 +103,7 @@
                     android:layout_weight="1" />
 
                 <LinearLayout
+                    android:id="@+id/containerPaymentMethod"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
@@ -117,7 +118,7 @@
                         android:ellipsize="end"
                         android:text="@string/payment_method"
                         android:textSize="14dp"
-                        android:textColor="@color/ui_text_strongly_faded"
+                        android:textColor="@color/ui_text_semi_translucent"
                         android:fontFamily="@font/poppins_medium"/>
 
                     <TextView
@@ -130,7 +131,7 @@
                         android:ellipsize="end"
                         android:text="Kreditkarte"
                         android:textSize="14dp"
-                        android:textColor="@color/ui_icon"
+                        android:textColor="@color/ui_text_high_contrast"
                         android:fontFamily="@font/poppins_medium"/>
                 </LinearLayout>
 
@@ -142,7 +143,6 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingRight="15dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -150,11 +150,12 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:layout_gravity="left"
+                        android:paddingRight="15dp"
                         android:maxLines="1"
                         android:ellipsize="end"
                         android:text="@string/category"
                         android:textSize="14dp"
-                        android:textColor="@color/ui_text_strongly_faded"
+                        android:textColor="@color/ui_text_semi_translucent"
                         android:fontFamily="@font/poppins_medium"/>
 
                     <TextView
@@ -162,12 +163,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
+                        android:paddingRight="15dp"
                         android:layout_gravity="left"
                         android:maxLines="1"
                         android:ellipsize="end"
                         android:text="Essen"
                         android:textSize="14dp"
-                        android:textColor="@color/ui_icon"
+                        android:textColor="@color/ui_text_high_contrast"
                         android:fontFamily="@font/poppins_medium"/>
 
                 </LinearLayout>

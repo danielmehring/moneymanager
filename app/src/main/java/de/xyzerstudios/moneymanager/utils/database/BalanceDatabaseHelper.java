@@ -168,4 +168,36 @@ public class BalanceDatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    public Cursor sumAllByPortfolioId(int portfolioId) {
+        String query = "SELECT Sum(" + COLUMN_REVENUES_SUM + ") as sum_revenues, " +
+                " Sum(" + COLUMN_EXPENSES_SUM + ") as sum_expenses, " +
+                " Sum(" + COLUMN_SALDO + ") as sum_saldo" +
+                " FROM " + TABLE_NAME +
+                " WHERE " + COLUMN_PORTFOLIO_ID + "=" + portfolioId +
+                " GROUP BY " + COLUMN_PORTFOLIO_ID;
+
+        SQLiteDatabase database = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (database != null) {
+            cursor = database.rawQuery(query, null);
+        }
+        return cursor;
+    }
+
+    public Cursor sumAllSaldosByPortfolioId(int portfolioId) {
+        String query = "SELECT Sum(" + COLUMN_SALDO + ") as summe" +
+                " FROM " + TABLE_NAME +
+                " WHERE " + COLUMN_PORTFOLIO_ID + "=" + portfolioId +
+                " GROUP BY " + COLUMN_PORTFOLIO_ID;
+
+        SQLiteDatabase database = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (database != null) {
+            cursor = database.rawQuery(query, null);
+        }
+        return cursor;
+    }
+
 }

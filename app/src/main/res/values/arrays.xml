@@ -9,6 +9,7 @@
         <item>@drawable/ic_shop</item>
         <item>@drawable/ic_donate</item>
 
+        <item>@drawable/ic_settings</item>
         <item>@drawable/ic_about_us</item>
     </string-array>
 
@@ -21,6 +22,7 @@
         <item>@string/menu_title_premium</item>
         <item>@string/menu_title_donate</item>
 
+        <item>@string/menu_title_settings</item>
         <item>@string/menu_title_about_us</item>
     </string-array>
 
@@ -29,7 +31,6 @@
         <item>@string/menu_heading_actions</item>
         <item>@string/menu_heading_other</item>
     </string-array>
-
 
 
 </resources>

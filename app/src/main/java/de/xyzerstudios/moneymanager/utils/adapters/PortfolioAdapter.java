@@ -1,6 +1,5 @@
 package de.xyzerstudios.moneymanager.utils.adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,15 +20,18 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
 import java.util.ArrayList;
 
 import de.xyzerstudios.moneymanager.R;
 import de.xyzerstudios.moneymanager.activities.PortfoliosActivity;
+import de.xyzerstudios.moneymanager.activities.edit.EditBudgetActivity;
 import de.xyzerstudios.moneymanager.activities.edit.EditPortfolioActivity;
 import de.xyzerstudios.moneymanager.asynctasks.LoadPortfoliosAsyncTask;
 import de.xyzerstudios.moneymanager.utils.adapters.items.BalancePortfolioItem;
-import de.xyzerstudios.moneymanager.utils.PublicValues;
 import de.xyzerstudios.moneymanager.utils.Utils;
+import de.xyzerstudios.moneymanager.utils.database.BalanceDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.database.PortfolioDatabaseHelper;
 
 
@@ -102,12 +105,15 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
             return;
         }
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder.setMessage(activity.getString(R.string.delete_confirmation))
-                .setCancelable(false)
-                .setPositiveButton(activity.getString(R.string.yes), new DialogInterface.OnClickListener() {
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(activity);
+        builder.setMessage(Html.fromHtml("<font color='"
+                        + String.format("#%06X", (0xFFFFFF & activity.getColor(R.color.ui_text)))
+                        + "'>" + activity.getString(R.string.delete_confirmation) + "</font>"))
+                .setPositiveButton(Html.fromHtml("<font color='"
+                        + String.format("#%06X", (0xFFFFFF & activity.getColor(R.color.ui_text)))
+                        + "'>" + activity.getString(R.string.yes) + "</font>"), new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(DialogInterface dialogInterface, int i) {
                         PortfolioDatabaseHelper portfolioDatabaseHelper = new PortfolioDatabaseHelper(activity);
                         portfolioDatabaseHelper.deletePortfolio(portfolioId);
                         if (portfolioId == loadPortfolioIdFromSharedPrefs()) {
@@ -116,14 +122,17 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
                         new LoadPortfoliosAsyncTask(activity).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, false);
                     }
                 })
-                .setNegativeButton(activity.getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                .setNegativeButton(Html.fromHtml("<font color='"
+                        + String.format("#%06X", (0xFFFFFF & activity.getColor(R.color.ui_text)))
+                        + "'>" + activity.getString(R.string.cancel) + "</font>"), new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
                     }
-                });
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
+                })
+                .setBackground(activity.getDrawable(R.drawable.dialog_background))
+                .show();
+
     }
 
     @Override
@@ -135,7 +144,6 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
         if(id == activeId)
             return;
 
-        PublicValues.portfolioChanged();
         SharedPreferences sharedPreferences = context.getSharedPreferences(Utils.SHARED_PREFS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         activeId = id;

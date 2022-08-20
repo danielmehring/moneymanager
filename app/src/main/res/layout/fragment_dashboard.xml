@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.DashboardFragment">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -44,7 +43,7 @@
                         android:elevation="1dp"
                         android:fontFamily="@font/poppins_semibold"
                         android:text="Portfolio 1"
-                        android:textColor="@color/ui_black"
+                        android:textColor="@color/ui_text_high_contrast"
                         android:textSize="28dp" />
 
                     <ImageButton
@@ -57,9 +56,9 @@
                         android:background="@drawable/image_button"
                         android:clickable="true"
                         android:elevation="1dp"
-                        android:visibility="gone"
                         android:foreground="?android:attr/selectableItemBackground"
                         android:src="@drawable/ic_change_portfolio"
+                        android:visibility="gone"
                         app:tint="@color/ui_light_background" />
                 </LinearLayout>
 
@@ -80,6 +79,7 @@
                         android:orientation="horizontal">
 
                         <LinearLayout
+                            android:id="@+id/transitionContainerDashboard"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:orientation="vertical"
@@ -94,8 +94,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins_medium"
-                                android:text="---- €"
-                                android:textColor="@color/ui_white"
+                                android:text="--,-- €"
+                                android:textColor="@color/ui_text_white"
                                 android:textSize="28dp" />
 
                             <Space
@@ -115,8 +115,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins_regular"
-                                android:text="---- €"
-                                android:textColor="@color/ui_white"
+                                android:text="--,-- €"
+                                android:textColor="@color/ui_text_white"
                                 android:textSize="15dp" />
 
                             <Space
@@ -137,8 +137,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="10dp"
                                 android:fontFamily="@font/poppins_regular"
-                                android:text="---- €"
-                                android:textColor="@color/ui_white"
+                                android:text="--,-- €"
+                                android:textColor="@color/ui_text_white"
                                 android:textSize="15dp" />
 
                         </LinearLayout>
@@ -188,7 +188,7 @@
                                     android:paddingTop="3dp"
                                     android:paddingRight="4dp"
                                     android:text="Oktober"
-                                    android:textColor="@color/ui_white"
+                                    android:textColor="@color/ui_text_white"
                                     android:textSize="17dp" />
 
                                 <ImageView
@@ -196,7 +196,7 @@
                                     android:layout_height="24dp"
                                     android:layout_marginRight="4dp"
                                     android:src="@drawable/ic_arrows_up_down"
-                                    app:tint="@color/ui_light_background" />
+                                    app:tint="@color/ui_text_white" />
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
@@ -223,17 +223,17 @@
                         android:foreground="?android:attr/selectableItemBackground"
                         android:gravity="center"
                         android:paddingTop="4dp"
-                        android:textColor="@color/ui_icon">
+                        android:textColor="@color/ui_text_high_contrast">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1"
                             android:ellipsize="end"
                             android:fontFamily="@font/poppins_medium"
+                            android:maxLines="1"
                             android:text="@string/add_expense"
                             android:textAlignment="center"
-                            android:textColor="@color/ui_icon"
+                            android:textColor="@color/ui_text_faded"
                             android:textSize="12dp" />
                     </LinearLayout>
 
@@ -249,40 +249,20 @@
                         android:foreground="?android:attr/selectableItemBackground"
                         android:gravity="center"
                         android:paddingTop="4dp"
-                        android:textColor="@color/ui_icon">
+                        android:textColor="@color/ui_text_high_contrast">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="1"
                             android:ellipsize="end"
                             android:fontFamily="@font/poppins_medium"
+                            android:maxLines="1"
                             android:text="@string/add_revenue"
                             android:textAlignment="center"
-                            android:textColor="@color/ui_icon"
+                            android:textColor="@color/ui_text_faded"
                             android:textSize="12dp" />
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:id="@+id/button_add_balance_to_portfolio"
-                        android:layout_width="35dp"
-                        android:layout_height="30dp"
-                        android:layout_margin="5dp"
-                        android:background="@drawable/light_button"
-                        android:clickable="true"
-                        android:elevation="2dp"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        android:gravity="center">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_medium"
-                            android:text="..."
-                            android:textAlignment="center"
-                            android:textColor="@color/ui_icon"
-                            android:textSize="12dp" />
-                    </LinearLayout>
                 </LinearLayout>
 
                 <Space
@@ -301,7 +281,7 @@
                         android:layout_gravity="left"
                         android:fontFamily="@font/poppins_semibold"
                         android:text="@string/income"
-                        android:textColor="@color/ui_black"
+                        android:textColor="@color/ui_text_high_contrast"
                         android:textSize="26dp" />
 
                     <Space
@@ -327,7 +307,7 @@
                             android:paddingHorizontal="7dp"
                             android:paddingTop="4dp"
                             android:text="Alle anzeigen"
-                            android:textColor="@color/ui_black"
+                            android:textColor="@color/ui_text_faded"
                             android:textSize="11dp" />
                     </LinearLayout>
                 </LinearLayout>
@@ -360,13 +340,13 @@
                             android:id="@+id/centerTextViewIncomeChart"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="20dp"
-                            android:textColor="@color/ui_black"
                             android:fontFamily="@font/poppins_medium"
+                            android:textColor="@color/ui_text_high_contrast"
+                            android:textSize="17dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"/>
+                            app:layout_constraintTop_toTopOf="parent" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -405,7 +385,7 @@
                         android:layout_gravity="left"
                         android:fontFamily="@font/poppins_semibold"
                         android:text="@string/expenses"
-                        android:textColor="@color/ui_black"
+                        android:textColor="@color/ui_text_high_contrast"
                         android:textSize="26dp" />
 
                     <Space
@@ -431,7 +411,7 @@
                             android:paddingHorizontal="7dp"
                             android:paddingTop="4dp"
                             android:text="Alle anzeigen"
-                            android:textColor="@color/ui_black"
+                            android:textColor="@color/ui_text_faded"
                             android:textSize="11dp" />
                     </LinearLayout>
                 </LinearLayout>
@@ -464,13 +444,13 @@
                             android:id="@+id/centerTextViewExpensesChart"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="20dp"
-                            android:textColor="@color/ui_black"
                             android:fontFamily="@font/poppins_medium"
+                            android:textColor="@color/ui_text_high_contrast"
+                            android:textSize="17dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"/>
+                            app:layout_constraintTop_toTopOf="parent" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -494,26 +474,9 @@
 
                 <Space
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"/>
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/ui_black"
-                    android:text="Test Button"
-                    android:visibility="gone"
-                    android:id="@+id/testButton"/>
+                    android:layout_height="30dp" />
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="6dp"
-        android:background="@drawable/gradient_lightbg_transparent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

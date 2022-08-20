@@ -1,10 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="gui_background">#0B1019</color>
-    <color name="gui_drawer">#10151E</color>
     <color name="gui_elevation1">#080C12</color>
-    <color name="gui_elevation2">#0C0C19</color>
-    <color name="gui_text">#F0F0F0</color>
-    <color name="gui_fadedtext">#B2B2B2</color>
 
+    <color name="ui_black">#E3E3E3</color>
+
+    <color name="ui_toolbar">#000000</color>
+    <color name="ui_drawer">#121212</color>
+    <color name="ui_dialog_background">#1C1C1C</color>
+    <color name="ui_white_background">#000000</color>
+    <color name="ui_light_background">#000000</color>
+    <color name="ui_light_button">#1ADCDCFF</color>
+    <color name="ui_recycler_item_background">#1ADCDCFF</color>
+
+    <color name="ui_text">#D5D5D5</color>
+    <color name="ui_text_high_contrast">#E3E3E3</color>
+    <color name="ui_text_faded">#D1D1D1</color>
+    <color name="ui_text_semi_translucent">#80FFFFFF</color>
+
+    <color name="ui_side_menu">#E6FFFFFF</color>
+    <color name="ui_side_menu_purple">#FFFFFF</color>
+    <color name="ui_icon">#E6FFFFFF</color>
+
+    <color name="ui_lime_green">#448972</color>
+    <color name="ui_lime_red">#984843</color>
+    <color name="ui_lime_grey">#434545</color>
+
+    <color name="ui_black_strongly_translucent">#1AFFFFFF</color>
+    <color name="ui_black_semi_translucent">#B3FFFFFF</color>
 </resources>

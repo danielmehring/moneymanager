@@ -16,6 +16,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +41,7 @@ public class EditBalanceActivity extends AppCompatActivity implements DatePicker
     public ImageView closeActivityEditBalance, editBalance;
     public TextView textViewBalanceTimestamp, textViewBalancePortfolio;
     public FrameLayout chooserBalanceTimestamp, chooserBalancePortfolio;
+    public LinearLayout removeEditFilterPortfolio;
 
     private final Utils utils = new Utils();
 
@@ -92,6 +94,7 @@ public class EditBalanceActivity extends AppCompatActivity implements DatePicker
         textViewBalancePortfolio = findViewById(R.id.textViewBalancePortfolioEdit);
         chooserBalanceTimestamp = findViewById(R.id.chooserBalanceTimestampEdit);
         chooserBalancePortfolio = findViewById(R.id.chooserBalancePortfolioEdit);
+        removeEditFilterPortfolio = findViewById(R.id.removeEditFilterPortfolio);
     }
 
     private void setClickListeners() {
@@ -134,6 +137,14 @@ public class EditBalanceActivity extends AppCompatActivity implements DatePicker
             }
         });
 
+        removeEditFilterPortfolio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                portfolioId = 0;
+                updatePortfolioChooser();
+            }
+        });
+
     }
 
 
@@ -153,6 +164,12 @@ public class EditBalanceActivity extends AppCompatActivity implements DatePicker
             }
         }
 
+        updatePortfolioChooser();
+
+        textViewBalanceTimestamp.setText(Utils.timestampDateDisplayFormat.format(date));
+    }
+
+    public void updatePortfolioChooser() {
         if (portfolioId != 0) {
             PortfolioDatabaseHelper portfolioDatabaseHelper = new PortfolioDatabaseHelper(EditBalanceActivity.this);
             Cursor cursor2 = portfolioDatabaseHelper.readPortfolioById(portfolioId);
@@ -161,9 +178,11 @@ public class EditBalanceActivity extends AppCompatActivity implements DatePicker
                 portfolioName = cursor2.getString(1);
             }
             textViewBalancePortfolio.setText(portfolioName);
+            removeEditFilterPortfolio.setVisibility(View.VISIBLE);
+        } else {
+            textViewBalancePortfolio.setText("");
+            removeEditFilterPortfolio.setVisibility(View.GONE);
         }
-
-        textViewBalanceTimestamp.setText(Utils.timestampDateDisplayFormat.format(date));
     }
 
     private void showDialogDatePicker() {

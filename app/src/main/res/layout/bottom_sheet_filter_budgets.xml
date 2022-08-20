@@ -34,7 +34,7 @@
                 android:maxLines="1"
                 android:ellipsize="end"
                 android:text="@string/choose_month_and_year"
-                android:textColor="@color/ui_icon"
+                android:textColor="@color/ui_text_high_contrast"
                 android:textSize="20dp" />
 
             <ImageView

@@ -27,7 +27,7 @@
         android:ellipsize="end"
         android:text="Category"
         android:textSize="13dp"
-        android:textColor="@color/ui_icon"
+        android:textColor="@color/ui_text_high_contrast"
         android:fontFamily="@font/poppins_medium"/>
 
     <TextView
@@ -38,6 +38,6 @@
         android:layout_marginLeft="15dp"
         android:text="100%"
         android:textSize="13dp"
-        android:textColor="@color/ui_icon"
+        android:textColor="@color/ui_text_high_contrast"
         android:fontFamily="@font/poppins_medium"/>
 </LinearLayout>

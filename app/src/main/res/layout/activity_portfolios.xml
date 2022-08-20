@@ -10,7 +10,8 @@
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/ui_white">
+        android:elevation="1dp"
+        android:background="@color/ui_toolbar">
 
         <ImageButton
             android:id="@+id/buttonPortfolioGoBack"
@@ -20,7 +21,8 @@
             android:clickable="true"
             android:foreground="?android:attr/selectableItemBackground"
             android:src="@drawable/ic_arrow_back"
-            android:backgroundTint="@color/transparent_white"/>
+            android:backgroundTint="@color/transparent_white"
+            app:tint="@color/ui_black" />
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -53,7 +55,7 @@
                     android:fontFamily="@font/poppins_semibold"
                     android:paddingTop="4dp"
                     android:text="@string/menu_title_portfolios"
-                    android:textColor="@color/ui_black"
+                    android:textColor="@color/ui_text_high_contrast"
                     android:textSize="28dp" />
 
                 <Space
