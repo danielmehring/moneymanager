@@ -9,57 +9,59 @@
 
     <Space
         android:layout_width="0dp"
-        android:layout_height="30dp"/>
+        android:layout_height="30dp" />
 
     <LinearLayout
         android:layout_width="240dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:gravity="center_vertical"
+        android:orientation="horizontal"
         android:paddingHorizontal="24dp">
 
         <ImageView
             android:layout_width="42dp"
             android:layout_height="42dp"
-            android:src="@drawable/ic_mm_drawer"/>
+            android:src="@drawable/ic_mm_drawer" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:text="Free"
-            android:textSize="24dp"
             android:layout_marginTop="2dp"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Free"
             android:textColor="@color/ui_side_menu_purple"
-            android:fontFamily="@font/poppins_medium"/>
+            android:textSize="24dp" />
     </LinearLayout>
 
     <Space
         android:layout_width="0dp"
-        android:layout_height="5dp"/>
-
+        android:layout_height="5dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list"
-        android:layout_marginTop="0dp"
-        android:paddingTop="0dp"
         android:layout_width="240dp"
-        android:layout_height="wrap_content" />
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:layout_marginTop="0dp"
+        android:paddingTop="0dp" />
+
 
     <Space
         android:layout_width="0dp"
-        android:layout_height="fill_parent"
-        android:layout_weight="1"/>
+        android:layout_height="30dp" />
 
     <LinearLayout
         android:layout_width="240dp"
         android:layout_height="30dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="15dp"
         android:gravity="center_horizontal">
+
         <ImageView
             android:layout_width="80dp"
             android:layout_height="30dp"
-            android:layout_marginBottom="15dp"
             android:layout_marginRight="7dp"
+            android:layout_marginBottom="15dp"
             android:src="@drawable/ic_xyzerstudios_logo"
             app:tint="@color/ui_side_menu_purple" />
     </LinearLayout>
