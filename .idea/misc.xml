@@ -96,7 +96,12 @@
         <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/layout/layout_dialog_payment_method_extra_option.xml" value="0.3009833262077811" />
         <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1585" />
         <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1585" />
+        <entry key="app/src/main/res/layout/activity_balances.xml" value="0.2105978260869565" />
+        <entry key="app/src/main/res/layout/activity_currencies.xml" value="0.2105978260869565" />
+        <entry key="app/src/main/res/layout/activity_income.xml" value="0.15070921985815602" />
+        <entry key="app/src/main/res/layout/activity_settings.xml" value="0.205340576171875" />
         <entry key="app/src/main/res/layout/drawer_menu.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/item_currency.xml" value="0.2105978260869565" />
       </map>
     </option>
   </component>

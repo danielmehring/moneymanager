@@ -1,0 +1,561 @@
+package de.xyzerstudios.moneymanager.utils;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class Currencies {
+
+    private static HashMap<String, String> isoToName; // Key: EUR Value: Euro
+    private static HashMap<String, String> isoToNameTranslated; // Key: EUR Value: Euro
+    private static HashMap<String, String> isoToUnicode; // Key: EUR Value: €
+    private static ArrayList<String> isoCodes;
+    private static ArrayList<String> isoCodesOfCurrenciesUsedMost;
+
+    public static void init() {
+        isoToName = new HashMap<>();
+        isoToNameTranslated = new HashMap<>();
+        isoToUnicode = new HashMap<>();
+        isoCodes = new ArrayList<>();
+        isoCodesOfCurrenciesUsedMost = new ArrayList<>();
+        addCurrenciesToIsoToName();
+        addCurrenciesToIsoToUnicode();
+        addCurrenciesToIsoCodes();
+        addCurrenciesToIsoCodesUM();
+    }
+
+    public static void setIsoToNameTranslated(HashMap<String, String> isoToNameTranslated) {
+        Currencies.isoToNameTranslated = isoToNameTranslated;
+    }
+
+    public static HashMap<String, String> getIsoToNameTranslated() {
+        return isoToNameTranslated;
+    }
+
+    public static HashMap<String, String> getIsoToName() {
+        return isoToName;
+    }
+
+    public static HashMap<String, String> getIsoToUnicode() {
+        return isoToUnicode;
+    }
+
+    public static ArrayList<String> getIsoCodes() {
+        return isoCodes;
+    }
+
+    public static ArrayList<String> getIsoCodesOfCurrenciesUsedMost() {
+        return isoCodesOfCurrenciesUsedMost;
+    }
+
+    private static void addCurrenciesToIsoCodesUM() {
+        try {
+            isoCodesOfCurrenciesUsedMost.add("USD");
+            isoCodesOfCurrenciesUsedMost.add("EUR");
+
+        } catch (Exception e) {
+            throw new ClassCastException("Must initialize \"Currencies\" with .init() before usage.");
+        }
+    }
+
+    private static void addCurrenciesToIsoToUnicode() { //TODO: Add Unicodes
+        try {
+            isoToUnicode.put("FJD", "");
+            isoToUnicode.put("MXN", "");
+            isoToUnicode.put("STD", "");
+            isoToUnicode.put("SCR", "");
+            isoToUnicode.put("CDF", "");
+            isoToUnicode.put("BBD", "");
+            isoToUnicode.put("GTQ", "");
+            isoToUnicode.put("CLP", "");
+            isoToUnicode.put("HNL", "");
+            isoToUnicode.put("UGX", "");
+            isoToUnicode.put("ZAR", "");
+            isoToUnicode.put("MXV", "");
+            isoToUnicode.put("TND", "");
+            isoToUnicode.put("CUC", "");
+            isoToUnicode.put("BSD", "");
+            isoToUnicode.put("SLL", "");
+            isoToUnicode.put("SDG", "");
+            isoToUnicode.put("IQD", "");
+            isoToUnicode.put("GMD", "");
+            isoToUnicode.put("CUP", "");
+            isoToUnicode.put("TWD", "");
+            isoToUnicode.put("RSD", "");
+            isoToUnicode.put("DOP", "");
+            isoToUnicode.put("KMF", "");
+            isoToUnicode.put("MYR", "");
+            isoToUnicode.put("FKP", "");
+            isoToUnicode.put("XOF", "");
+            isoToUnicode.put("GEL", "");
+            isoToUnicode.put("UYU", "");
+            isoToUnicode.put("MAD", "");
+            isoToUnicode.put("CVE", "");
+            isoToUnicode.put("TOP", "");
+            isoToUnicode.put("AZN", "");
+            isoToUnicode.put("OMR", "");
+            isoToUnicode.put("PGK", "");
+            isoToUnicode.put("KES", "");
+            isoToUnicode.put("SEK", "");
+            isoToUnicode.put("BTN", "");
+            isoToUnicode.put("UAH", "");
+            isoToUnicode.put("GNF", "");
+            isoToUnicode.put("ERN", "");
+            isoToUnicode.put("MZN", "");
+            isoToUnicode.put("SVC", "");
+            isoToUnicode.put("ARS", "");
+            isoToUnicode.put("QAR", "");
+            isoToUnicode.put("IRR", "");
+            isoToUnicode.put("MRO", "");
+            isoToUnicode.put("CNY", "");
+            isoToUnicode.put("XPF", "");
+            isoToUnicode.put("THB", "");
+            isoToUnicode.put("UZS", "");
+            isoToUnicode.put("BDT", "");
+            isoToUnicode.put("LYD", "");
+            isoToUnicode.put("BMD", "");
+            isoToUnicode.put("KWD", "");
+            isoToUnicode.put("PHP", "");
+            isoToUnicode.put("RUB", "");
+            isoToUnicode.put("PYG", "");
+            isoToUnicode.put("ISK", "");
+            isoToUnicode.put("JMD", "");
+            isoToUnicode.put("COP", "");
+            isoToUnicode.put("USD", "");
+            isoToUnicode.put("MKD", "");
+            isoToUnicode.put("COU", "");
+            isoToUnicode.put("DZD", "");
+            isoToUnicode.put("PAB", "");
+            isoToUnicode.put("SGD", "");
+            isoToUnicode.put("ETB", "");
+            isoToUnicode.put("KGS", "");
+            isoToUnicode.put("SOS", "");
+            isoToUnicode.put("VUV", "");
+            isoToUnicode.put("VEF", "");
+            isoToUnicode.put("LAK", "");
+            isoToUnicode.put("BND", "");
+            isoToUnicode.put("XAF", "");
+            isoToUnicode.put("LRD", "");
+            isoToUnicode.put("HRK", "");
+            isoToUnicode.put("CHF", "");
+            isoToUnicode.put("DJF", "");
+            isoToUnicode.put("ZMW", "");
+            isoToUnicode.put("TZS", "");
+            isoToUnicode.put("VND", "");
+            isoToUnicode.put("AUD", "");
+            isoToUnicode.put("ILS", "");
+            isoToUnicode.put("GHS", "");
+            isoToUnicode.put("GYD", "");
+            isoToUnicode.put("KPW", "");
+            isoToUnicode.put("CHW", "");
+            isoToUnicode.put("BOB", "");
+            isoToUnicode.put("KHR", "");
+            isoToUnicode.put("MDL", "");
+            isoToUnicode.put("IDR", "");
+            isoToUnicode.put("KYD", "");
+            isoToUnicode.put("AMD", "");
+            isoToUnicode.put("BWP", "");
+            isoToUnicode.put("SHP", "");
+            isoToUnicode.put("TRY", "");
+            isoToUnicode.put("LBP", "");
+            isoToUnicode.put("TJS", "");
+            isoToUnicode.put("JOD", "");
+            isoToUnicode.put("HKD", "");
+            isoToUnicode.put("RWF", "");
+            isoToUnicode.put("AED", "");
+            isoToUnicode.put("EUR", "");
+            isoToUnicode.put("LSL", "");
+            isoToUnicode.put("DKK", "");
+            isoToUnicode.put("CAD", "");
+            isoToUnicode.put("BOV", "");
+            isoToUnicode.put("BGN", "");
+            isoToUnicode.put("MMK", "");
+            isoToUnicode.put("NOK", "");
+            isoToUnicode.put("MUR", "");
+            isoToUnicode.put("SYP", "");
+            isoToUnicode.put("ZWL", "");
+            isoToUnicode.put("GIP", "");
+            isoToUnicode.put("RON", "");
+            isoToUnicode.put("LKR", "");
+            isoToUnicode.put("NGN", "");
+            isoToUnicode.put("CRC", "");
+            isoToUnicode.put("CZK", "");
+            isoToUnicode.put("PKR", "");
+            isoToUnicode.put("XCD", "");
+            isoToUnicode.put("HTG", "");
+            isoToUnicode.put("XSU", "");
+            isoToUnicode.put("BHD", "");
+            isoToUnicode.put("KZT", "");
+            isoToUnicode.put("SRD", "");
+            isoToUnicode.put("SZL", "");
+            isoToUnicode.put("SAR", "");
+            isoToUnicode.put("TTD", "");
+            isoToUnicode.put("YER", "");
+            isoToUnicode.put("MVR", "");
+            isoToUnicode.put("INR", "");
+            isoToUnicode.put("AWG", "");
+            isoToUnicode.put("KRW", "");
+            isoToUnicode.put("NPR", "");
+            isoToUnicode.put("JPY", "");
+            isoToUnicode.put("MNT", "");
+            isoToUnicode.put("AOA", "");
+            isoToUnicode.put("PLN", "");
+            isoToUnicode.put("GBP", "");
+            isoToUnicode.put("SBD", "");
+            isoToUnicode.put("HUF", "");
+            isoToUnicode.put("BYR", "");
+            isoToUnicode.put("BIF", "");
+            isoToUnicode.put("MWK", "");
+            isoToUnicode.put("MGA", "");
+            isoToUnicode.put("BZD", "");
+            isoToUnicode.put("BAM", "");
+            isoToUnicode.put("MOP", "");
+            isoToUnicode.put("EGP", "");
+            isoToUnicode.put("NAD", "");
+            isoToUnicode.put("SSP", "");
+            isoToUnicode.put("NIO", "");
+            isoToUnicode.put("PEN", "");
+            isoToUnicode.put("NZD", "");
+            isoToUnicode.put("WST", "");
+            isoToUnicode.put("TMT", "");
+            isoToUnicode.put("CLF", "");
+            isoToUnicode.put("BRL", "");
+        } catch (Exception e) {
+            throw new ClassCastException("Must initialize \"Currencies\" with .init() before usage.");
+        }
+    }
+
+    private static void addCurrenciesToIsoCodes() {
+        try {
+            isoCodes.add("FJD");
+            isoCodes.add("MXN");
+            isoCodes.add("STD");
+            isoCodes.add("SCR");
+            isoCodes.add("CDF");
+            isoCodes.add("BBD");
+            isoCodes.add("GTQ");
+            isoCodes.add("CLP");
+            isoCodes.add("HNL");
+            isoCodes.add("UGX");
+            isoCodes.add("ZAR");
+            isoCodes.add("MXV");
+            isoCodes.add("TND");
+            isoCodes.add("CUC");
+            isoCodes.add("BSD");
+            isoCodes.add("SLL");
+            isoCodes.add("SDG");
+            isoCodes.add("IQD");
+            isoCodes.add("GMD");
+            isoCodes.add("CUP");
+            isoCodes.add("TWD");
+            isoCodes.add("RSD");
+            isoCodes.add("DOP");
+            isoCodes.add("KMF");
+            isoCodes.add("MYR");
+            isoCodes.add("FKP");
+            isoCodes.add("XOF");
+            isoCodes.add("GEL");
+            isoCodes.add("UYU");
+            isoCodes.add("MAD");
+            isoCodes.add("CVE");
+            isoCodes.add("TOP");
+            isoCodes.add("AZN");
+            isoCodes.add("OMR");
+            isoCodes.add("PGK");
+            isoCodes.add("KES");
+            isoCodes.add("SEK");
+            isoCodes.add("BTN");
+            isoCodes.add("UAH");
+            isoCodes.add("GNF");
+            isoCodes.add("ERN");
+            isoCodes.add("MZN");
+            isoCodes.add("SVC");
+            isoCodes.add("ARS");
+            isoCodes.add("QAR");
+            isoCodes.add("IRR");
+            isoCodes.add("MRO");
+            isoCodes.add("CNY");
+            isoCodes.add("XPF");
+            isoCodes.add("THB");
+            isoCodes.add("UZS");
+            isoCodes.add("BDT");
+            isoCodes.add("LYD");
+            isoCodes.add("BMD");
+            isoCodes.add("KWD");
+            isoCodes.add("PHP");
+            isoCodes.add("RUB");
+            isoCodes.add("PYG");
+            isoCodes.add("ISK");
+            isoCodes.add("JMD");
+            isoCodes.add("COP");
+            isoCodes.add("USD");
+            isoCodes.add("MKD");
+            isoCodes.add("COU");
+            isoCodes.add("DZD");
+            isoCodes.add("PAB");
+            isoCodes.add("SGD");
+            isoCodes.add("ETB");
+            isoCodes.add("KGS");
+            isoCodes.add("SOS");
+            isoCodes.add("VUV");
+            isoCodes.add("VEF");
+            isoCodes.add("LAK");
+            isoCodes.add("BND");
+            isoCodes.add("XAF");
+            isoCodes.add("LRD");
+            isoCodes.add("HRK");
+            isoCodes.add("CHF");
+            isoCodes.add("DJF");
+            isoCodes.add("ZMW");
+            isoCodes.add("TZS");
+            isoCodes.add("VND");
+            isoCodes.add("AUD");
+            isoCodes.add("ILS");
+            isoCodes.add("GHS");
+            isoCodes.add("GYD");
+            isoCodes.add("KPW");
+            isoCodes.add("CHW");
+            isoCodes.add("BOB");
+            isoCodes.add("KHR");
+            isoCodes.add("MDL");
+            isoCodes.add("IDR");
+            isoCodes.add("KYD");
+            isoCodes.add("AMD");
+            isoCodes.add("BWP");
+            isoCodes.add("SHP");
+            isoCodes.add("TRY");
+            isoCodes.add("LBP");
+            isoCodes.add("TJS");
+            isoCodes.add("JOD");
+            isoCodes.add("HKD");
+            isoCodes.add("RWF");
+            isoCodes.add("AED");
+            isoCodes.add("EUR");
+            isoCodes.add("LSL");
+            isoCodes.add("DKK");
+            isoCodes.add("CAD");
+            isoCodes.add("BOV");
+            isoCodes.add("BGN");
+            isoCodes.add("MMK");
+            isoCodes.add("NOK");
+            isoCodes.add("MUR");
+            isoCodes.add("SYP");
+            isoCodes.add("ZWL");
+            isoCodes.add("GIP");
+            isoCodes.add("RON");
+            isoCodes.add("LKR");
+            isoCodes.add("NGN");
+            isoCodes.add("CRC");
+            isoCodes.add("CZK");
+            isoCodes.add("PKR");
+            isoCodes.add("XCD");
+            isoCodes.add("HTG");
+            isoCodes.add("XSU");
+            isoCodes.add("BHD");
+            isoCodes.add("KZT");
+            isoCodes.add("SRD");
+            isoCodes.add("SZL");
+            isoCodes.add("SAR");
+            isoCodes.add("TTD");
+            isoCodes.add("YER");
+            isoCodes.add("MVR");
+            isoCodes.add("INR");
+            isoCodes.add("AWG");
+            isoCodes.add("KRW");
+            isoCodes.add("NPR");
+            isoCodes.add("JPY");
+            isoCodes.add("MNT");
+            isoCodes.add("AOA");
+            isoCodes.add("PLN");
+            isoCodes.add("GBP");
+            isoCodes.add("SBD");
+            isoCodes.add("HUF");
+            isoCodes.add("BYR");
+            isoCodes.add("BIF");
+            isoCodes.add("MWK");
+            isoCodes.add("MGA");
+            isoCodes.add("BZD");
+            isoCodes.add("BAM");
+            isoCodes.add("MOP");
+            isoCodes.add("EGP");
+            isoCodes.add("NAD");
+            isoCodes.add("SSP");
+            isoCodes.add("NIO");
+            isoCodes.add("PEN");
+            isoCodes.add("NZD");
+            isoCodes.add("WST");
+            isoCodes.add("TMT");
+            isoCodes.add("CLF");
+            isoCodes.add("BRL");
+        } catch (Exception e) {
+            throw new ClassCastException("Must initialize \"Currencies\" with .init() before usage.");
+        }
+    }
+
+    private static void addCurrenciesToIsoToName() {
+        try {
+            isoToName.put("FJD", "Fidschi Dollar");
+            isoToName.put("MXN", "Mexikanischer Peso");
+            isoToName.put("STD", "Dobra");
+            isoToName.put("SCR", "Seychellen-Rupie");
+            isoToName.put("CDF", "Congolese Franc");
+            isoToName.put("BBD", "Barbados-Dollar");
+            isoToName.put("GTQ", "Quetzal");
+            isoToName.put("CLP", "Chilenischer Peso");
+            isoToName.put("HNL", "Lempira");
+            isoToName.put("UGX", "Uganda-Schilling");
+            isoToName.put("ZAR", "Rand");
+            isoToName.put("MXV", "Mexikanische Unidad de Inversion (UDI)");
+            isoToName.put("TND", "Tunesischer Dinar");
+            isoToName.put("CUC", "Peso Convertible");
+            isoToName.put("BSD", "Bahama-Dollar");
+            isoToName.put("SLL", "Leone");
+            isoToName.put("SDG", "Sudanesisches Pfund");
+            isoToName.put("IQD", "Irakischer Dinar");
+            isoToName.put("GMD", "Dalasi");
+            isoToName.put("CUP", "Kubanischer Peso");
+            isoToName.put("TWD", "Neuer Taiwan-Dollar");
+            isoToName.put("RSD", "Serbischer Dinar");
+            isoToName.put("DOP", "Dominikanischer Peso");
+            isoToName.put("KMF", "Comoro Franc");
+            isoToName.put("MYR", "Malaysischer Ringgit");
+            isoToName.put("FKP", "Falklandinseln Pfund");
+            isoToName.put("XOF", "CFA Franc BCEAO");
+            isoToName.put("GEL", "Lari");
+            isoToName.put("UYU", "Peso Uruguayo");
+            isoToName.put("MAD", "Marokkanischer Dirham");
+            isoToName.put("CVE", "Kap Verde Escudo");
+            isoToName.put("TOP", "Pa’anga");
+            isoToName.put("AZN", "Aserbaidschanischer Manat");
+            isoToName.put("OMR", "Rial Omani");
+            isoToName.put("PGK", "Kina");
+            isoToName.put("KES", "Kenia-Schilling");
+            isoToName.put("SEK", "Schwedische Krone");
+            isoToName.put("BTN", "Ngultrum");
+            isoToName.put("UAH", "Hryvnia");
+            isoToName.put("GNF", "Guinea Franc");
+            isoToName.put("ERN", "Nakfa");
+            isoToName.put("MZN", "Mosambik Metical");
+            isoToName.put("SVC", "El Salvador Colon");
+            isoToName.put("ARS", "Argentinischer Peso");
+            isoToName.put("QAR", "Katar-Riyal");
+            isoToName.put("IRR", "Iranischer Rial");
+            isoToName.put("MRO", "Ouguiya");
+            isoToName.put("CNY", "Yuan Renminbi");
+            isoToName.put("XPF", "CFP Franc");
+            isoToName.put("THB", "Baht");
+            isoToName.put("UZS", "Soʻm");
+            isoToName.put("BDT", "Taka");
+            isoToName.put("LYD", "Libyscher Dinar");
+            isoToName.put("BMD", "Bermudischer Dollar");
+            isoToName.put("KWD", "Kuwaitischer Dinar");
+            isoToName.put("PHP", "Philippinischer Peso");
+            isoToName.put("RUB", "Russischer Rubel");
+            isoToName.put("PYG", "Guarani");
+            isoToName.put("ISK", "Isländische Krone");
+            isoToName.put("JMD", "Jamaikanischer Dollar");
+            isoToName.put("COP", "Kolumbianischer Peso");
+            isoToName.put("USD", "US Dollar");
+            isoToName.put("MKD", "Denar");
+            isoToName.put("COU", "Unidad de Valor Real");
+            isoToName.put("DZD", "Algerischer Dinar");
+            isoToName.put("PAB", "Balboa");
+            isoToName.put("SGD", "Singapur-Dollar");
+            isoToName.put("ETB", "Äthiopischer Birr");
+            isoToName.put("KGS", "Som");
+            isoToName.put("SOS", "Somali-Schilling");
+            isoToName.put("VUV", "Vatu");
+            isoToName.put("VEF", "Bolivar");
+            isoToName.put("LAK", "Kip");
+            isoToName.put("BND", "Brunei Dollar");
+            isoToName.put("XAF", "CFA Franc BEAC");
+            isoToName.put("LRD", "Liberianischer Dollar");
+            isoToName.put("HRK", "Kuna");
+            isoToName.put("CHF", "Schweizer Franken");
+            isoToName.put("DJF", "Dschibuti-Franc");
+            isoToName.put("ZMW", "Sambische Kwacha");
+            isoToName.put("TZS", "Tanzanian Shilling");
+            isoToName.put("VND", "Dong");
+            isoToName.put("AUD", "Australischer Dollar");
+            isoToName.put("ILS", "Neuer israelischer Schekel");
+            isoToName.put("GHS", "Ghana Cedi");
+            isoToName.put("GYD", "Guyana Dollar");
+            isoToName.put("KPW", "Nordkoreanischer Won");
+            isoToName.put("CHW", "WIR Franc");
+            isoToName.put("BOB", "Boliviano");
+            isoToName.put("KHR", "Riel");
+            isoToName.put("MDL", "Moldovan Leu");
+            isoToName.put("IDR", "Rupiah");
+            isoToName.put("KYD", "Kaimaninseln Dollar");
+            isoToName.put("AMD", "Armenischer Dram");
+            isoToName.put("BWP", "Pula");
+            isoToName.put("SHP", "St. Helena Pfund");
+            isoToName.put("TRY", "Türkische Lira");
+            isoToName.put("LBP", "Libanesisches Pfund");
+            isoToName.put("TJS", "Somoni");
+            isoToName.put("JOD", "Jordanian Dinar");
+            isoToName.put("HKD", "Hong Kong Dollar");
+            isoToName.put("RWF", "Rwanda Franc");
+            isoToName.put("AED", "UAE Dirham");
+            isoToName.put("EUR", "Euro");
+            isoToName.put("LSL", "Loti");
+            isoToName.put("DKK", "Dänische Krone");
+            isoToName.put("CAD", "Kanadischer Dollar");
+            isoToName.put("BOV", "Mvdol");
+            isoToName.put("BGN", "Bulgarischer Lev");
+            isoToName.put("MMK", "Kyat");
+            isoToName.put("NOK", "Norwegische Krone");
+            isoToName.put("MUR", "Mauritius-Rupie");
+            isoToName.put("SYP", "Syrisches Pfund");
+            isoToName.put("ZWL", "Simbabwe-Dollar");
+            isoToName.put("GIP", "Gibraltar-Pfund");
+            isoToName.put("RON", "Rumänischer Leu");
+            isoToName.put("LKR", "Sri Lanka Rupee");
+            isoToName.put("NGN", "Naira");
+            isoToName.put("CRC", "Costa Rican Colon");
+            isoToName.put("CZK", "Tschechische Krone");
+            isoToName.put("PKR", "Pakistanische Rupie");
+            isoToName.put("XCD", "Ostkaribischer Dollar");
+            isoToName.put("HTG", "Gourde");
+            isoToName.put("XSU", "Sucre");
+            isoToName.put("BHD", "Bahrainischer Dinar");
+            isoToName.put("KZT", "Tenge");
+            isoToName.put("SRD", "Surinamischer Dollar");
+            isoToName.put("SZL", "Lilangeni");
+            isoToName.put("SAR", "Saudi-Riyal");
+            isoToName.put("TTD", "Trinidad und Tobago Dollar");
+            isoToName.put("YER", "Jemenitische Rial");
+            isoToName.put("MVR", "Rufiyaa");
+            isoToName.put("INR", "Indische Rupie");
+            isoToName.put("AWG", "Aruban Florin");
+            isoToName.put("KRW", "Won");
+            isoToName.put("NPR", "Nepalesische Rupie");
+            isoToName.put("JPY", "Yen");
+            isoToName.put("MNT", "Tugrik");
+            isoToName.put("AOA", "Kwanza");
+            isoToName.put("PLN", "Zloty");
+            isoToName.put("GBP", "Pfund Sterling");
+            isoToName.put("SBD", "Salomonen-Dollar");
+            isoToName.put("HUF", "Forint");
+            isoToName.put("BYR", "Weißrussischer Rubel");
+            isoToName.put("BIF", "Burundi-Franc");
+            isoToName.put("MWK", "Kwacha");
+            isoToName.put("MGA", "Madagaskar Ariary");
+            isoToName.put("BZD", "Belize-Dollar");
+            isoToName.put("BAM", "Konvertible Mark");
+            isoToName.put("MOP", "Pataca");
+            isoToName.put("EGP", "Ägyptisches Pfund");
+            isoToName.put("NAD", "Namibia-Dollar");
+            isoToName.put("SSP", "Südsudanesisches Pfund");
+            isoToName.put("NIO", "Cordoba Oro");
+            isoToName.put("PEN", "Nuevo Sol");
+            isoToName.put("NZD", "Neuseeland-Dollar");
+            isoToName.put("WST", "Tala");
+            isoToName.put("TMT", "Turkmenistan-Manat");
+            isoToName.put("CLF", "Unidad de Fomento");
+            isoToName.put("BRL", "Brasilianischer Real");
+        } catch (Exception e) {
+            throw new ClassCastException("Must initialize \"Currencies\" with .init() before usage.");
+        }
+    }
+
+}

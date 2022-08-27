@@ -24,6 +24,7 @@ import java.util.Map;
 import de.xyzerstudios.moneymanager.R;
 import de.xyzerstudios.moneymanager.activities.HomeActivity;
 import de.xyzerstudios.moneymanager.fragments.DashboardFragment;
+import de.xyzerstudios.moneymanager.utils.CategoryItemComparator;
 import de.xyzerstudios.moneymanager.utils.RepeatedItem;
 import de.xyzerstudios.moneymanager.utils.Utils;
 import de.xyzerstudios.moneymanager.utils.charting.CategoryItem;
@@ -295,6 +296,9 @@ public class LoadPieChartsAsyncTask extends AsyncTask<Integer, ArrayList<Categor
             categoryItemsExpenses.add(new CategoryItem(activity.getColor(R.color.ui_lime_green),
                     activity.getString(R.string.category), 100));
         }
+
+        categoryItemsIncome.sort(new CategoryItemComparator());
+        categoryItemsExpenses.sort(new CategoryItemComparator());
 
         int saldoOffAll = sumOfAllIncome - sumOfAllExpenses;
 

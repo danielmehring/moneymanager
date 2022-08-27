@@ -154,6 +154,10 @@
         färbt sich das Budget rot. Unter \"verfügbarer Betrag\" siehst du dein durchschnittliches Budget pro Monat.
         Hierzu zählt lediglich regelmäßiges Einkommen. </string>
     <string name="portfolios_explanation">Mit \"Portfolios\" kannst du Umsätze voneinander trennen. Mit mehreren Portfolios behälst du leicht den Überblick.</string>
+    <string name="settings">Einstellungen</string>
+    <string name="settings_currency">Währung</string>
+    <string name="display_currency_with_unicode">Währung mit Unicode anzeigen</string>
+    <string name="choose_currency">Währung auswählen</string>
 
 
     <string-array name="interval_units">

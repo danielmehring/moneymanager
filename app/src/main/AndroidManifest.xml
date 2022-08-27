@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="de.xyzerstudios.moneymanager">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -15,6 +16,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MoneyManager"
         tools:targetApi="31">
+        <activity
+            android:name=".activities.CurrenciesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.SettingsActivity"
+            android:exported="false" />
         <activity
             android:name=".activities.edit.EditIncomeOfBalanceActivity"
             android:exported="false" />

@@ -314,8 +314,10 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
                 slidingRootNav.closeMenu();
                 break;
             case POS_SETTINGS:
-
                 slidingRootNav.closeMenu();
+                Intent intent4 = new Intent(HomeActivity.this, SettingsActivity.class);
+                startActivity(intent4);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 break;
             case POS_ABOUT_US:
                 Fragment aboutUsFragment = new AboutUsFragment();
