@@ -39,6 +39,7 @@ import java.util.Date;
 
 import de.xyzerstudios.moneymanager.R;
 import de.xyzerstudios.moneymanager.activities.CategoriesActivity;
+import de.xyzerstudios.moneymanager.activities.ConvertCurrencyActivity;
 import de.xyzerstudios.moneymanager.utils.Utils;
 import de.xyzerstudios.moneymanager.utils.database.CategoriesDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.database.IncomeDatabaseHelper;
@@ -48,13 +49,13 @@ import de.xyzerstudios.moneymanager.utils.dialogs.IntervalPickerDialog;
 
 public class EditIncomeActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, IntervalPickerDialog.IntervalPickerDialogListener {
 
-    private final Utils utils = new Utils();
+    private final Utils utils = new Utils(this);
     public EditText editTextIncomeAmount, editTextIncomeName;
     public ImageView closeActivityAddIncome, editIncome;
     public TextView textViewIncomeAmount, textViewIncomeTimestamp, textViewIncomeCategory, textViewIncomeInterval,
             textViewRepeatedIncome;
     public FrameLayout chooserIncomeTimestamp, chooserIncomeCategory, chooserIncomeInterval;
-    public LinearLayout displayCategoryColor, deleteIncomeEntry;
+    public LinearLayout displayCategoryColor, deleteIncomeEntry, buttonEditIncomeConvert;
 
     public ViewGroup containerAddIncomeInterval;
     public Switch switchRepeatedIncome;
@@ -75,6 +76,18 @@ public class EditIncomeActivity extends AppCompatActivity implements DatePickerD
                             backgroundDrawableIndicator.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
 
                             displayCategoryColor.setBackground(backgroundDrawableIndicator);
+                        }
+                    }
+                }
+            });
+    public ActivityResultLauncher<Intent> startForResultConvertCurrency = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result != null && result.getResultCode() == RESULT_OK) {
+                        if (result.getData() != null) {
+                            amount = result.getData().getIntExtra("exchangedCurrency", amount);
+                            textViewIncomeAmount.setText(utils.formatCurrency(amount));
                         }
                     }
                 }
@@ -145,6 +158,7 @@ public class EditIncomeActivity extends AppCompatActivity implements DatePickerD
         chooserIncomeInterval = containerAddIncomeInterval.findViewById(R.id.chooserIncomeIntervalEdit);
         textViewIncomeInterval = containerAddIncomeInterval.findViewById(R.id.textViewIncomeIntervalEdit);
         textViewRepeatedIncome = findViewById(R.id.textViewRepeatedIncomeEdit);
+        buttonEditIncomeConvert = findViewById(R.id.buttonEditIncomeConvert);
     }
 
     private void setClickListeners() {
@@ -168,6 +182,14 @@ public class EditIncomeActivity extends AppCompatActivity implements DatePickerD
                 Intent intent = new Intent(EditIncomeActivity.this, CategoriesActivity.class);
                 intent.putExtra("type", "income");
                 startForResult.launch(intent);
+            }
+        });
+
+        buttonEditIncomeConvert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(EditIncomeActivity.this, ConvertCurrencyActivity.class);
+                startForResultConvertCurrency.launch(intent);
             }
         });
 
@@ -351,7 +373,7 @@ public class EditIncomeActivity extends AppCompatActivity implements DatePickerD
     }
 
     private void showDialogDatePicker() {
-        DialogFragment datePicker = new DatePickerFragment();
+        DialogFragment datePicker = new DatePickerFragment(false);
         datePicker.show(getSupportFragmentManager(), "Date Picker");
     }
 

@@ -1,23 +1,21 @@
 package de.xyzerstudios.moneymanager.activities;
 
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.ImageButton;
-
-import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collections;
+import java.util.Comparator;
 
 import de.xyzerstudios.moneymanager.R;
-import de.xyzerstudios.moneymanager.utils.Currencies;
-import de.xyzerstudios.moneymanager.utils.Utils;
+import de.xyzerstudios.moneymanager.utils.currency.Currencies;
 import de.xyzerstudios.moneymanager.utils.adapters.CurrencyAdapter;
 import de.xyzerstudios.moneymanager.utils.adapters.items.CurrencyItem;
 
@@ -25,8 +23,6 @@ public class CurrenciesActivity extends AppCompatActivity {
 
     private ImageButton buttonCurrenciesGoBack;
     private RecyclerView recyclerViewCurrencies;
-    private CurrencyAdapter currencyAdapter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,26 +73,26 @@ public class CurrenciesActivity extends AppCompatActivity {
         protected CurrencyAdapter doInBackground(String... strings) {
             ArrayList<CurrencyItem> currencyItems = new ArrayList<>();
 
-            if (Currencies.getIsoToNameTranslated().size() > 0) {
-                Currencies.getIsoToNameTranslated().forEach((key, value) -> {
-                    currencyItems.add(new CurrencyItem(key, value));
-                });
-            } else {
-                Log.d("yesssssss", "yes");
-                HashMap<String, String> displayedCurrencies = new HashMap<>();
 
-                ArrayList<String> allCurrencies = Currencies.getIsoCodes();
-                ArrayList<String> mostUsedCurrencies = Currencies.getIsoCodesOfCurrenciesUsedMost();
+            ArrayList<String> allCurrencies = Currencies.getIsoCodes();
+            ArrayList<String> mostUsedCurrencies = Currencies.getIsoCodesOfCurrenciesUsedMost();
 
-                for (String isoCode : mostUsedCurrencies) {
-                    allCurrencies.remove(isoCode);
-                    currencyItems.add(new CurrencyItem(isoCode, Currencies.getIsoToName().get(isoCode)));
+            for (String isoCode : mostUsedCurrencies) {
+                allCurrencies.remove(isoCode);
+                currencyItems.add(new CurrencyItem(isoCode, Currencies.getIsoToName().get(isoCode),
+                        Currencies.getIsoToUnicode().getOrDefault(isoCode, "")));
+            }
+
+            allCurrencies.sort(new Comparator<String>() {
+                @Override
+                public int compare(String s, String t1) {
+                    return s.compareTo(t1);
                 }
+            });
 
-                for (String isoCode : allCurrencies) {
-                    currencyItems.add(new CurrencyItem(isoCode, Currencies.getIsoToName().get(isoCode)));
-                }
-
+            for (String isoCode : allCurrencies) {
+                currencyItems.add(new CurrencyItem(isoCode, Currencies.getIsoToName().get(isoCode),
+                        Currencies.getIsoToUnicode().getOrDefault(isoCode, "")));
             }
 
             return new CurrencyAdapter(activity, currencyItems);
@@ -119,7 +115,6 @@ public class CurrenciesActivity extends AppCompatActivity {
             if (activity == null) {
                 return;
             }
-            this.activity.currencyAdapter = ca;
             this.activity.recyclerViewCurrencies.setAdapter(ca);
         }
     }

@@ -32,7 +32,7 @@ import de.xyzerstudios.moneymanager.utils.database.CategoriesDatabaseHelper;
 
 public class AddBudgetActivity extends AppCompatActivity {
 
-    private final Utils utils = new Utils();
+    private final Utils utils = new Utils(this);
     private ImageView closeActivityAddBudget, addBudget;
     private FrameLayout chooserBudgetCategory;
     private TextView textViewBudgetCategory, textViewBudgetAmount;

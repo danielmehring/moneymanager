@@ -84,7 +84,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void loadUIFromSharedPrefs() {
         SharedPreferences sharedPreferences = getSharedPreferences(Utils.SHARED_PREFS, Context.MODE_PRIVATE);
-        textViewSettingsCurrency.setText(sharedPreferences.getString(Utils.SPS_CURRENCY_ISO_CODE, "EUR"));
+        textViewSettingsCurrency.setText(sharedPreferences.getString(Utils.SPS_CURRENCY_ISO_CODE, "USD"));
         switchDisplayCurWU.setChecked(sharedPreferences.getBoolean(Utils.SPS_CURRENCY_DISPLAYED_WITH_UNICODE, true));
     }
 }

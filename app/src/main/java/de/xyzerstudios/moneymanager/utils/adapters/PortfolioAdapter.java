@@ -59,7 +59,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Utils utils = new Utils();
+        Utils utils = new Utils(activity);
         BalancePortfolioItem balanceItem = portfolioItems.get(position);
 
         Drawable background = context.getDrawable(R.drawable.default_corners);

@@ -29,6 +29,7 @@ import java.util.Date;
 
 import de.xyzerstudios.moneymanager.R;
 import de.xyzerstudios.moneymanager.activities.CategoriesActivity;
+import de.xyzerstudios.moneymanager.activities.ConvertCurrencyActivity;
 import de.xyzerstudios.moneymanager.utils.Utils;
 import de.xyzerstudios.moneymanager.utils.database.CategoriesDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.database.ExpensesDatabaseHelper;
@@ -37,12 +38,12 @@ import de.xyzerstudios.moneymanager.utils.dialogs.PaymentMethodDialog;
 
 public class AddExpenseActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, PaymentMethodDialog.PaymentMethodDialogListener {
 
-    private final Utils utils = new Utils();
+    private final Utils utils = new Utils(this);
     public EditText editTextExpenseAmount, editTextExpenseName;
     public ImageView closeActivityAddExpense, addExpense;
     public TextView textViewExpenseAmount, textViewExpenseTimestamp, textViewExpenseCategory, textViewExpensePaymentMethod;
     public FrameLayout chooserExpenseTimestamp, chooserExpenseCategory, chooserExpensePaymentMethod;
-    public LinearLayout displayCategoryColor;
+    public LinearLayout displayCategoryColor, buttonAddExpenseConvert;
     private int categoryId = 9;
     public ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
@@ -59,6 +60,18 @@ public class AddExpenseActivity extends AppCompatActivity implements DatePickerD
                             backgroundDrawableIndicator.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
 
                             displayCategoryColor.setBackground(backgroundDrawableIndicator);
+                        }
+                    }
+                }
+            });
+    public ActivityResultLauncher<Intent> startForResultConvertCurrency = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result != null && result.getResultCode() == RESULT_OK) {
+                        if (result.getData() != null) {
+                            amount = result.getData().getIntExtra("exchangedCurrency", amount);
+                            textViewExpenseAmount.setText(utils.formatCurrency(amount));
                         }
                     }
                 }
@@ -97,6 +110,7 @@ public class AddExpenseActivity extends AppCompatActivity implements DatePickerD
         chooserExpensePaymentMethod = findViewById(R.id.chooserExpensePaymentMethod);
         displayCategoryColor = findViewById(R.id.displayCategoryColor);
         textViewExpensePaymentMethod = findViewById(R.id.textViewExpensePaymentMethod);
+        buttonAddExpenseConvert = findViewById(R.id.buttonAddExpenseConvert);
     }
 
     private void setClickListeners() {
@@ -121,6 +135,14 @@ public class AddExpenseActivity extends AppCompatActivity implements DatePickerD
                 Intent intent = new Intent(AddExpenseActivity.this, CategoriesActivity.class);
                 intent.putExtra("type", "expense");
                 startForResult.launch(intent);
+            }
+        });
+
+        buttonAddExpenseConvert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AddExpenseActivity.this, ConvertCurrencyActivity.class);
+                startForResultConvertCurrency.launch(intent);
             }
         });
 
@@ -223,7 +245,7 @@ public class AddExpenseActivity extends AppCompatActivity implements DatePickerD
     }
 
     private void showDialogDatePicker() {
-        DialogFragment datePicker = new DatePickerFragment();
+        DialogFragment datePicker = new DatePickerFragment(false);
         datePicker.show(getSupportFragmentManager(), "Date Picker");
     }
 

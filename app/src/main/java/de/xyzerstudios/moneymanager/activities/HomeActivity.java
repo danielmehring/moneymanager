@@ -22,6 +22,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.play.core.review.ReviewInfo;
 import com.google.android.play.core.review.ReviewManager;
@@ -30,14 +33,12 @@ import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import de.xyzerstudios.moneymanager.R;
 import de.xyzerstudios.moneymanager.fragments.AboutUsFragment;
 import de.xyzerstudios.moneymanager.fragments.DashboardFragment;
 import de.xyzerstudios.moneymanager.fragments.DonateFragment;
-import de.xyzerstudios.moneymanager.fragments.PremiumFragment;
 import de.xyzerstudios.moneymanager.utils.Utils;
 import de.xyzerstudios.moneymanager.utils.drawermenu.DrawerAdapter;
 import de.xyzerstudios.moneymanager.utils.drawermenu.DrawerItem;
@@ -51,19 +52,17 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
     public static final int POS_BUDGET = 4;
     private static final String tag = "HomeActivity";
     private static final int POS_DASHBOARD = 1;
-    private static final int POS_PREMIUM = 6;
-    private static final int POS_DONATE = 7;
-    private static final int POS_SETTINGS = 9;
-    private static final int POS_ABOUT_US = 10;
+    private static final int POS_DONATE = 6;
+    private static final int POS_SETTINGS = 8;
+    private static final int POS_ABOUT_US = 9;
 
     private static final int RESOURCE_DASHBOARD = 0;
     private static final int RESOURCE_PORTFOLIOS = 1;
     private static final int RESOURCE_BILANZEN = 2;
     private static final int RESOURCE_BUDGET = 3;
-    private static final int RESOURCE_PREMIUM = 4;
-    private static final int RESOURCE_DONATE = 5;
-    private static final int RESOURCE_SETTINGS = 6;
-    private static final int RESOURCE_ABOUT_US = 7;
+    private static final int RESOURCE_DONATE = 4;
+    private static final int RESOURCE_SETTINGS = 5;
+    private static final int RESOURCE_ABOUT_US = 6;
 
     private static final int RESOURCE_HEADING_GENERAL = 0;
     private static final int RESOURCE_HEADING_ACTIONS = 1;
@@ -125,6 +124,12 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
         if (getCreatedCount() % 10 == 0) {
             startReviewFlow();
         }
+
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(@NonNull InitializationStatus initializationStatus) {
+            }
+        });
     }
 
     public void loadSlidingRootNav() {
@@ -143,8 +148,7 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
 
         drawerItems.add(createNewHeadingItem(RESOURCE_HEADING_ACTIONS));
 
-        drawerItems.add(createNewDrawerItem(RESOURCE_PREMIUM).showNotification());
-        drawerItems.add(createNewDrawerItem(RESOURCE_DONATE).hideNotification());
+        drawerItems.add(createNewDrawerItem(RESOURCE_DONATE).showNotification());
 
         drawerItems.add(createNewHeadingItem(RESOURCE_HEADING_OTHER));
 
@@ -302,11 +306,6 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
                 Intent intent3 = new Intent(HomeActivity.this, BudgetsActivity.class);
                 startActivity(intent3);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                break;
-            case POS_PREMIUM:
-                Fragment premiumFragment = new PremiumFragment();
-                showFragment(premiumFragment);
-                slidingRootNav.closeMenu();
                 break;
             case POS_DONATE:
                 Fragment donateFragment = new DonateFragment();

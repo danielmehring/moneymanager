@@ -47,7 +47,7 @@ public class ExpensesAdapter extends RecyclerView.Adapter<ExpensesAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ExpensesItem expensesItem = expensesItems.get(position);
-        Utils utils = new Utils();
+        Utils utils = new Utils(activity);
         holder.expensesProductname.setText(expensesItem.getName());
         holder.expensesPrice.setText(utils.formatCurrency(expensesItem.getAmount()) );
         holder.expensesDate.setText(expensesItem.getDate());

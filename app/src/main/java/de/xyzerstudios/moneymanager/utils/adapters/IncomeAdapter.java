@@ -43,7 +43,7 @@ public class IncomeAdapter extends RecyclerView.Adapter<IncomeAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         IncomeItem incomeItem = incomeItems.get(position);
-        Utils utils = new Utils();
+        Utils utils = new Utils(activity);
         holder.incomeProductname.setText(incomeItem.getName());
         holder.incomePrice.setText(utils.formatCurrency(incomeItem.getAmount()));
         holder.incomeDate.setText(incomeItem.getDate());

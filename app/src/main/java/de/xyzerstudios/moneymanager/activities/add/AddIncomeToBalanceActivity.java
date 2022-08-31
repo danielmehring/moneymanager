@@ -29,10 +29,10 @@ import java.util.Date;
 
 import de.xyzerstudios.moneymanager.R;
 import de.xyzerstudios.moneymanager.activities.CategoriesActivity;
+import de.xyzerstudios.moneymanager.activities.ConvertCurrencyActivity;
 import de.xyzerstudios.moneymanager.utils.Utils;
 import de.xyzerstudios.moneymanager.utils.database.BalanceTurnoversDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.database.CategoriesDatabaseHelper;
-import de.xyzerstudios.moneymanager.utils.database.IncomeDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.database.TurnoverType;
 import de.xyzerstudios.moneymanager.utils.dialogs.DatePickerFragment;
 
@@ -42,15 +42,28 @@ public class AddIncomeToBalanceActivity extends AppCompatActivity implements Dat
     public ImageView closeActivityAddIncome, addIncome;
     public TextView textViewIncomeAmount, textViewIncomeTimestamp, textViewIncomeCategory;
     public FrameLayout chooserIncomeTimestamp, chooserIncomeCategory;
-    public LinearLayout displayCategoryColor;
+    public LinearLayout displayCategoryColor, buttonAddIncomeToBalanceConvert;
 
-    private final Utils utils = new Utils();
+    private final Utils utils = new Utils(this);
 
     private int balanceId;
     private int categoryId = 38;
 
     private int amount = 0;
     private Date date;
+
+    public ActivityResultLauncher<Intent> startForResultConvertCurrency = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result != null && result.getResultCode() == RESULT_OK) {
+                        if (result.getData() != null) {
+                            amount = result.getData().getIntExtra("exchangedCurrency", amount);
+                            textViewIncomeAmount.setText(utils.formatCurrency(amount));
+                        }
+                    }
+                }
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +120,7 @@ public class AddIncomeToBalanceActivity extends AppCompatActivity implements Dat
         chooserIncomeTimestamp = findViewById(R.id.chooserIncomeTimestamp);
         chooserIncomeCategory = findViewById(R.id.chooserIncomeCategory);
         displayCategoryColor = findViewById(R.id.displayCategoryColorAddIncome);
+        buttonAddIncomeToBalanceConvert = findViewById(R.id.buttonAddIncomeToBalanceConvert);
     }
 
     private void setClickListeners() {
@@ -146,6 +160,14 @@ public class AddIncomeToBalanceActivity extends AppCompatActivity implements Dat
                 finish();
 
                 finish();
+            }
+        });
+
+        buttonAddIncomeToBalanceConvert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AddIncomeToBalanceActivity.this, ConvertCurrencyActivity.class);
+                startForResultConvertCurrency.launch(intent);
             }
         });
     }
@@ -228,7 +250,7 @@ public class AddIncomeToBalanceActivity extends AppCompatActivity implements Dat
     }
 
     private void showDialogDatePicker() {
-        DialogFragment datePicker = new DatePickerFragment();
+        DialogFragment datePicker = new DatePickerFragment(false);
         datePicker.show(getSupportFragmentManager(), "Date Picker");
     }
 

@@ -85,7 +85,7 @@ public class LoadPortfolioAsyncTask extends AsyncTask<Integer, String, String> {
         int saldo = Integer.valueOf(strings[1]);
         int revenue = Integer.valueOf(strings[2]);
         int expenses = Integer.valueOf(strings[3]);
-        Utils utils = new Utils();
+        Utils utils = new Utils(activity);
 
         TransitionManager.beginDelayedTransition(dashboardFragment.transitionContainerDashboard);
         TransitionManager.beginDelayedTransition(dashboardFragment.linearLayoutIncome);

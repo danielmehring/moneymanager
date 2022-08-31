@@ -110,7 +110,7 @@
             android:fontFamily="@font/poppins_medium"
             android:textColor="@color/ui_text_faded"
             android:textSize="15dp"
-            android:text="@string/descriptopn" />
+            android:text="@string/description" />
 
         <Space
             android:layout_width="match_parent"

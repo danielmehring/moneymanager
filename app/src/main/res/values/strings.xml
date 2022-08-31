@@ -1,5 +1,8 @@
 <resources>
-    <string name="app_name">Money Manager</string>
+    <string name="app_name" translatable="false">Money Manager</string>
+    <string name="app_description">\"Money Manager\" ist eine von \"XYZER Studios\" entwickelte App, die Leuten ihre Ausgaben und
+        Einnahmen übersichtlich aufzeichnet. Budgets, Bilanzen, Portfolios, sowie verschiedene
+        Kategorien können genutzt werden, um die eigenen Finanzen so transparent wie möglich zu machen.</string>
 
     <string name="press_again_to_exit">Drücke erneut, um die App zu verlassen.</string>
 
@@ -14,7 +17,7 @@
     <string name="menu_title_donate">Spenden</string>
     <string name="menu_heading_other">Anderes</string>
     <string name="menu_title_settings">Einstellungen</string>
-    <string name="menu_title_about_us">Über uns</string>
+    <string name="menu_title_about_us">About</string>
     <string name="menu_title_budgets">Budgets</string>
 
     <string name="add_balance">Bilanz hinzufügen</string>
@@ -39,7 +42,7 @@
 
     <string name="add">hinzufügen</string>
     <string name="saldo">Saldo</string>
-    <string name="descriptopn">Beschreibung</string>
+    <string name="description">Beschreibung</string>
     <string name="please_enter_a_name">Bitte gebe einen Namen an</string>
     <string name="only_letters_numbers">Bitte nur Buchstaben und Zahlen eingeben</string>
     <string name="delete_confirmation">Sind Sie sich sicher, dass Sie diesen Eintrag löschen möchten?</string>
@@ -158,6 +161,16 @@
     <string name="settings_currency">Währung</string>
     <string name="display_currency_with_unicode">Währung mit Unicode anzeigen</string>
     <string name="choose_currency">Währung auswählen</string>
+    <string name="convert_currency">Währung umrechnen</string>
+    <string name="convert">Umrechnen</string>
+    <string name="convert_from">Von</string>
+    <string name="convert_to">Zu</string>
+    <string name="exchange_rate">Wechselkurs</string>
+    <string name="text_donate">Diese App zu entwickeln hat mich viel Zeit und Arbeit gekostet.
+        Wenn ihr mich finanziell unterstützen möchtet, dann könnt ihr gerne die Premium-Version kaufen,
+        oder einen kleinen Betrag via PayPal spenden :).</string>
+    <string name="paypal_donate">Mit PayPal spenden</string>
+    <string name="consent_rewarded_ad">Um diese Aktion durchzuführen, musst du dir ein Werbevideo ansehen.</string>
 
 
     <string-array name="interval_units">

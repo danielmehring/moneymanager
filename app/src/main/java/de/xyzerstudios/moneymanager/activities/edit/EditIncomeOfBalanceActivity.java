@@ -4,7 +4,6 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
@@ -35,21 +34,21 @@ import java.util.Date;
 
 import de.xyzerstudios.moneymanager.R;
 import de.xyzerstudios.moneymanager.activities.CategoriesActivity;
+import de.xyzerstudios.moneymanager.activities.ConvertCurrencyActivity;
 import de.xyzerstudios.moneymanager.utils.Utils;
 import de.xyzerstudios.moneymanager.utils.database.BalanceTurnoversDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.database.CategoriesDatabaseHelper;
-import de.xyzerstudios.moneymanager.utils.database.IncomeDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.database.TurnoverType;
 import de.xyzerstudios.moneymanager.utils.dialogs.DatePickerFragment;
 
 public class EditIncomeOfBalanceActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
-    private final Utils utils = new Utils();
+    private final Utils utils = new Utils(this);
     public EditText editTextIncomeAmount, editTextIncomeName;
     public ImageView closeActivityAddIncome, editIncome;
     public TextView textViewIncomeAmount, textViewIncomeTimestamp, textViewIncomeCategory;
     public FrameLayout chooserIncomeTimestamp, chooserIncomeCategory;
-    public LinearLayout displayCategoryColor, deleteIncomeEntry;
+    public LinearLayout displayCategoryColor, deleteIncomeEntry, buttonEditIncomeConvert;
 
 
     private int categoryId = 38;
@@ -71,6 +70,19 @@ public class EditIncomeOfBalanceActivity extends AppCompatActivity implements Da
                             backgroundDrawableIndicator.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
 
                             displayCategoryColor.setBackground(backgroundDrawableIndicator);
+                        }
+                    }
+                }
+            });
+
+    public ActivityResultLauncher<Intent> startForResultConvertCurrency = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result != null && result.getResultCode() == RESULT_OK) {
+                        if (result.getData() != null) {
+                            amount = result.getData().getIntExtra("exchangedCurrency", amount);
+                            textViewIncomeAmount.setText(utils.formatCurrency(amount));
                         }
                     }
                 }
@@ -116,6 +128,7 @@ public class EditIncomeOfBalanceActivity extends AppCompatActivity implements Da
         chooserIncomeCategory = findViewById(R.id.chooserIncomeCategoryEdit);
         displayCategoryColor = findViewById(R.id.displayCategoryColorEditIncome);
         deleteIncomeEntry = findViewById(R.id.deleteIncomeEntry);
+        buttonEditIncomeConvert = findViewById(R.id.buttonEditIncomeConvert);
     }
 
     private void setClickListeners() {
@@ -139,6 +152,14 @@ public class EditIncomeOfBalanceActivity extends AppCompatActivity implements Da
                 Intent intent = new Intent(EditIncomeOfBalanceActivity.this, CategoriesActivity.class);
                 intent.putExtra("type", "income");
                 startForResult.launch(intent);
+            }
+        });
+
+        buttonEditIncomeConvert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(EditIncomeOfBalanceActivity.this, ConvertCurrencyActivity.class);
+                startForResultConvertCurrency.launch(intent);
             }
         });
 
@@ -282,7 +303,7 @@ public class EditIncomeOfBalanceActivity extends AppCompatActivity implements Da
     }
 
     private void showDialogDatePicker() {
-        DialogFragment datePicker = new DatePickerFragment();
+        DialogFragment datePicker = new DatePickerFragment(false);
         datePicker.show(getSupportFragmentManager(), "Date Picker");
     }
 

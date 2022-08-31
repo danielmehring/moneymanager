@@ -2,7 +2,6 @@ package de.xyzerstudios.moneymanager.utils.dialogs;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.widget.DatePicker;
 
@@ -11,10 +10,16 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import java.util.Calendar;
-
-import de.xyzerstudios.moneymanager.R;
+import java.util.Date;
 
 public class DatePickerFragment extends DialogFragment {
+
+    private final boolean doNotExceedToday;
+
+    public DatePickerFragment(boolean doNotExceedToday) {
+        this.doNotExceedToday = doNotExceedToday;
+    }
+
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -28,7 +33,9 @@ public class DatePickerFragment extends DialogFragment {
             }
         };
         DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), (DatePickerDialog.OnDateSetListener) getActivity(), calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+        if (doNotExceedToday) {
+            datePickerDialog.getDatePicker().setMaxDate(new Date().getTime());
+        }
         return datePickerDialog;
-
     }
 }

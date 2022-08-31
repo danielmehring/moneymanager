@@ -8,14 +8,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -29,12 +24,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 import de.xyzerstudios.moneymanager.R;
-import de.xyzerstudios.moneymanager.activities.CategoriesActivity;
 import de.xyzerstudios.moneymanager.activities.PortfoliosActivity;
 import de.xyzerstudios.moneymanager.utils.Utils;
 import de.xyzerstudios.moneymanager.utils.database.BalanceDatabaseHelper;
-import de.xyzerstudios.moneymanager.utils.database.CategoriesDatabaseHelper;
-import de.xyzerstudios.moneymanager.utils.database.ExpensesDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.database.PortfolioDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.dialogs.DatePickerFragment;
 
@@ -46,7 +38,7 @@ public class AddBalanceActivity extends AppCompatActivity implements DatePickerD
     public FrameLayout chooserBalanceTimestamp, chooserBalancePortfolio;
     public LinearLayout removeAddFilterPortfolio;
 
-    private final Utils utils = new Utils();
+    private final Utils utils = new Utils(this);
 
     private int portfolioId = 0;
     private Date date;
@@ -164,7 +156,7 @@ public class AddBalanceActivity extends AppCompatActivity implements DatePickerD
     }
 
     private void showDialogDatePicker() {
-        DialogFragment datePicker = new DatePickerFragment();
+        DialogFragment datePicker = new DatePickerFragment(false);
         datePicker.show(getSupportFragmentManager(), "Date Picker");
     }
 

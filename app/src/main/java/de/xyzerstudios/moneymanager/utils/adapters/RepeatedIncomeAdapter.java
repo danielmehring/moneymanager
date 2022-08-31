@@ -44,7 +44,7 @@ public class RepeatedIncomeAdapter extends RecyclerView.Adapter<RepeatedIncomeAd
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         RepeatedIncomeItem repeatedIncomeItem = incomeItems.get(position);
-        Utils utils = new Utils();
+        Utils utils = new Utils(activity);
         holder.textViewRepeatedName.setText(repeatedIncomeItem.getName());
         holder.textViewRepeatedAmount.setText(utils.formatCurrency(repeatedIncomeItem.getAmount()));
         holder.linearLayoutRepeatedIncome.setOnClickListener(new View.OnClickListener() {

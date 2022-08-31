@@ -36,7 +36,7 @@ public class EditBudgetActivity extends AppCompatActivity {
 
     private int budgetEntryId;
 
-    private final Utils utils = new Utils();
+    private final Utils utils = new Utils(this);
     private ImageView closeActivityAddBudget, editBudget;
     private FrameLayout chooserBudgetCategory;
     private TextView textViewBudgetCategory, textViewBudgetAmount;

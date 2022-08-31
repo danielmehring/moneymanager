@@ -52,7 +52,7 @@ public class BalanceTurnoversAdapter extends RecyclerView.Adapter<BalanceTurnove
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         TurnoverItem turnoverItem = turnoverItems.get(position);
-        Utils utils = new Utils();
+        Utils utils = new Utils(activity);
         holder.expensesProductname.setText(turnoverItem.getName());
         holder.expensesPrice.setText(utils.formatCurrency(turnoverItem.getAmount()) );
         holder.expensesDate.setText(turnoverItem.getDate());

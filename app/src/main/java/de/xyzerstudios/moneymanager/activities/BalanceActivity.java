@@ -212,7 +212,7 @@ public class BalanceActivity extends AppCompatActivity {
             activityWeakReference = new WeakReference<BalanceActivity>(activity);
             this.activity = activity;
             this.reloadNameAndSaldo = reloadNameAndSaldo;
-            utils = new Utils();
+            utils = new Utils(BalanceActivity.this);
             this.turnoverTypeFilter = BalanceActivity.this.turnoverTypeFilters;
         }
 

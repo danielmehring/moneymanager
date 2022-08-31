@@ -12,6 +12,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 import de.xyzerstudios.moneymanager.R;
@@ -50,6 +52,7 @@ public class CurrencyAdapter extends RecyclerView.Adapter<CurrencyAdapter.ViewHo
         });
         holder.nameCurrency.setText(currencyItem.getName());
         holder.isoCodeCurrency.setText(currencyItem.getIsoCode());
+        holder.textViewSymbolCurrency.setText(currencyItem.getSymbol());
     }
 
     @Override
@@ -62,12 +65,14 @@ public class CurrencyAdapter extends RecyclerView.Adapter<CurrencyAdapter.ViewHo
 
         private TextView nameCurrency;
         private TextView isoCodeCurrency;
+        private TextView textViewSymbolCurrency;
         private LinearLayout linearLayoutCurrencyItem;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             nameCurrency = itemView.findViewById(R.id.textViewNameOfCurrency);
             isoCodeCurrency = itemView.findViewById(R.id.textViewIsoCodeCurrency);
+            textViewSymbolCurrency = itemView.findViewById(R.id.textViewSymbolCurrency);
             linearLayoutCurrencyItem = itemView.findViewById(R.id.linearLayoutCurrencyItem);
         }
     }

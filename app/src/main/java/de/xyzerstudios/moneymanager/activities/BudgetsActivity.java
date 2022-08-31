@@ -244,7 +244,7 @@ public class BudgetsActivity extends AppCompatActivity {
 
         budgetsActivity(BudgetsActivity activity) {
             activityWeakReference = new WeakReference<BudgetsActivity>(activity);
-            utils = new Utils();
+            utils = new Utils(BudgetsActivity.this);
         }
 
         @Override

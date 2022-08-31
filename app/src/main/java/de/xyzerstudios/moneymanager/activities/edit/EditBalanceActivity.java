@@ -26,10 +26,8 @@ import java.util.Date;
 
 import de.xyzerstudios.moneymanager.R;
 import de.xyzerstudios.moneymanager.activities.PortfoliosActivity;
-import de.xyzerstudios.moneymanager.activities.add.AddBalanceActivity;
 import de.xyzerstudios.moneymanager.utils.Utils;
 import de.xyzerstudios.moneymanager.utils.database.BalanceDatabaseHelper;
-import de.xyzerstudios.moneymanager.utils.database.ExpensesDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.database.PortfolioDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.dialogs.DatePickerFragment;
 
@@ -43,7 +41,7 @@ public class EditBalanceActivity extends AppCompatActivity implements DatePicker
     public FrameLayout chooserBalanceTimestamp, chooserBalancePortfolio;
     public LinearLayout removeEditFilterPortfolio;
 
-    private final Utils utils = new Utils();
+    private final Utils utils = new Utils(this);
 
     private int portfolioId = 0;
     private Date date;
@@ -186,7 +184,7 @@ public class EditBalanceActivity extends AppCompatActivity implements DatePicker
     }
 
     private void showDialogDatePicker() {
-        DialogFragment datePicker = new DatePickerFragment();
+        DialogFragment datePicker = new DatePickerFragment(false);
         datePicker.show(getSupportFragmentManager(), "Date Picker");
     }
 

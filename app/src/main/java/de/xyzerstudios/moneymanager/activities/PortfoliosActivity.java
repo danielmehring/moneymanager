@@ -1,5 +1,6 @@
 package de.xyzerstudios.moneymanager.activities;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -14,9 +15,19 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.transition.TransitionManager;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.rewarded.RewardedAd;
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -34,18 +45,27 @@ import de.xyzerstudios.moneymanager.utils.database.ExpensesDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.database.IncomeDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.database.PortfolioDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.dialogs.InformationDialog;
+import de.xyzerstudios.moneymanager.utils.dialogs.WatchRewardedAdDialog;
 
 public class PortfoliosActivity extends AppCompatActivity {
 
     private ImageButton buttonPortfolioGoBack;
-    private LinearLayout buttonAddNewPortfolioActivity, buttonInfoPortfolios;
+    private LinearLayout buttonInfoPortfolios;
+    private ViewGroup buttonAddNewPortfolioActivity;
 
     public RecyclerView portfolioRecyclerView;
     public RecyclerView.Adapter portfolioAdapter;
     public SwipeRefreshLayout swipeRefreshPortfolio;
     public static ArrayList<BalancePortfolioItem> portfolioItems;
 
+    private ProgressBar progressBarAddPortfolio;
+    private ImageView imageViewAddPortfolio;
+
+    private RewardedAd mRewardedAd;
+
     private boolean choosePortfolio = false;
+
+    private static final String TAG = "PortfoliosActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,11 +78,34 @@ public class PortfoliosActivity extends AppCompatActivity {
             return;
         }
 
+        AdRequest adRequest = new AdRequest.Builder().build();
+
+        RewardedAd.load(this, "ca-app-pub-3940256099942544/5224354917",
+                adRequest, new RewardedAdLoadCallback() {
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        Log.d(TAG, loadAdError.toString());
+                        mRewardedAd = null;
+                    }
+
+                    @Override
+                    public void onAdLoaded(@NonNull RewardedAd rewardedAd) {
+                        TransitionManager.beginDelayedTransition(buttonAddNewPortfolioActivity);
+                        mRewardedAd = rewardedAd;
+                        progressBarAddPortfolio.setVisibility(View.GONE);
+                        imageViewAddPortfolio.setVisibility(View.VISIBLE);
+                        Log.d(TAG, "Ad was loaded.");
+                    }
+                });
+
+
         choosePortfolio = bundle.getBoolean("choosePortfolio");
 
         buttonPortfolioGoBack = findViewById(R.id.buttonPortfolioGoBack);
         buttonAddNewPortfolioActivity = findViewById(R.id.buttonAddNewPortfolioActivity);
         buttonInfoPortfolios = findViewById(R.id.buttonInfoPortfolios);
+        progressBarAddPortfolio = buttonAddNewPortfolioActivity.findViewById(R.id.progressBarAddPortfolio);
+        imageViewAddPortfolio = buttonAddNewPortfolioActivity.findViewById(R.id.imageViewAddPortfolio);
 
         buttonPortfolioGoBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,8 +118,8 @@ public class PortfoliosActivity extends AppCompatActivity {
         buttonAddNewPortfolioActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(PortfoliosActivity.this, AddPortfolioActivity.class);
-                startActivity(intent);
+                WatchRewardedAdDialog watchRewardedAdDialog = new WatchRewardedAdDialog(mRewardedAd, PortfoliosActivity.this);
+                watchRewardedAdDialog.show(getSupportFragmentManager(), "Reward Dialog");
             }
         });
 

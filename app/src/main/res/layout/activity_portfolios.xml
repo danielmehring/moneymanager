@@ -93,11 +93,21 @@
                     android:orientation="horizontal"
                     android:paddingTop="4dp">
 
+                    <ProgressBar
+                        android:id="@+id/progressBarAddPortfolio"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="4dp"
+                        android:indeterminateTint="@color/ui_link_blue"/>
+
+
                     <ImageView
+                        android:id="@+id/imageViewAddPortfolio"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_marginLeft="4dp"
                         android:src="@drawable/ic_add_box"
+                        android:visibility="gone"
                         app:tint="@color/ui_link_blue" />
 
                     <TextView

@@ -44,7 +44,7 @@ public class BudgetsAdapter extends RecyclerView.Adapter<BudgetsAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Utils utils = new Utils();
+        Utils utils = new Utils(activity);
         BudgetItem item = budgetItems.get(position);
 
         int color = item.isExceeded() ? context.getColor(R.color.ui_lime_red) : context.getColor(R.color.ui_lime_green);
