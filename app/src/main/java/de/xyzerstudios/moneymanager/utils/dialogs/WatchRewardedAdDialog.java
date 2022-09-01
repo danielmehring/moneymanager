@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,7 +27,7 @@ public class WatchRewardedAdDialog extends AppCompatDialogFragment {
     private final RewardedAd rewardedAd;
     private final Activity activity;
 
-    private LinearLayout closeDialog, buttonPlayReward;
+    private LinearLayout buttonCancelAd, buttonPlayReward;
 
     public WatchRewardedAdDialog(RewardedAd rewardedAd, Activity activity) {
         this.rewardedAd = rewardedAd;
@@ -42,11 +43,12 @@ public class WatchRewardedAdDialog extends AppCompatDialogFragment {
         builder.setView(view);
 
         if (rewardedAd == null) {
+            Toast.makeText(activity, getString(R.string.ad_is_loading), Toast.LENGTH_SHORT).show();
             dismiss();
         }
 
         buttonPlayReward = view.findViewById(R.id.buttonPlayReward);
-
+        buttonCancelAd = view.findViewById(R.id.buttonCancelAd);
 
         buttonPlayReward.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +61,13 @@ public class WatchRewardedAdDialog extends AppCompatDialogFragment {
                         startActivity(intent);
                     }
                 });
+            }
+        });
+
+        buttonCancelAd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss();
             }
         });
 

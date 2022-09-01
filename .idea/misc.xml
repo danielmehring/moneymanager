@@ -57,7 +57,7 @@
         <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/layout/activity_home.xml" value="0.18" />
         <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/layout/activity_income.xml" value="0.18" />
         <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/layout/activity_portfolios.xml" value="0.25" />
-        <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/layout/activity_splash_screen.xml" value="0.25" />
+        <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/layout/activity_splash_screen.xml" value="0.18" />
         <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/layout/activity_view_balance.xml" value="0.3009833262077811" />
         <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/layout/balance_portfolio_item.xml" value="0.9" />
         <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/layout/bottom_sheet_choose_display_type.xml" value="0.3009833262077811" />
@@ -72,6 +72,7 @@
         <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/layout/dialog_information.xml" value="0.25" />
         <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/layout/dialog_interval_picker.xml" value="0.3009833262077811" />
         <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/layout/dialog_payment_method.xml" value="0.2511584800741427" />
+        <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/layout/dialog_view_rew_ad.xml" value="0.26969416126042633" />
         <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/layout/drawer_item_heading.xml" value="0.36666666666666664" />
         <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/layout/drawer_item_option.xml" value="0.36666666666666664" />
         <entry key="..\:/Documents/Projects/AndroidStudioProjects/MoneyManager/app/src/main/res/layout/drawer_menu.xml" value="0.33" />

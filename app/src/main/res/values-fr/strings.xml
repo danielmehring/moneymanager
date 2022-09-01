@@ -177,4 +177,5 @@
     <string name="show_all">Afficher tout</string>
     <string name="revenue">Recettes</string>
     <string name="add_revenue">Ajouter une recette</string>
+    <string name="ad_is_loading">L\'annonce est en cours de chargement</string>
 </resources>

@@ -1,13 +1,5 @@
 package de.xyzerstudios.moneymanager.activities;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -24,6 +16,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.rewarded.RewardedAd;
@@ -36,10 +35,10 @@ import java.util.Date;
 import de.xyzerstudios.moneymanager.R;
 import de.xyzerstudios.moneymanager.activities.add.AddPortfolioActivity;
 import de.xyzerstudios.moneymanager.asynctasks.LoadPortfoliosAsyncTask;
+import de.xyzerstudios.moneymanager.utils.Utils;
+import de.xyzerstudios.moneymanager.utils.adapters.PortfolioAdapter;
 import de.xyzerstudios.moneymanager.utils.adapters.PortfolioChooseAdapter;
 import de.xyzerstudios.moneymanager.utils.adapters.items.BalancePortfolioItem;
-import de.xyzerstudios.moneymanager.utils.adapters.PortfolioAdapter;
-import de.xyzerstudios.moneymanager.utils.Utils;
 import de.xyzerstudios.moneymanager.utils.database.BalanceDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.database.ExpensesDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.database.IncomeDatabaseHelper;
@@ -49,23 +48,19 @@ import de.xyzerstudios.moneymanager.utils.dialogs.WatchRewardedAdDialog;
 
 public class PortfoliosActivity extends AppCompatActivity {
 
-    private ImageButton buttonPortfolioGoBack;
-    private LinearLayout buttonInfoPortfolios;
-    private ViewGroup buttonAddNewPortfolioActivity;
-
+    private static final String TAG = "PortfoliosActivity";
+    public static ArrayList<BalancePortfolioItem> portfolioItems;
     public RecyclerView portfolioRecyclerView;
     public RecyclerView.Adapter portfolioAdapter;
     public SwipeRefreshLayout swipeRefreshPortfolio;
-    public static ArrayList<BalancePortfolioItem> portfolioItems;
-
+    private ImageButton buttonPortfolioGoBack;
+    private LinearLayout buttonInfoPortfolios;
+    private ViewGroup buttonAddNewPortfolioActivity;
     private ProgressBar progressBarAddPortfolio;
     private ImageView imageViewAddPortfolio;
-
     private RewardedAd mRewardedAd;
-
     private boolean choosePortfolio = false;
-
-    private static final String TAG = "PortfoliosActivity";
+    private AdRequest adRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,26 +73,7 @@ public class PortfoliosActivity extends AppCompatActivity {
             return;
         }
 
-        AdRequest adRequest = new AdRequest.Builder().build();
-
-        RewardedAd.load(this, "ca-app-pub-3940256099942544/5224354917",
-                adRequest, new RewardedAdLoadCallback() {
-                    @Override
-                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
-                        Log.d(TAG, loadAdError.toString());
-                        mRewardedAd = null;
-                    }
-
-                    @Override
-                    public void onAdLoaded(@NonNull RewardedAd rewardedAd) {
-                        TransitionManager.beginDelayedTransition(buttonAddNewPortfolioActivity);
-                        mRewardedAd = rewardedAd;
-                        progressBarAddPortfolio.setVisibility(View.GONE);
-                        imageViewAddPortfolio.setVisibility(View.VISIBLE);
-                        Log.d(TAG, "Ad was loaded.");
-                    }
-                });
-
+        adRequest = new AdRequest.Builder().build();
 
         choosePortfolio = bundle.getBoolean("choosePortfolio");
 
@@ -158,6 +134,39 @@ public class PortfoliosActivity extends AppCompatActivity {
     @Override
     protected void onPostResume() {
         super.onPostResume();
+
+        RewardedAd.load(this, "ca-app-pub-3940256099942544/5224354917",
+                adRequest, new RewardedAdLoadCallback() {
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        Log.d(TAG, loadAdError.toString());
+                        mRewardedAd = null;
+                        buttonAddNewPortfolioActivity.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent intent = new Intent(PortfoliosActivity.this, AddPortfolioActivity.class);
+                                startActivity(intent);
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onAdLoaded(@NonNull RewardedAd rewardedAd) {
+                        TransitionManager.beginDelayedTransition(buttonAddNewPortfolioActivity);
+                        mRewardedAd = rewardedAd;
+                        progressBarAddPortfolio.setVisibility(View.GONE);
+                        imageViewAddPortfolio.setVisibility(View.VISIBLE);
+                        Log.d(TAG, "Ad was loaded.");
+                        buttonAddNewPortfolioActivity.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                WatchRewardedAdDialog watchRewardedAdDialog = new WatchRewardedAdDialog(mRewardedAd, PortfoliosActivity.this);
+                                watchRewardedAdDialog.show(getSupportFragmentManager(), "Reward Dialog");
+                            }
+                        });
+                    }
+                });
+
         new updateAndLoadPortfoliosAsyncTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, choosePortfolio);
     }
 

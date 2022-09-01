@@ -175,6 +175,7 @@
     <string name="show_all">Show All</string>
     <string name="revenue">Revenues</string>
     <string name="add_revenue">Add Revenue</string>
+    <string name="ad_is_loading">Ad is currently loading</string>
 
     <string-array name="interval_units">
         <item>@string/days</item>

@@ -176,5 +176,6 @@
     <string name="show_all">Alle anzeigen</string>
     <string name="revenue">Einnahmen</string>
     <string name="add_revenue">Einnahme hinzufügen</string>
+    <string name="ad_is_loading">Das Video lädt gerade</string>
 
 </resources>
