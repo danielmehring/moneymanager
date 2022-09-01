@@ -29,6 +29,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -51,7 +52,8 @@ public class EditExpenseOfBalanceActivity extends AppCompatActivity implements D
     public ImageView closeActivityAddExpense, editExpense;
     public TextView textViewExpenseAmount, textViewExpenseTimestamp, textViewExpenseCategory, textViewExpensePaymentMethod;
     public FrameLayout chooserExpenseTimestamp, chooserExpenseCategory, chooserExpensePaymentMethod;
-    public LinearLayout displayCategoryColor, deleteExpenseEntry, buttonEditExpenseConvert;
+    public LinearLayout displayCategoryColor, buttonEditExpenseConvert;
+    public FloatingActionButton deleteExpenseEntry;
     private int categoryId = 9;
     public ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {

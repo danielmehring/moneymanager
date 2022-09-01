@@ -8,11 +8,11 @@
     android:orientation="vertical"
     android:paddingHorizontal="15dp"
     tools:context=".activities.add.AddPortfolioActivity">
-    
+
     <Space
         android:layout_width="match_parent"
-        android:layout_height="25dp"/>
-    
+        android:layout_height="25dp" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,8 +23,8 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginLeft="10dp"
-            android:elevation="2dp"
             android:clickable="true"
+            android:elevation="2dp"
             android:foreground="?android:attr/selectableItemBackground"
             android:src="@drawable/ic_close"
             app:tint="@color/ui_black" />
@@ -32,104 +32,123 @@
         <Space
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:elevation="2dp"
             android:fontFamily="@font/poppins_medium"
+            android:text="@string/edit_portfolio"
             android:textColor="@color/ui_text_high_contrast"
-            android:textSize="20dp"
-            android:text="@string/edit_portfolio"/>
+            android:textSize="20dp" />
 
         <Space
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <ImageView
             android:id="@+id/editPortfolio"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginRight="10dp"
-            android:elevation="2dp"
             android:clickable="true"
+            android:elevation="2dp"
             android:foreground="?android:attr/selectableItemBackground"
             android:src="@drawable/ic_done"
             app:tint="@color/ui_black" />
 
     </LinearLayout>
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="70dp"/>
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_medium"
-            android:textColor="@color/ui_text_faded"
-            android:textSize="15dp"
-            android:text="@string/name" />
+            android:orientation="vertical">
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="5dp"/>
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="70dp" />
 
-        <EditText
-            android:id="@+id/editTextPortfolioNameEdit"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:elevation="2dp"
-            android:layout_margin="1dp"
-            android:maxLines="1"
-            android:maxLength="35"
-            android:textColor="@color/ui_text_faded"
-            android:background="@drawable/edit_text_custom_bg"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-    </LinearLayout>
-    
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="20dp" />
-    
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_medium"
-            android:textColor="@color/ui_text_faded"
-            android:textSize="15dp"
-            android:text="@string/description" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="@string/name"
+                    android:textColor="@color/ui_text_faded"
+                    android:textSize="15dp" />
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="5dp"/>
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp" />
 
-        <EditText
-            android:id="@+id/editTextPortfolioDescriptionEdit"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:paddingVertical="10dp"
-            android:elevation="2dp"
-            android:layout_margin="1dp"
-            android:maxLength="255"
-            android:gravity="top|left"
-            android:textColor="@color/ui_text_faded"
-            android:background="@drawable/edit_text_custom_bg"/>
+                <EditText
+                    android:id="@+id/editTextPortfolioNameEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_margin="1dp"
+                    android:background="@drawable/edit_text_custom_bg"
+                    android:elevation="2dp"
+                    android:maxLength="35"
+                    android:maxLines="1"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:textColor="@color/ui_text_faded" />
 
-    </LinearLayout>
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="@string/description"
+                    android:textColor="@color/ui_text_faded"
+                    android:textSize="15dp" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp" />
+
+                <EditText
+                    android:id="@+id/editTextPortfolioDescriptionEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:layout_margin="1dp"
+                    android:background="@drawable/edit_text_custom_bg"
+                    android:elevation="2dp"
+                    android:gravity="top|left"
+                    android:maxLength="255"
+                    android:paddingVertical="10dp"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:textColor="@color/ui_text_faded" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>

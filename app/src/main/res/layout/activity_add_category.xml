@@ -11,7 +11,7 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="25dp"/>
+        android:layout_height="25dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,8 +23,8 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginLeft="10dp"
-            android:elevation="2dp"
             android:clickable="true"
+            android:elevation="2dp"
             android:foreground="?android:attr/selectableItemBackground"
             android:src="@drawable/ic_close"
             app:tint="@color/ui_black" />
@@ -32,148 +32,166 @@
         <Space
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:elevation="2dp"
             android:fontFamily="@font/poppins_medium"
+            android:text="@string/add_category"
             android:textColor="@color/ui_text_high_contrast"
-            android:textSize="20dp"
-            android:text="@string/add_category"/>
+            android:textSize="20dp" />
 
         <Space
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <ImageView
             android:id="@+id/addCategory"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginRight="10dp"
-            android:elevation="2dp"
             android:clickable="true"
+            android:elevation="2dp"
             android:foreground="?android:attr/selectableItemBackground"
             android:src="@drawable/ic_done"
             app:tint="@color/ui_black" />
 
     </LinearLayout>
 
-    <Space
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="70dp"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_medium"
-            android:textColor="@color/ui_text_faded"
-            android:textSize="15dp"
-            android:text="@string/name" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="5dp"/>
-
-        <EditText
-            android:id="@+id/editTextCategoryName"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:elevation="2dp"
-            android:layout_margin="1dp"
-            android:maxLines="1"
-            android:inputType="text"
-            android:maxLength="35"
-            android:textColor="@color/ui_text_faded"
-            android:background="@drawable/edit_text_custom_bg"/>
-
-    </LinearLayout>
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="20dp" />
-
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_medium"
-            android:textColor="@color/ui_text_faded"
-            android:textSize="15dp"
-            android:text="@string/color" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="5dp"/>
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="70dp" />
 
             <LinearLayout
-                android:id="@+id/buttonChooseColorCategoryAdd"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_margin="5dp"
-                android:background="@drawable/image_button"
-                android:clickable="true"
-                android:elevation="2dp"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:gravity="center"
-                android:paddingTop="4dp"
-                android:paddingHorizontal="8dp"
-                android:textColor="@color/ui_text_high_contrast">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/buttonChooseColorText"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:ellipsize="end"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="@string/choose_color"
-                    android:textAlignment="center"
-                    android:textColor="@color/ui_text_high_contrast"
-                    android:textSize="14dp" />
+                    android:text="@string/name"
+                    android:textColor="@color/ui_text_faded"
+                    android:textSize="15dp" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp" />
+
+                <EditText
+                    android:id="@+id/editTextCategoryName"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_margin="1dp"
+                    android:background="@drawable/edit_text_custom_bg"
+                    android:elevation="2dp"
+                    android:inputType="text"
+                    android:maxLength="35"
+                    android:maxLines="1"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:textColor="@color/ui_text_faded" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="@string/color"
+                    android:textColor="@color/ui_text_faded"
+                    android:textSize="15dp" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/buttonChooseColorCategoryAdd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/image_button"
+                        android:clickable="true"
+                        android:elevation="2dp"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:gravity="center"
+                        android:paddingHorizontal="8dp"
+                        android:paddingTop="4dp"
+                        android:textColor="@color/ui_text_high_contrast">
+
+                        <TextView
+                            android:id="@+id/buttonChooseColorText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:fontFamily="@font/poppins_medium"
+                            android:maxLines="1"
+                            android:text="@string/choose_color"
+                            android:textAlignment="center"
+                            android:textColor="@color/ui_text_high_contrast"
+                            android:textSize="14dp" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/colorStripeCategoryAdd"
+                        android:layout_width="fill_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginHorizontal="7dp"
+                        android:layout_weight="1"
+                        android:background="@color/ui_lime_red"
+                        android:elevation="2dp"
+                        android:orientation="horizontal" />
+
+                    <LinearLayout
+                        android:id="@+id/colorCircleCategoryAdd"
+                        android:layout_width="19dp"
+                        android:layout_height="19dp"
+                        android:layout_marginHorizontal="5dp"
+                        android:background="@drawable/circle"
+                        android:backgroundTint="@color/ui_lime_red"
+                        android:orientation="horizontal" />
+
+
+                </LinearLayout>
             </LinearLayout>
 
 
-            <LinearLayout
-                android:id="@+id/colorStripeCategoryAdd"
-                android:layout_width="fill_parent"
-                android:layout_height="2dp"
-                android:layout_weight="1"
-                android:elevation="2dp"
-                android:layout_marginHorizontal="7dp"
-                android:background="@color/ui_lime_red"
-                android:orientation="horizontal" />
-
-            <LinearLayout
-                android:id="@+id/colorCircleCategoryAdd"
-                android:layout_width="19dp"
-                android:layout_height="19dp"
-                android:layout_marginHorizontal="5dp"
-                android:orientation="horizontal"
-                android:background="@drawable/circle"
-                android:backgroundTint="@color/ui_lime_red" />
-
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
 
         </LinearLayout>
-    </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>

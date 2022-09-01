@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_description">\"Money Manager\" est une application développée par \"XYZER Studios\" qui aide les gens à
+        les gens à suivre leurs dépenses et leurs revenus d\'une manière claire et concise. Budgets, bilans,
+        portefeuilles, ainsi que différentes catégories peuvent être utilisées pour rendre les finances d\'une personne aussi
+        transparentes que possible.</string>.
+
+    <string name="press_again_to_exit">Appuyez à nouveau sur la touche pour quitter.</string>
+
+    <string name="name">Nom</string>
+
+    <string name="menu_heading_general">General</string>
+    <string name="menu_title_dashboard">Dashboard</string>
+    <string name="menu_title_portfolios">Portefeuilles</string>
+    <string name="menu_title_bilanzen">Bilans</string>
+    <string name="menu_heading_actions">Actions</string>
+    <string name="menu_title_premium">Premium</string>
+    <string name="menu_title_donate">Faire un don</string>
+    <string name="menu_heading_other">Autre</string>
+    <string name="menu_title_settings">Paramètres</string>
+    <string name="menu_title_about_us">À propos</string>
+    <string name="menu_title_budgets">Budgets</string>
+
+    <string name="add_balance">Ajouter un bilan</string>
+    <string name="add_portfolio">Ajouter un portefeuille</string>
+    <string name="edit_portfolio">Editer un portefeuille</string>
+
+    <string name="income">Revenu</string>
+    <string name="expenses">Dépenses</string>
+
+    <string name="yes">Oui</string>
+    <string name="cancel">Annuler</string>
+
+    <string name="add_expense">Ajouter une dépense</string>
+    <string name="add_income">Ajouter un revenu</string>
+
+    <string name="choose_category">Choisir une catégorie</string>
+
+    <string name="date">Date</string>
+    <string name="payment_method">Méthode de paiement</string>
+    <string name="category">Catégorie</string>
+    <string name="categories">Catégories</string>
+
+    <string name="add">ajouter</string>
+    <string name="saldo">Solde</string>
+    <string name="description">Description</string>
+    <string name="please_enter_a_name">Veuillez entrer un nom</string>
+    <string name="only_letters_numbers">Veuillez saisir uniquement des lettres et des chiffres</string>.
+    <string name="delete_confirmation">Vous êtes sûr de vouloir supprimer cette entrée ? </string>
+    <string name="cannot_be_deleted">Cette entrée ne peut pas être supprimée</string>
+
+    <string name="category_food">Alimentation</string>
+    <string name="category_car">Voiture</string>
+    <string name="category_entertainment">Divertissement</string>
+    <string name="category_shopping">Shopping</string>
+    <string name="category_clothing">Vêtements</string>
+    <string name="category_telephone">Téléphone</string>
+    <string name="category_gift">Cadeau</string>
+    <string name="category_social">Social</string>
+    <string name="category_other">Autre</string>
+    <string name="category_alcohol">Alcool</string>
+    <string name="category_sports">Sports</string>
+    <string name="category_books">Livres</string>
+    <string name="category_office">Bureau</string>
+    <string name="category_education">Éducation</string>
+    <string name="category_travel">Voyage</string>
+    <string name="category_snacks">Snacks</string>
+    <string name="category_vegetables">Végétaux</string>
+    <string name="category_electronics">Electronique</string>
+    <string name="category_pet">Animaux de compagnie</string>
+    <string name="category_baby">Bébé</string>
+    <string name="category_health">Santé</string>
+    <string name="category_smoking">Fumer</string>
+    <string name="category_insurance">Assurance</string>
+    <string name="category_transportation">Transport</string>
+    <string name="category_home">Maison</string>
+    <string name="category_rent">Loyer</string>
+
+    <string name="category_wage">Salaire</string>
+    <string name="category_prize">Prix</string>
+    <string name="category_grant">Grandeur</string>
+    <string name="category_sales">Ventes</string>
+    <string name="category_renting">Location</string>
+    <string name="category_voucher">Bon d\'achat</string>
+    <string name="category_refund">Remboursement</string>
+    <string name="category_lottery">Loterie</string>
+    <string name="category_bonus">Bonus</string>
+    <string name="category_dividend">Dividende</string>
+    <string name="category_investment">Investissement</string>
+    <string name="amount">Montant</string>
+
+    <string name="time_stamp">Horodatage</string>
+    <string name="edit_expense">Editer une dépense</string>
+    <string name="delete">Supprimer</string>
+
+    <string name="day">Jour</string>
+    <string name="days">Jours</string>
+    <string name="week">Semaine</string>
+    <string name="weeks">Semaines</string>
+    <string name="month">Mois</string>
+    <string name="months">Mois</string>
+    <string name="year">Année</string>
+    <string name="years">Années</string>
+
+    <string name="choose_month_and_year">Choisissez le mois et l\'année</string>
+    <string name="choose_payment_method">Choisir le mode de paiement</string>
+
+    <string name="january">Janvier</string>
+    <string name="february">Février</string>
+    <string name="march">Mars</string>
+    <string name="april">Avril</string>
+    <string name="may">Mai</string>
+    <string name="june">Juin</string>
+    <string name="july">Juillet</string>
+    <string name="august">Août</string>
+    <string name="september">Septembre</string>
+    <string name="october">Octobre</string>
+    <string name="november">Novembre</string>
+    <string name="december">Décembre</string>
+
+
+    <string name="credit_card">Carte de crédit</string>
+    <string name="ec_card">Carte EC</string>
+    <string name="cash">Espèces</string>
+    <string name="bank_transfer">Virement bancaire</string>
+    <string name="online_payment">Paiement en ligne</string>
+
+    <string name="remove_filter">Supprimer le filtre</string>
+    <string name="add_category">Ajouter une catégorie</string>
+    <string name="color">Color</string>
+    <string name="choose_color">Choisissez une couleur</string>
+    <string name="category_needs_to_be_unique">Votre catégorie doit être unique</string>
+    <string name="edit_category">Editer la catégorie</string>
+    <string name="edit_income">Editer le revenu</string>
+
+    <string name="amount_left">Montant restant</string>
+    <string name="amount_exceeded">Dépassé</string>
+    <string name="amount_limit">Limite</string>
+    <string name="amount_spent">dépensé</string>
+
+    <string name="add_budget">Ajouter un budget</string>.
+    <string name="cant_add_two_budgets_same_cat">On ne peut définir qu\'un seul budget par catégorie</string>
+    <string name="edit_budget">Modifier le budget</string>
+    <string name="portfolio">Portfolio</string>
+    <string name="edit_balance">Modifier le bilan</string>
+    <string name="add_amount">Ajouter un montant</string>
+    <string name="repeated_income">Revenu régulier</string>
+    <string name="repeated_income_not_available">\"Revenu régulier\" n\'est pas disponible avec cette version d\'Android.</string>
+    <string name="repeated">Répétitif</string>
+    <string name="interval">Intervalle</string>
+    <string name="available_amount">Montant disponible</string>
+    <string name="sum_budgets">Somme des budgets</string>
+
+    <string name="select">Sélectionner</string>
+    <string name="apply">Appliquer</string>
+
+    <string name="budgets_explanation">Avec \"Budgets\", vous pouvez établir un budget très facilement. Choisissez une catégorie
+        et une limite mensuelle. Dès que vous dépassez ce montant, le budget devient rouge. Sous
+        \"Montant disponible\", vous pouvez voir votre budget moyen par mois. Celui-ci ne comprend que les revenus réguliers. </string>
+    <string name="portfolios_explanation">Avec \"Portfolios\", vous pouvez séparer les ventes les unes des autres.
+        Avec plusieurs portefeuilles, vous pouvez facilement garder une trace de tout.</string>
+
+    <string name="settings">Paramètres</string>.
+    <string name="settings_currency">Monnaie</string>
+    <string name="display_currency_with_unicode">Afficher la monnaie avec Unicode</string>
+    <string name="choose_currency">Sélectionner la monnaie</string>.
+    <string name="convert_currency">Convertir la monnaie</string>.
+    <string name="convert">Convertir</string>
+    <string name="convert_from">Depuis</string>.
+    <string name="convert_to">Vers</string>
+    <string name="exchange_rate">Taux de change</string>
+    <string name="text_donate">Le développement de cette application m\'a demandé beaucoup de temps et de travail.
+        Si tu veux me soutenir financièrement, tu peux me faire un petit don via PayPal. :).</string>
+    <string name="paypal_donate">Donner avec PayPal</string>.
+    <string name="consent_rewarded_ad">Pour ajouter un portefeuille, vous devez regarder une vidéo promotionnelle.</string>
+    <string name="show_ad">Lire la vidéo</string>
+    <string name="show_all">Afficher tout</string>
+    <string name="revenue">Recettes</string>
+    <string name="add_revenue">Ajouter une recette</string>
+</resources>

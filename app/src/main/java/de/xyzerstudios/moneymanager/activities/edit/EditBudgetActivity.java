@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Date;
 
@@ -40,7 +41,8 @@ public class EditBudgetActivity extends AppCompatActivity {
     private ImageView closeActivityAddBudget, editBudget;
     private FrameLayout chooserBudgetCategory;
     private TextView textViewBudgetCategory, textViewBudgetAmount;
-    private LinearLayout displayCategoryColorBudget, deleteBudgetEntry;
+    private LinearLayout displayCategoryColorBudget;
+    private FloatingActionButton deleteBudgetEntry;
     private EditText editTextBudgetAmount;
     private int categoryId = 9;
     private int amount = 0;

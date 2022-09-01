@@ -5,17 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/ui_light_background"
-    android:orientation="vertical"
     android:gravity="center_horizontal"
+    android:orientation="vertical"
     tools:context=".fragments.AboutUsFragment">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:textAlignment="center"
         android:fontFamily="@font/poppins_medium"
         android:text="@string/app_name"
+        android:textAlignment="center"
         android:textColor="@color/ui_text"
         android:textSize="28dp" />
 
@@ -23,11 +23,11 @@
         android:id="@+id/textViewVersionName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_regular"
+        android:text="Version: 1.0"
         android:textAlignment="center"
         android:textColor="@color/ui_text"
-        android:fontFamily="@font/poppins_regular"
-        android:textSize="12dp"
-        android:text="Version: 1.0"/>
+        android:textSize="12dp" />
 
     <TextView
         android:id="@+id/textViewVersionCode"
@@ -56,13 +56,19 @@
         android:layout_height="fill_parent"
         android:layout_weight="1" />
 
-    <ImageView
-        android:layout_width="80dp"
-        android:layout_height="30dp"
-        android:layout_marginRight="7dp"
-        android:layout_marginBottom="15dp"
-        android:src="@drawable/ic_xyzerstudios_logo"
-        app:tint="@color/ui_text" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp">
 
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_xyzerstudios_logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/ui_text" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

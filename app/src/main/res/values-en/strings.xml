@@ -1,15 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">Money Manager</string>
-
     <string name="app_description">\"Money Manager\" is an app developed by \"XYZER Studios\" that helps
         people keep track of their expenses and income in a clear and concise way. Budgets, balance sheets,
-        portfolios, as well as different categories can be used to make one\'s finances as transparent as possible.</string>.
+        portfolios, as well as different categories can be used to make one\'s finances as transparent as possible.</string>
 
     <string name="press_again_to_exit">Press again to exit the app.</string>
 
-    <string name="name">Name</string>.
+    <string name="name">Name</string>
 
-    <string name="menu_heading_general">General</string>.
+    <string name="menu_heading_general">General</string>
     <string name="menu_title_dashboard">Dashboard</string>
     <string name="menu_title_portfolios">Portfolios</string>
     <string name="menu_title_bilanzen">Balance Sheets</string>
@@ -175,12 +174,4 @@
     <string name="show_all">Show All</string>
     <string name="revenue">Revenues</string>
     <string name="add_revenue">Add Revenue</string>
-
-    <string-array name="interval_units">
-        <item>@string/days</item>
-        <item>@string/weeks</item>
-        <item>@string/months</item>
-        <item>@string/years</item>
-    </string-array>
-
 </resources>

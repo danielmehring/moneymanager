@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jaredrummler.android.colorpicker.ColorPickerDialog;
 import com.jaredrummler.android.colorpicker.ColorPickerDialogListener;
 
@@ -28,7 +29,8 @@ import de.xyzerstudios.moneymanager.utils.database.RepeatedIncomeDatabaseHelper;
 
 public class EditCategoryActivity extends AppCompatActivity implements ColorPickerDialogListener {
 
-    private LinearLayout buttonChooseColor, deleteCategoryEntry;
+    private LinearLayout buttonChooseColor;
+    private FloatingActionButton deleteCategoryEntry;
     private LinearLayout colorStripeCategoryEdit, colorCircleCategoryEdit;
     private ImageView closeActivityEditCategory, editCategory;
     private EditText editTextCategoryName;

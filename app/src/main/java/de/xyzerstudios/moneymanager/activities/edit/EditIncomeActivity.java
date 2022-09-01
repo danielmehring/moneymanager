@@ -32,6 +32,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -55,7 +56,8 @@ public class EditIncomeActivity extends AppCompatActivity implements DatePickerD
     public TextView textViewIncomeAmount, textViewIncomeTimestamp, textViewIncomeCategory, textViewIncomeInterval,
             textViewRepeatedIncome;
     public FrameLayout chooserIncomeTimestamp, chooserIncomeCategory, chooserIncomeInterval;
-    public LinearLayout displayCategoryColor, deleteIncomeEntry, buttonEditIncomeConvert;
+    public LinearLayout displayCategoryColor, buttonEditIncomeConvert;
+    public FloatingActionButton deleteIncomeEntry;
 
     public ViewGroup containerAddIncomeInterval;
     public Switch switchRepeatedIncome;

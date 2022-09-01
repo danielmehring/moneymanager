@@ -194,7 +194,7 @@ public class BalanceActivity extends AppCompatActivity {
     }
 
     private void reloadTypeChooser() {
-        turnoverTypeFilter.setText(turnoverTypeFilters == TurnoverType.EXPENSE ? getString(R.string.expenses) : getString(R.string.income));
+        turnoverTypeFilter.setText(turnoverTypeFilters == TurnoverType.EXPENSE ? getString(R.string.expenses) : getString(R.string.revenue));
     }
 
     private void startLoadingAsyncTask(boolean reloadNameAndSaldo) {

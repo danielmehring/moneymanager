@@ -257,7 +257,7 @@
                             android:ellipsize="end"
                             android:fontFamily="@font/poppins_medium"
                             android:maxLines="1"
-                            android:text="@string/add_revenue"
+                            android:text="@string/add_income"
                             android:textAlignment="center"
                             android:textColor="@color/ui_text_faded"
                             android:textSize="12dp" />
@@ -306,7 +306,7 @@
                             android:fontFamily="@font/poppins_medium"
                             android:paddingHorizontal="7dp"
                             android:paddingTop="4dp"
-                            android:text="Alle anzeigen"
+                            android:text="@string/show_all"
                             android:textColor="@color/ui_text_faded"
                             android:textSize="11dp" />
                     </LinearLayout>
@@ -410,7 +410,7 @@
                             android:fontFamily="@font/poppins_medium"
                             android:paddingHorizontal="7dp"
                             android:paddingTop="4dp"
-                            android:text="Alle anzeigen"
+                            android:text="@string/show_all"
                             android:textColor="@color/ui_text_faded"
                             android:textSize="11dp" />
                     </LinearLayout>
