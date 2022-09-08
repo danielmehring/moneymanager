@@ -1,8 +1,11 @@
 package de.xyzerstudios.moneymanager.activities;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -43,6 +46,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         initAndCreateDatabases();
         initGuiObjects();
+        initNotificationChannel();
         Currencies.init();
         manipulateGuiObjects();
         startAsyncTask();
@@ -78,6 +82,19 @@ public class SplashScreenActivity extends AppCompatActivity {
     private void initGuiObjects() {
         mmLogo = findViewById(R.id.imageViewMmLogo);
         xsLogo = findViewById(R.id.imageViewXsLogo);
+    }
+
+    private void initNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Daily Notification Channel";
+            String description = "Channel for a daily notification.";
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel channel = new NotificationChannel("dailyNotification", name, importance);
+            channel.setDescription(description);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 
     private void startAsyncTask() {

@@ -20,6 +20,7 @@
     <string name="menu_title_settings">Paramètres</string>
     <string name="menu_title_about_us">À propos</string>
     <string name="menu_title_budgets">Budgets</string>
+    <string name="menu_title_your_data">Tes données</string>
 
     <string name="add_balance">Ajouter un bilan</string>
     <string name="add_portfolio">Ajouter un portefeuille</string>
@@ -178,4 +179,12 @@
     <string name="revenue">Recettes</string>
     <string name="add_revenue">Ajouter une recette</string>
     <string name="ad_is_loading">L\'annonce est en cours de chargement</string>
+    <string name="how_app_handle_data">Comment cette application stocke-t-elle mes données ?</string>
+    <string name="data_handle_description">Dans un monde où presque toutes les entreprises dépensent chaque centime
+        tire profit de tes données, nous faisons les choses différemment. Les données financières sont très sensibles et ne quittent
+        C\'est pourquoi elles ne sont jamais utilisées dans cette application. Tout est stocké sur ton smartphone à l\'aide de bases de données SQLite.
+        smartphone. Il n\'est donc pas possible de synchroniser tes données avec d\'autres appareils.</string>
+    <string name="notify_regularaly">Activer la notification quotidienne</string>
+    <string name="notification_time">Temps de notification</string>
+    <string name="notification_text">N\'oublie pas de saisir tes entrées et sorties du jour.</string>
 </resources>

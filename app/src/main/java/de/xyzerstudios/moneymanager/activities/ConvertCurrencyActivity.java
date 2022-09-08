@@ -8,14 +8,12 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.transition.TransitionManager;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -57,6 +55,7 @@ public class ConvertCurrencyActivity extends AppCompatActivity implements DatePi
     private Date date;
     private String currencyFrom = "";
     private String currencyTo = "";
+    private boolean error = false;
     public ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override
@@ -76,8 +75,6 @@ public class ConvertCurrencyActivity extends AppCompatActivity implements DatePi
                     }
                 }
             });
-
-    private boolean error = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

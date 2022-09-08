@@ -123,6 +123,58 @@
                     android:textColor="@color/ui_text"
                     android:textSize="16dp" />
 
+                <Switch
+                    android:id="@+id/switchEnableNotification"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:paddingTop="9dp"
+                    android:paddingBottom="6dp"
+                    android:paddingLeft="5dp"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:checked="false"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="@string/notify_regularaly"
+                    android:textColor="@color/ui_text"
+                    android:textSize="16dp" />
+
+                <LinearLayout
+                    android:id="@+id/chooserNotificationTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:paddingTop="9dp"
+                    android:paddingBottom="6dp"
+                    android:orientation="horizontal"
+                    android:clickable="true"
+                    android:visibility="invisible"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="@string/notification_time"
+                        android:textColor="@color/ui_text"
+                        android:textSize="16dp" />
+
+                    <Space
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/textViewSettingsNotificationTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="--:--"
+                        android:textColor="@color/ui_text"
+                        android:textSize="16dp" />
+
+                </LinearLayout>
 
 
             </LinearLayout>

@@ -84,7 +84,6 @@ public class DashboardFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Utils.SHARED_PREFS, Context.MODE_PRIVATE);
-        Log.d("test___", sharedPreferences.getString(Utils.SPS_CURRENCY_CONVERT_LAST_DATE, ""));
 
         linearLayoutIncome = view.findViewById(R.id.linearLayoutIncome);
         linearLayoutExpenses = view.findViewById(R.id.linearLayoutExpenses);

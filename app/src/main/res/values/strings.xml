@@ -3,7 +3,8 @@
 
     <string name="app_description">\"Money Manager\" is an app developed by \"XYZER Studios\" that helps
         people keep track of their expenses and income in a clear and concise way. Budgets, balance sheets,
-        portfolios, as well as different categories can be used to make one\'s finances as transparent as possible.</string>.
+        portfolios, as well as different categories can be used to make one\'s finances as transparent as possible.</string>
+    .
 
     <string name="press_again_to_exit">Press again to exit the app.</string>
 
@@ -20,6 +21,7 @@
     <string name="menu_title_settings">Settings</string>
     <string name="menu_title_about_us">About</string>
     <string name="menu_title_budgets">Budgets</string>
+    <string name="menu_title_your_data">Your Data</string>
 
     <string name="add_balance">Add Balance Sheet</string>
     <string name="add_portfolio">Add Portfolio</string>
@@ -176,6 +178,14 @@
     <string name="revenue">Revenues</string>
     <string name="add_revenue">Add Revenue</string>
     <string name="ad_is_loading">Ad is currently loading</string>
+    <string name="how_app_handle_data">How does this App handle your data?</string>
+    <string name="data_handle_description">In a world where companies try to squeeze every
+        penny out of your data, you may be surprised that your data never leaves this app.
+        Everything is stored internally on your phone using SQLite databases. This is the
+        reason why you cannot synchronize your data with other devices.</string>
+    <string name="notify_regularaly">Enable daily notification</string>
+    <string name="notification_time">Notification time</string>
+    <string name="notification_text">Don\'t forget to enter your income and expenses for today.</string>
 
     <string-array name="interval_units">
         <item>@string/days</item>

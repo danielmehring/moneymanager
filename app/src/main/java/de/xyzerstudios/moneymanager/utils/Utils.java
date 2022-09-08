@@ -11,6 +11,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import de.xyzerstudios.moneymanager.utils.currency.Currencies;
 import okhttp3.OkHttpClient;
@@ -33,6 +34,9 @@ public class Utils {
     public static final String SPS_CURRENCY_DISPLAYED_WITH_UNICODE = "currencyDisplayedWithUnicode";
     public static final String SPS_CURRENCY_CONVERT_USED_LAST = "currencyConvertUsedLast";
     public static final String SPS_CURRENCY_CONVERT_LAST_DATE = "currencyConvertLastDate";
+    public static final String SPS_DAILY_NOTIFICATION_ENABLED = "dailyNotificationEnabled";
+    public static final String SPS_DAILY_NOTIFICATION_TIME_HOUR = "dailyNotificationTimeH";
+    public static final String SPS_DAILY_NOTIFICATION_TIME_MINUTE = "dailyNotificationTimeM";
 
     private final Context context;
 
@@ -47,10 +51,14 @@ public class Utils {
 
         int nachKomma = amount % 100;
         double d = amount / 100 + (nachKomma / 100.0);
+        boolean displayWithUnicode = sharedPreferences.getBoolean(SPS_CURRENCY_DISPLAYED_WITH_UNICODE, true);
 
         DecimalFormat formatter = (DecimalFormat) NumberFormat.getCurrencyInstance();
+        if (!displayWithUnicode || isoCode.matches("EUR")) {
+            formatter = (DecimalFormat) NumberFormat.getCurrencyInstance(Locale.GERMANY);
+        }
         DecimalFormatSymbols symbols = formatter.getDecimalFormatSymbols();
-        if (sharedPreferences.getBoolean(SPS_CURRENCY_DISPLAYED_WITH_UNICODE, true)) {
+        if (displayWithUnicode) {
             symbols.setCurrencySymbol(currencySymbol);
         } else {
             symbols.setCurrencySymbol(isoCode);
@@ -67,6 +75,9 @@ public class Utils {
         double d = amount / 100 + (nachKomma / 100.0);
 
         DecimalFormat formatter = (DecimalFormat) NumberFormat.getCurrencyInstance();
+        if (!displayWithSymbol || currencyIsoCode.matches("EUR")) {
+            formatter = (DecimalFormat) NumberFormat.getCurrencyInstance(Locale.GERMANY);
+        }
         DecimalFormatSymbols symbols = formatter.getDecimalFormatSymbols();
         if (displayWithSymbol) {
             symbols.setCurrencySymbol(currencySymbol);
