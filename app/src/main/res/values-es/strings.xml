@@ -4,7 +4,7 @@
     <string name="press_again_to_exit">Pulse de nuevo para salir de la aplicación.</string>
     <string name="name">Nombre</string>
     <string name="menu_heading_general">General</string>
-    <string name="menu_title_dashboard">Tablero de mandos</string>
+    <string name="menu_title_dashboard">Dashboard</string>
     <string name="menu_title_portfolios">Carteras</string>
     <string name="menu_title_bilanzen">Balances</string>
     <string name="menu_heading_actions">Acciones</string>

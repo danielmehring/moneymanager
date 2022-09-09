@@ -4,7 +4,7 @@
     <string name="press_again_to_exit">Tryck igen för att avsluta appen.</string>
     <string name="name">Namn</string>
     <string name="menu_heading_general">Allmänt</string>
-    <string name="menu_title_dashboard">Instrumentpanel</string>
+    <string name="menu_title_dashboard">Dashboard</string>
     <string name="menu_title_portfolios">Portföljer</string>
     <string name="menu_title_bilanzen">Balansräkningar</string>
     <string name="menu_heading_actions">Åtgärder</string>
