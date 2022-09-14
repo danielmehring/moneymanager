@@ -24,11 +24,13 @@ public class Utils {
     public static final SimpleDateFormat timestampDateDisplayFormat = new SimpleDateFormat("yyyy.MM.dd");
     public static final SimpleDateFormat monthDateFormat = new SimpleDateFormat("MM");
     public static final SimpleDateFormat yearDateFormat = new SimpleDateFormat("yyyy");
+    public static final SimpleDateFormat yearMonthDateFormat = new SimpleDateFormat("yyyy/MM");
 
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String SHARED_PREFS_CURRENT_PORTFOLIO = "currentPortfolio";
     public static final String SHARED_PREFS_IS_BUDGET_EXCEEDED = "isBudgetExceeded";
     public static final String SHARED_PREFS_COUNT_HOMEACTIVITY_CREATED = "countHomeActivityCreated";
+    public static final String SHARED_PREFS_IS_FIRST_START = "isFirstStart";
 
     public static final String SPS_CURRENCY_ISO_CODE = "currencyIsoCode";
     public static final String SPS_CURRENCY_DISPLAYED_WITH_UNICODE = "currencyDisplayedWithUnicode";

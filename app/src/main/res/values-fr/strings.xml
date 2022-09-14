@@ -187,4 +187,6 @@
     <string name="notify_regularaly">Activer la notification quotidienne</string>
     <string name="notification_time">Temps de notification</string>
     <string name="notification_text">N\'oublie pas de saisir tes entrées et sorties du jour.</string>
+    <string name="onboarding_text">Tutorial</string>
+    <string name="menu_title_statistics">Statistiques</string>
 </resources>

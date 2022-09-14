@@ -162,4 +162,6 @@
     <string name="notify_regularaly">Tägliche Benachrichtigung aktivieren</string>
     <string name="notification_time">Benachrichtigungszeit</string>
     <string name="notification_text">Vergiss nicht deine heutigen Ein- und Ausgaben einzugeben.</string>
+    <string name="onboarding_text">Tutorial</string>
+    <string name="menu_title_statistics">Statistik</string>
 </resources>

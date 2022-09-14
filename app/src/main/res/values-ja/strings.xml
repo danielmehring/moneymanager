@@ -153,4 +153,6 @@
     <string name="notify_regularaly">毎日の通知を有効にする</string>
     <string name="notification_time">通知時間</string>
     <string name="notification_text">今日の収入と支出を忘れずに入力してください。</string>
+    <string name="onboarding_text">チュートリアル</string>
+    <string name="menu_title_statistics">統計情報</string>
 </resources>

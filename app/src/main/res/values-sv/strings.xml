@@ -149,5 +149,10 @@
     <string name="notify_regularaly">Aktivera daglig anmälan</string>
     <string name="notification_time">Tid för anmälan</string>
     <string name="notification_text">Glöm inte att ange dina inkomster och utgifter för idag.</string>
-
+    <string name="convert_currency">Konvertera valuta</string>
+    <string name="onboarding_text">Tutorial</string>
+    <string name="add_budget">Lägg till budget</string>
+    <string name="edit_budget">Redigera budget</string>
+    <string name="repeated_income_not_available">\"Upprepad inkomst\" är endast tillgänglig med nyare versioner av Android.</string>
+    <string name="menu_title_statistics">Statistik</string>
 </resources>

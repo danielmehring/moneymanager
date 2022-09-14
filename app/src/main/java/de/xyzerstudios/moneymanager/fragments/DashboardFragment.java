@@ -24,6 +24,8 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.whiteelephant.monthpicker.MonthPickerDialog;
 
+import org.puder.highlight.HighlightManager;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -220,6 +222,7 @@ public class DashboardFragment extends Fragment {
         loadExpensesPieChartData();
         inflateCategoriesIncome();
         inflateCategoriesExpenses();
+
         return view;
     }
 
@@ -228,6 +231,7 @@ public class DashboardFragment extends Fragment {
         super.onResume();
         loadPieChartsAndPortfolio();
     }
+
 
     private void loadPieChartsAndPortfolio() {
         new LoadPieChartsAsyncTask(getActivity(), homeActivity, this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, loadPortfolioIdFromSharedPrefs(),

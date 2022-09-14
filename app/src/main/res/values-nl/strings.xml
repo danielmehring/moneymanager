@@ -151,4 +151,8 @@
     <string name="notify_regularaly">Dagelijkse melding inschakelen</string>
     <string name="notification_time">Tijd van kennisgeving</string>
     <string name="notification_text">Vergeet niet uw inkomsten en uitgaven voor vandaag in te voeren.</string>
+    <string name="onboarding_text">Tutorial</string>
+    <string name="category_sales">Verkoop</string>
+    <string name="category_home">Home</string>
+    <string name="menu_title_statistics">Statistieken</string>
 </resources>

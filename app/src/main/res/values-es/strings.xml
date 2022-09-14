@@ -153,4 +153,6 @@
     <string name="notify_regularaly">Activar la notificación diaria</string>
     <string name="notification_time">Tiempo de notificación</string>
     <string name="notification_text">No olvides introducir tus ingresos y gastos de hoy.</string>
+    <string name="onboarding_text">Tutorial</string>
+    <string name="menu_title_statistics">Estadísticas</string>
 </resources>

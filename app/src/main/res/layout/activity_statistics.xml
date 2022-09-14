@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/ui_light_background"
+    tools:context=".activities.SettingsActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/ui_toolbar"
+        android:elevation="1dp">
+
+        <ImageButton
+            android:id="@+id/buttonStatisticsGoBack"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_gravity="left"
+            android:backgroundTint="@color/transparent_white"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:src="@drawable/ic_arrow_back"
+            app:tint="@color/ui_black" />
+
+
+    </androidx.appcompat.widget.Toolbar>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/ui_light_background">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingHorizontal="15dp">
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="11dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:elevation="1dp"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:paddingTop="4dp"
+                        android:text="@string/menu_title_statistics"
+                        android:textColor="@color/ui_text_high_contrast"
+                        android:textSize="28dp" />
+
+
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+                    <LinearLayout
+                        android:id="@+id/buttonStatisticsMonthFrom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/button_translucent_statistics"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textViewMonthFrom"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_medium"
+                            android:paddingLeft="9dp"
+                            android:paddingTop="3dp"
+                            android:paddingRight="9dp"
+                            android:text="Oktober, 2022"
+                            android:textColor="@color/ui_text_white"
+                            android:textSize="17dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/button_translucent_statistics" />
+
+                    <LinearLayout
+                        android:id="@+id/buttonStatisticsMonthTo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/button_translucent_statistics"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textViewMonthTo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_medium"
+                            android:paddingLeft="9dp"
+                            android:paddingTop="3dp"
+                            android:paddingRight="9dp"
+                            android:text="September, 2022"
+                            android:textColor="@color/ui_text_white"
+                            android:textSize="17dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="10"/>
+
+
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/lineChartStatistics"
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="5"/>
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="9"/>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+</LinearLayout>

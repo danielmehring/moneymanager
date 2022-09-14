@@ -4,6 +4,7 @@
         <item>@drawable/ic_dashboard</item>
         <item>@drawable/ic_portfolios</item>
         <item>@drawable/ic_bilanzen</item>
+        <item>@drawable/ic_statistics</item>
         <item>@drawable/ic_budgets</item>
 
         <item>@drawable/ic_donate</item>
@@ -17,6 +18,7 @@
         <item>@string/menu_title_dashboard</item>
         <item>@string/menu_title_portfolios</item>
         <item>@string/menu_title_bilanzen</item>
+        <item>@string/menu_title_statistics</item>
         <item>@string/menu_title_budgets</item>
 
         <item>@string/menu_title_donate</item>
@@ -31,6 +33,5 @@
         <item>@string/menu_heading_actions</item>
         <item>@string/menu_heading_other</item>
     </string-array>
-
 
 </resources>

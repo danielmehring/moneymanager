@@ -25,89 +25,155 @@
             android:value="ca-app-pub-3940256099942544~3347511713" />
 
         <activity
+            android:name=".activities.StatisticsActivity"
+            android:configChanges="orientation"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.OnboardingActivity"
+            android:configChanges="orientation"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activities.ConvertCurrencyActivity"
-            android:exported="false" />
+            android:configChanges="orientation"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.CurrenciesActivity"
-            android:exported="false" />
+            android:configChanges="orientation"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.SettingsActivity"
-            android:exported="false" />
+            android:configChanges="orientation"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.edit.EditIncomeOfBalanceActivity"
-            android:exported="false" />
+            android:configChanges="orientation"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.edit.EditExpenseOfBalanceActivity"
-            android:exported="false" />
+            android:configChanges="orientation"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.add.AddIncomeToBalanceActivity"
-            android:exported="false" />
+            android:configChanges="orientation"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.add.AddExpenseToBalanceActivity"
-            android:exported="false" />
+            android:configChanges="orientation"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.edit.EditBalanceActivity"
-            android:exported="false" />
+            android:configChanges="orientation"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.BalancesActivity"
-            android:exported="false" />
+            android:configChanges="orientation"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.edit.EditBudgetActivity"
-            android:exported="false" />
+            android:configChanges="orientation"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.add.AddBudgetActivity"
-            android:exported="false" />
+            android:configChanges="orientation"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.BudgetsActivity"
-            android:exported="false" />
+            android:configChanges="orientation"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.add.AddBalanceActivity"
-            android:exported="false" />
+            android:configChanges="orientation"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.edit.EditIncomeActivity"
-            android:exported="false" />
+            android:configChanges="orientation"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.add.AddIncomeActivity"
-            android:exported="false" />
+            android:configChanges="orientation"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.add.AddCategoryActivity"
-            android:exported="false" />
+            android:configChanges="orientation"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.edit.EditCategoryActivity"
-            android:exported="false" />
+            android:configChanges="orientation"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.edit.EditExpenseActivity"
-            android:exported="false" />
+            android:configChanges="orientation"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.CategoriesActivity"
-            android:exported="false" />
+            android:configChanges="orientation"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.add.AddExpenseActivity"
-            android:exported="false" />
+            android:configChanges="orientation"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.IncomeActivity"
-            android:exported="false" />
+            android:configChanges="orientation"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.ExpensesActivity"
-            android:exported="false" />
+            android:configChanges="orientation"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.add.AddPortfolioActivity"
-            android:exported="false" />
+            android:configChanges="orientation"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.edit.EditPortfolioActivity"
-            android:exported="false" />
+            android:configChanges="orientation"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.PortfoliosActivity"
-            android:exported="false" />
+            android:configChanges="orientation"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.BalanceActivity"
-            android:exported="false" />
+            android:configChanges="orientation"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.HomeActivity"
-            android:exported="false" />
+            android:configChanges="orientation"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.SplashScreenActivity"
-            android:exported="true">
+            android:configChanges="orientation"
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -28,4 +28,5 @@
 
     <color name="ui_black_strongly_translucent">#1AFFFFFF</color>
     <color name="ui_black_semi_translucent">#B3FFFFFF</color>
+    <color name="ui_black_semi_translucent_s">#1AFFFFFF</color>
 </resources>

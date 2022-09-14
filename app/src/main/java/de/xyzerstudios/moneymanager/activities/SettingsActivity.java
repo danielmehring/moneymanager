@@ -33,7 +33,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     private ImageButton buttonSettingsGoBack;
     private Switch switchDisplayCurWU, switchEnableNotification;
-    private ViewGroup chooserNotificationTime;
+    private ViewGroup chooserNotificationTime, buttonOnboarding;
     private LinearLayout chooserSettingsCurrency;
     private TextView textViewSettingsCurrency, textViewSettingsNotificationTime;
     public ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
@@ -74,6 +74,7 @@ public class SettingsActivity extends AppCompatActivity {
         switchEnableNotification = findViewById(R.id.switchEnableNotification);
         chooserNotificationTime = findViewById(R.id.chooserNotificationTime);
         textViewSettingsNotificationTime = findViewById(R.id.textViewSettingsNotificationTime);
+        buttonOnboarding = findViewById(R.id.buttonOnboarding);
 
         buttonSettingsGoBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,6 +122,16 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        buttonOnboarding.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SettingsActivity.this, OnboardingActivity.class);
+                intent.putExtra("openedFirstTime", false);
+                startActivity(intent);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            }
+        });
+
         loadUIFromSharedPrefs();
     }
 
@@ -138,11 +149,13 @@ public class SettingsActivity extends AppCompatActivity {
         switchEnableNotification.setChecked(sharedPreferences.getBoolean(Utils.SPS_DAILY_NOTIFICATION_ENABLED, false));
         showTimeTextView(sharedPreferences.getInt(Utils.SPS_DAILY_NOTIFICATION_TIME_HOUR, -1),
                 sharedPreferences.getInt(Utils.SPS_DAILY_NOTIFICATION_TIME_MINUTE, -1));
+        updateVisibilityNotificationChooser();
     }
 
     private void updateVisibilityNotificationChooser() {
         TransitionManager.beginDelayedTransition(chooserNotificationTime);
-        chooserNotificationTime.setVisibility(notificationEnabled ? View.VISIBLE : View.INVISIBLE);
+        TransitionManager.beginDelayedTransition(buttonOnboarding);
+        chooserNotificationTime.setVisibility(notificationEnabled ? View.VISIBLE : View.GONE);
     }
 
     private void showTimePicker() {

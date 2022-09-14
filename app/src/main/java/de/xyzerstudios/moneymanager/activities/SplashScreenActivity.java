@@ -4,6 +4,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.lang.ref.WeakReference;
 
 import de.xyzerstudios.moneymanager.R;
+import de.xyzerstudios.moneymanager.utils.Utils;
 import de.xyzerstudios.moneymanager.utils.currency.Currencies;
 import de.xyzerstudios.moneymanager.utils.database.BalanceDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.database.BalanceTurnoversDatabaseHelper;
@@ -149,7 +151,19 @@ public class SplashScreenActivity extends AppCompatActivity {
             if (activity == null) {
                 return;
             }
+            SharedPreferences sharedPreferences = activity.getSharedPreferences(Utils.SHARED_PREFS, Context.MODE_PRIVATE);
+            if (sharedPreferences.getBoolean(Utils.SHARED_PREFS_IS_FIRST_START, true)) {
+                Intent intent = new Intent(SplashScreenActivity.this, OnboardingActivity.class);
+                intent.putExtra("openedFirstTime", true);
+                startActivity(intent);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean(Utils.SHARED_PREFS_IS_FIRST_START, false);
+                editor.apply();
+                finish();
+                return;
+            }
             Intent intent = new Intent(SplashScreenActivity.this, HomeActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);

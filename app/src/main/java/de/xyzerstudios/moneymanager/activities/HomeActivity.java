@@ -50,23 +50,25 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
 
     private static final String tag = "HomeActivity";
 
+    private static final int POS_DASHBOARD = 1;
     public static final int POS_PORTFOLIOS = 2;
     public static final int POS_BILANZEN = 3;
-    public static final int POS_BUDGET = 4;
-    private static final int POS_DASHBOARD = 1;
-    private static final int POS_DONATE = 6;
-    private static final int POS_SETTINGS = 7;
-    private static final int POS_YOUR_DATA = 9;
-    private static final int POS_ABOUT_US = 10;
+    public static final int POS_STATISTICS = 4;
+    public static final int POS_BUDGET = 5;
+    private static final int POS_DONATE = 7;
+    private static final int POS_SETTINGS = 8;
+    private static final int POS_YOUR_DATA = 10;
+    private static final int POS_ABOUT_US = 11;
 
     private static final int RESOURCE_DASHBOARD = 0;
     private static final int RESOURCE_PORTFOLIOS = 1;
     private static final int RESOURCE_BILANZEN = 2;
-    private static final int RESOURCE_BUDGET = 3;
-    private static final int RESOURCE_DONATE = 4;
-    private static final int RESOURCE_SETTINGS = 5;
-    private static final int RESOURCE_YOUR_DATA = 6;
-    private static final int RESOURCE_ABOUT_US = 7;
+    private static final int RESOURCE_STATISTICS = 3;
+    private static final int RESOURCE_BUDGET = 4;
+    private static final int RESOURCE_DONATE = 5;
+    private static final int RESOURCE_SETTINGS = 6;
+    private static final int RESOURCE_YOUR_DATA = 7;
+    private static final int RESOURCE_ABOUT_US = 8;
 
     private static final int RESOURCE_HEADING_GENERAL = 0;
     private static final int RESOURCE_HEADING_ACTIONS = 1;
@@ -148,6 +150,7 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
         drawerItems.add(createNewDrawerItem(RESOURCE_DASHBOARD).hideNotification().setChecked(true));
         drawerItems.add(createNewDrawerItem(RESOURCE_PORTFOLIOS).hideNotification());
         drawerItems.add(createNewDrawerItem(RESOURCE_BILANZEN).hideNotification());
+        drawerItems.add(createNewDrawerItem(RESOURCE_STATISTICS).hideNotification());
         drawerItems.add(createNewDrawerItem(RESOURCE_BUDGET).hideNotification());
 
         drawerItems.add(createNewHeadingItem(RESOURCE_HEADING_ACTIONS));
@@ -295,14 +298,20 @@ public class HomeActivity extends AppCompatActivity implements DrawerAdapter.OnI
                 break;
             case POS_PORTFOLIOS:
                 slidingRootNav.closeMenu();
-                Intent intent = new Intent(HomeActivity.this, PortfoliosActivity.class);
-                intent.putExtra("choosePortfolio", false);
-                startActivity(intent);
+                Intent intent0 = new Intent(HomeActivity.this, PortfoliosActivity.class);
+                intent0.putExtra("choosePortfolio", false);
+                startActivity(intent0);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 break;
             case POS_BILANZEN:
                 slidingRootNav.closeMenu();
-                Intent intent2 = new Intent(HomeActivity.this, BalancesActivity.class);
+                Intent intent1 = new Intent(HomeActivity.this, BalancesActivity.class);
+                startActivity(intent1);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                break;
+            case POS_STATISTICS:
+                slidingRootNav.closeMenu();
+                Intent intent2 = new Intent(HomeActivity.this, StatisticsActivity.class);
                 startActivity(intent2);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 break;

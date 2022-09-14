@@ -225,8 +225,25 @@ public class ExpensesDatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    public Cursor readEntriesByRangeSortedByDate(int portfolioId, int yearFrom, int yearTo) {
+        String query = "SELECT Sum(" + COLUMN_AMOUNT + ") as total_sum, "
+                + COLUMN_MONTH + ", " + COLUMN_YEAR + " FROM " + TABLE_NAME
+                + " WHERE " + COLUMN_PORTFOLIO_ID + "=" + portfolioId
+                + " AND " + COLUMN_YEAR + " BETWEEN " + yearFrom + " AND " + yearTo
+                + " GROUP BY " + COLUMN_MONTH + ", " + COLUMN_YEAR
+                + " ORDER BY " + COLUMN_TIMESTAMP + " ASC";
+        SQLiteDatabase database = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (database != null) {
+            cursor = database.rawQuery(query, null);
+        }
+        return cursor;
+    }
+
     public Cursor readEntriesByPortfolioIdSortedByCategoriesDesc(int portfolioId) {
-        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_PORTFOLIO_ID + "=" + portfolioId + " ORDER BY " + COLUMN_CATEGORY_ID + " DESC";
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_PORTFOLIO_ID + "="
+                + portfolioId + " ORDER BY " + COLUMN_CATEGORY_ID + " DESC";
         SQLiteDatabase database = this.getReadableDatabase();
 
         Cursor cursor = null;

@@ -152,5 +152,8 @@
     <string name="notify_regularaly">Включить ежедневное уведомление</string>
     <string name="notification_time">Время уведомления</string>
     <string name="notification_text">Не забудьте ввести свои доходы и расходы за сегодняшний день.</string>
+    <string name="onboarding_text">Учебник</string>
+    <string name="add_balance">Добавить балансовый отчет</string>
+    <string name="menu_title_statistics">Статистика</string>
 
 </resources>
