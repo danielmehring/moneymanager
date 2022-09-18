@@ -1,12 +1,5 @@
 package de.xyzerstudios.moneymanager.activities.add;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
-
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -15,14 +8,25 @@ import android.database.Cursor;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.KeyEvent;
+import android.transition.TransitionManager;
+import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -30,65 +34,24 @@ import java.util.Date;
 import de.xyzerstudios.moneymanager.R;
 import de.xyzerstudios.moneymanager.activities.CategoriesActivity;
 import de.xyzerstudios.moneymanager.activities.ConvertCurrencyActivity;
+import de.xyzerstudios.moneymanager.fragments.KeyboardFragment;
 import de.xyzerstudios.moneymanager.utils.Utils;
 import de.xyzerstudios.moneymanager.utils.database.BalanceTurnoversDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.database.CategoriesDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.database.TurnoverType;
 import de.xyzerstudios.moneymanager.utils.dialogs.DatePickerFragment;
 
-public class AddIncomeToBalanceActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
-
-    public EditText editTextIncomeAmount, editTextIncomeName;
-    public ImageView closeActivityAddIncome, addIncome;
-    public TextView textViewIncomeAmount, textViewIncomeTimestamp, textViewIncomeCategory;
-    public FrameLayout chooserIncomeTimestamp, chooserIncomeCategory;
-    public LinearLayout displayCategoryColor, buttonAddIncomeToBalanceConvert;
+public class AddIncomeToBalanceActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener,
+        KeyboardFragment.KeyboardListener {
 
     private final Utils utils = new Utils(this);
-
+    public EditText editTextIncomeName;
+    public ImageView closeActivityAddIncome, addIncome;
+    public TextView textViewIncomeAmount, textViewIncomeTimestamp, textViewIncomeCategory;
+    public FrameLayout chooserIncomeTimestamp, chooserIncomeCategory, amountChooser;
+    public LinearLayout displayCategoryColor, buttonAddIncomeToBalanceConvert, keyboardContainerAddIncome;
     private int balanceId;
     private int categoryId = 38;
-
-    private int amount = 0;
-    private Date date;
-
-    public ActivityResultLauncher<Intent> startForResultConvertCurrency = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if (result != null && result.getResultCode() == RESULT_OK) {
-                        if (result.getData() != null) {
-                            amount = result.getData().getIntExtra("exchangedCurrency", amount);
-                            textViewIncomeAmount.setText(utils.formatCurrency(amount));
-                        }
-                    }
-                }
-            });
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_income_to_balance);
-
-        Bundle bundle = getIntent().getExtras();
-        if (bundle == null) {
-            finish();
-            return;
-        }
-
-        balanceId = bundle.getInt("balanceId");
-
-        initGui();
-        initObjects();
-        setClickListeners();
-        setOtherListeners();
-        manipulateGui();
-    }
-
-    private void initObjects() {
-        date = new Date();
-    }
-
     public ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override
@@ -108,9 +71,46 @@ public class AddIncomeToBalanceActivity extends AppCompatActivity implements Dat
                     }
                 }
             });
+    private int amount = 0;
+    public ActivityResultLauncher<Intent> startForResultConvertCurrency = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result != null && result.getResultCode() == RESULT_OK) {
+                        if (result.getData() != null) {
+                            amount = result.getData().getIntExtra("exchangedCurrency", amount);
+                            textViewIncomeAmount.setText(utils.formatCurrency(amount));
+                        }
+                    }
+                }
+            });
+    private Date date;
+    private boolean softKeyboardOpened = false;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_add_income_to_balance);
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle == null) {
+            finish();
+            return;
+        }
+
+        balanceId = bundle.getInt("balanceId");
+
+        initGui();
+        initObjects();
+        setClickListeners();
+        manipulateGui();
+    }
+
+    private void initObjects() {
+        date = new Date();
+    }
 
     private void initGui() {
-        editTextIncomeAmount = findViewById(R.id.editTextIncomeAmount);
         editTextIncomeName = findViewById(R.id.editTextIncomeName);
         closeActivityAddIncome = findViewById(R.id.closeActivityAddIncome);
         addIncome = findViewById(R.id.addIncome);
@@ -121,9 +121,51 @@ public class AddIncomeToBalanceActivity extends AppCompatActivity implements Dat
         chooserIncomeCategory = findViewById(R.id.chooserIncomeCategory);
         displayCategoryColor = findViewById(R.id.displayCategoryColorAddIncome);
         buttonAddIncomeToBalanceConvert = findViewById(R.id.buttonAddIncomeToBalanceConvert);
+        keyboardContainerAddIncome = findViewById(R.id.keyboardContainerAddIncome);
+        amountChooser = findViewById(R.id.amountChooser);
+
+        KeyboardFragment fragment = new KeyboardFragment();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.keyboardContainerAddIncome, fragment);
+        fragmentTransaction.commit();
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) ((double) displayMetrics.heightPixels / 2.8));
+        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        keyboardContainerAddIncome.setLayoutParams(layoutParams);
+
+        setSoftKeyboardOpened(softKeyboardOpened);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (softKeyboardOpened)
+            setSoftKeyboardOpened(false);
+        else
+            super.onBackPressed();
+    }
+
+    private void setSoftKeyboardOpened(boolean opened) {
+        softKeyboardOpened = opened;
+        if (opened) {
+            TransitionManager.beginDelayedTransition(keyboardContainerAddIncome);
+            keyboardContainerAddIncome.setVisibility(View.VISIBLE);
+        } else {
+            TransitionManager.beginDelayedTransition(keyboardContainerAddIncome);
+            keyboardContainerAddIncome.setVisibility(View.GONE);
+        }
     }
 
     private void setClickListeners() {
+        amountChooser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!softKeyboardOpened)
+                    setSoftKeyboardOpened(true);
+            }
+        });
+
         closeActivityAddIncome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -172,62 +214,6 @@ public class AddIncomeToBalanceActivity extends AppCompatActivity implements Dat
         });
     }
 
-    private void setOtherListeners() {
-
-        editTextIncomeAmount.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                if(keyEvent.getAction() == keyEvent.ACTION_UP) {
-
-
-                    String s = amount + "";
-
-                    if(i == KeyEvent.KEYCODE_DEL)
-                        amount = amount / 10;
-
-                    if(s.length() >= 12)
-                        return false;
-
-                    switch (i) {
-                        case KeyEvent.KEYCODE_0:
-                            amount = amount * 10;
-                            break;
-                        case KeyEvent.KEYCODE_1:
-                            amount = amount * 10 + 1;
-                            break;
-                        case KeyEvent.KEYCODE_2:
-                            amount = amount * 10 + 2;
-                            break;
-                        case KeyEvent.KEYCODE_3:
-                            amount = amount * 10 + 3;
-                            break;
-                        case KeyEvent.KEYCODE_4:
-                            amount = amount * 10 + 4;
-                            break;
-                        case KeyEvent.KEYCODE_5:
-                            amount = amount * 10 + 5;
-                            break;
-                        case KeyEvent.KEYCODE_6:
-                            amount = amount * 10 + 6;
-                            break;
-                        case KeyEvent.KEYCODE_7:
-                            amount = amount * 10 + 7;
-                            break;
-                        case KeyEvent.KEYCODE_8:
-                            amount = amount * 10 + 8;
-                            break;
-                        case KeyEvent.KEYCODE_9:
-                            amount = amount * 10 + 9;
-                            break;
-                    }
-                    textViewIncomeAmount.setText(utils.formatCurrency(amount));
-                }
-                return false;
-            }
-
-        });
-    }
-
 
     private void manipulateGui() {
         CategoriesDatabaseHelper categoriesDatabaseHelper = new CategoriesDatabaseHelper(this, this);
@@ -244,11 +230,6 @@ public class AddIncomeToBalanceActivity extends AppCompatActivity implements Dat
         textViewIncomeAmount.setText(utils.formatCurrency(amount));
     }
 
-    private int loadPortfolioIdFromSharedPrefs() {
-        SharedPreferences sharedPreferences = getSharedPreferences(Utils.SHARED_PREFS, Context.MODE_PRIVATE);
-        return sharedPreferences.getInt(Utils.SHARED_PREFS_CURRENT_PORTFOLIO, 1);
-    }
-
     private void showDialogDatePicker() {
         DialogFragment datePicker = new DatePickerFragment(false);
         datePicker.show(getSupportFragmentManager(), "Date Picker");
@@ -262,5 +243,55 @@ public class AddIncomeToBalanceActivity extends AppCompatActivity implements Dat
         calendar.set(Calendar.DAY_OF_MONTH, day);
         date = calendar.getTime();
         textViewIncomeTimestamp.setText(Utils.timestampDateDisplayFormat.format(date));
+    }
+
+    @Override
+    public void keyPressed(int key) {
+        if (key == 11) {
+            setSoftKeyboardOpened(false);
+            return;
+        }
+
+        String s = amount + "";
+
+        if (key == 10)
+            amount = amount / 10;
+
+        if (s.length() >= 12)
+            return;
+
+        switch (key) {
+            case 0:
+                amount = amount * 10;
+                break;
+            case 1:
+                amount = amount * 10 + 1;
+                break;
+            case 2:
+                amount = amount * 10 + 2;
+                break;
+            case 3:
+                amount = amount * 10 + 3;
+                break;
+            case 4:
+                amount = amount * 10 + 4;
+                break;
+            case 5:
+                amount = amount * 10 + 5;
+                break;
+            case 6:
+                amount = amount * 10 + 6;
+                break;
+            case 7:
+                amount = amount * 10 + 7;
+                break;
+            case 8:
+                amount = amount * 10 + 8;
+                break;
+            case 9:
+                amount = amount * 10 + 9;
+                break;
+        }
+        textViewIncomeAmount.setText(utils.formatCurrency(amount));
     }
 }

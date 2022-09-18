@@ -155,4 +155,8 @@
     <string name="notification_text">今日の収入と支出を忘れずに入力してください。</string>
     <string name="onboarding_text">チュートリアル</string>
     <string name="menu_title_statistics">統計情報</string>
+    <string name="statistics_explanation">\"統計 \"では、一定期間の収入と支出を比較するグラフが表示されます。これによって、より大きな時間軸で毎月の収支を確認することができます。</string>
+    <string name="balance_explanation">残高とは、売上高と経費をすべて計算し、利益が出たか損失が出たかを示すものです。</string>
+    <string name="ok">Ok</string>
+
 </resources>

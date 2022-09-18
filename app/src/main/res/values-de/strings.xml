@@ -164,4 +164,7 @@
     <string name="notification_text">Vergiss nicht deine heutigen Ein- und Ausgaben einzugeben.</string>
     <string name="onboarding_text">Tutorial</string>
     <string name="menu_title_statistics">Statistik</string>
+    <string name="statistics_explanation">Unter \"Statistik\" finden Sie ein Diagramm, das Ihre Einnahmen mit Ihren Ausgaben in einem bestimmten Zeitraum vergleicht. So können Sie Ihren monatlichen Saldo über einen größeren Zeitraum hinweg sehen.</string>
+    <string name="balance_explanation">In einer Bilanz werden alle Ihre Umsätze und Ausgaben erfasst, um den Gesamtsaldo zu berechnen und zu zeigen, ob Sie Gewinn oder Verlust gemacht haben.</string>
+    <string name="ok">Ok</string>
 </resources>

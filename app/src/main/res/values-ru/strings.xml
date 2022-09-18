@@ -155,5 +155,8 @@
     <string name="onboarding_text">Учебник</string>
     <string name="add_balance">Добавить балансовый отчет</string>
     <string name="menu_title_statistics">Статистика</string>
+    <string name="statistics_explanation">\"Статистика\" покажет вам график, сравнивающий ваши доходы и расходы за определенный период времени. Это поможет вам увидеть ваш ежемесячный баланс за более длительный период времени.</string>
+    <string name="balance_explanation">Баланс учитывает все ваши обороты и расходы, чтобы рассчитать общий баланс и показать, получили ли вы прибыль или убыток.</string>
+    <string name="ok">Ok</string>
 
 </resources>

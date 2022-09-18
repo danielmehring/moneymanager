@@ -24,7 +24,7 @@ public class Utils {
     public static final SimpleDateFormat timestampDateDisplayFormat = new SimpleDateFormat("yyyy.MM.dd");
     public static final SimpleDateFormat monthDateFormat = new SimpleDateFormat("MM");
     public static final SimpleDateFormat yearDateFormat = new SimpleDateFormat("yyyy");
-    public static final SimpleDateFormat yearMonthDateFormat = new SimpleDateFormat("yyyy/MM");
+    public static final SimpleDateFormat yearMonthDateFormat = new SimpleDateFormat("MM/yy");
 
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String SHARED_PREFS_CURRENT_PORTFOLIO = "currentPortfolio";

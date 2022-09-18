@@ -189,4 +189,8 @@
     <string name="notification_text">N\'oublie pas de saisir tes entrées et sorties du jour.</string>
     <string name="onboarding_text">Tutorial</string>
     <string name="menu_title_statistics">Statistiques</string>
+    <string name="statistics_explanation">\"Statistiques\" vous montrera un graphique qui compare vos revenus avec vos dépenses sur une période donnée. Cela vous permet de voir votre solde mensuel sur une période plus longue.</string>
+    <string name="balance_explanation">Une balance prend en compte tous vos chiffres d\'affaires et vos dépenses pour calculer le solde total et montrer si vous avez fait des bénéfices ou des pertes.</string>
+    <string name="ok">Ok</string>
+
 </resources>

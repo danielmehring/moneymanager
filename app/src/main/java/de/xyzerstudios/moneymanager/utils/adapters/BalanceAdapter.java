@@ -62,7 +62,7 @@ public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Utils utils = new Utils(context);
+        Utils utils = new Utils(activity);
         BalanceItem balanceItem = balanceItems.get(position);
         int currentPosition = position;
         int balanceId = balanceItem.getId();

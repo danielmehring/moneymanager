@@ -155,4 +155,8 @@
     <string name="notification_text">No olvides introducir tus ingresos y gastos de hoy.</string>
     <string name="onboarding_text">Tutorial</string>
     <string name="menu_title_statistics">Estadísticas</string>
+    <string name="statistics_explanation">\"Estadísticas\" le mostrará un gráfico que compara sus ingresos con sus gastos en un tiempo determinado. Esto le ayuda a ver su saldo mensual en un marco temporal más amplio.</string>
+    <string name="balance_explanation">Un balance toma todos sus movimientos y gastos para calcular el balance total y mostrar si obtuvo ganancias o pérdidas.</string>
+    <string name="ok">Ok</string>
+
 </resources>

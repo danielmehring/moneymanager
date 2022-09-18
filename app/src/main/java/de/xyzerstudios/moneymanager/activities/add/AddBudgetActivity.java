@@ -1,18 +1,20 @@
 package de.xyzerstudios.moneymanager.activities.add;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.transition.TransitionManager;
+import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,23 +23,25 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import java.util.Date;
 
 import de.xyzerstudios.moneymanager.R;
 import de.xyzerstudios.moneymanager.activities.CategoriesActivity;
+import de.xyzerstudios.moneymanager.fragments.KeyboardFragment;
 import de.xyzerstudios.moneymanager.utils.Utils;
 import de.xyzerstudios.moneymanager.utils.database.BudgetsDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.database.CategoriesDatabaseHelper;
 
-public class AddBudgetActivity extends AppCompatActivity {
+public class AddBudgetActivity extends AppCompatActivity implements KeyboardFragment.KeyboardListener {
 
     private final Utils utils = new Utils(this);
     private ImageView closeActivityAddBudget, addBudget;
     private FrameLayout chooserBudgetCategory;
     private TextView textViewBudgetCategory, textViewBudgetAmount;
-    private LinearLayout displayCategoryColorBudget;
-    private EditText editTextBudgetAmount;
+    private LinearLayout displayCategoryColorBudget, keyboardContainer;
+    private FrameLayout amountChooser;
     private int categoryId = 9;
     public ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
@@ -60,6 +64,7 @@ public class AddBudgetActivity extends AppCompatActivity {
             });
     private int amount = 0;
     private Date date;
+    private boolean softKeyboardOpened = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +74,6 @@ public class AddBudgetActivity extends AppCompatActivity {
         initGui();
         initObjects();
         setClickListeners();
-        setOtherListeners();
         manipulateGui();
     }
 
@@ -84,10 +88,52 @@ public class AddBudgetActivity extends AppCompatActivity {
         textViewBudgetCategory = findViewById(R.id.textViewBudgetCategory);
         textViewBudgetAmount = findViewById(R.id.textViewBudgetAmount);
         displayCategoryColorBudget = findViewById(R.id.displayCategoryColorBudget);
-        editTextBudgetAmount = findViewById(R.id.editTextBudgetAmount);
+
+        keyboardContainer = findViewById(R.id.keyboardContainerBudget);
+        amountChooser = findViewById(R.id.amountChooser);
+
+        KeyboardFragment fragment = new KeyboardFragment();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.keyboardContainerBudget, fragment);
+        fragmentTransaction.commit();
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) ((double) displayMetrics.heightPixels / 2.8));
+        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        keyboardContainer.setLayoutParams(layoutParams);
+
+        setSoftKeyboardOpened(softKeyboardOpened);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (softKeyboardOpened)
+            setSoftKeyboardOpened(false);
+        else
+            super.onBackPressed();
+    }
+
+    private void setSoftKeyboardOpened(boolean opened) {
+        softKeyboardOpened = opened;
+        if (opened) {
+            TransitionManager.beginDelayedTransition(keyboardContainer);
+            keyboardContainer.setVisibility(View.VISIBLE);
+        } else {
+            TransitionManager.beginDelayedTransition(keyboardContainer);
+            keyboardContainer.setVisibility(View.GONE);
+        }
     }
 
     private void setClickListeners() {
+
+        amountChooser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!softKeyboardOpened)
+                    setSoftKeyboardOpened(true);
+            }
+        });
 
         closeActivityAddBudget.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,62 +173,6 @@ public class AddBudgetActivity extends AppCompatActivity {
 
     }
 
-    private void setOtherListeners() {
-
-        editTextBudgetAmount.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                if (keyEvent.getAction() == KeyEvent.ACTION_UP) {
-
-
-                    String s = amount + "";
-
-                    if (i == KeyEvent.KEYCODE_DEL)
-                        amount = amount / 10;
-
-                    if (s.length() >= 12)
-                        return false;
-
-                    switch (i) {
-                        case KeyEvent.KEYCODE_0:
-                            amount = amount * 10;
-                            break;
-                        case KeyEvent.KEYCODE_1:
-                            amount = amount * 10 + 1;
-                            break;
-                        case KeyEvent.KEYCODE_2:
-                            amount = amount * 10 + 2;
-                            break;
-                        case KeyEvent.KEYCODE_3:
-                            amount = amount * 10 + 3;
-                            break;
-                        case KeyEvent.KEYCODE_4:
-                            amount = amount * 10 + 4;
-                            break;
-                        case KeyEvent.KEYCODE_5:
-                            amount = amount * 10 + 5;
-                            break;
-                        case KeyEvent.KEYCODE_6:
-                            amount = amount * 10 + 6;
-                            break;
-                        case KeyEvent.KEYCODE_7:
-                            amount = amount * 10 + 7;
-                            break;
-                        case KeyEvent.KEYCODE_8:
-                            amount = amount * 10 + 8;
-                            break;
-                        case KeyEvent.KEYCODE_9:
-                            amount = amount * 10 + 9;
-                            break;
-                    }
-                    textViewBudgetAmount.setText(utils.formatCurrency(amount));
-                }
-                return false;
-            }
-
-        });
-    }
-
 
     private void manipulateGui() {
         CategoriesDatabaseHelper categoriesDatabaseHelper = new CategoriesDatabaseHelper(this, this);
@@ -194,6 +184,56 @@ public class AddBudgetActivity extends AppCompatActivity {
             displayCategoryColorBudget.setBackground(backgroundDrawableIndicator);
         }
 
+        textViewBudgetAmount.setText(utils.formatCurrency(amount));
+    }
+
+    @Override
+    public void keyPressed(int key) {
+        if (key == 11) {
+            setSoftKeyboardOpened(false);
+            return;
+        }
+
+        String s = amount + "";
+
+        if (key == 10)
+            amount = amount / 10;
+
+        if (s.length() >= 12)
+            return;
+
+        switch (key) {
+            case 0:
+                amount = amount * 10;
+                break;
+            case 1:
+                amount = amount * 10 + 1;
+                break;
+            case 2:
+                amount = amount * 10 + 2;
+                break;
+            case 3:
+                amount = amount * 10 + 3;
+                break;
+            case 4:
+                amount = amount * 10 + 4;
+                break;
+            case 5:
+                amount = amount * 10 + 5;
+                break;
+            case 6:
+                amount = amount * 10 + 6;
+                break;
+            case 7:
+                amount = amount * 10 + 7;
+                break;
+            case 8:
+                amount = amount * 10 + 8;
+                break;
+            case 9:
+                amount = amount * 10 + 9;
+                break;
+        }
         textViewBudgetAmount.setText(utils.formatCurrency(amount));
     }
 

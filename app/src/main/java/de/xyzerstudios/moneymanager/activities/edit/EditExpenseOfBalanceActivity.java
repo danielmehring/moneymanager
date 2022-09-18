@@ -8,17 +8,22 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.inputmethodservice.Keyboard;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
+import android.transition.TransitionManager;
+import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.activity.result.ActivityResult;
@@ -27,6 +32,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -38,6 +44,7 @@ import java.util.Date;
 import de.xyzerstudios.moneymanager.R;
 import de.xyzerstudios.moneymanager.activities.CategoriesActivity;
 import de.xyzerstudios.moneymanager.activities.ConvertCurrencyActivity;
+import de.xyzerstudios.moneymanager.fragments.KeyboardFragment;
 import de.xyzerstudios.moneymanager.utils.Utils;
 import de.xyzerstudios.moneymanager.utils.database.BalanceTurnoversDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.database.CategoriesDatabaseHelper;
@@ -45,14 +52,15 @@ import de.xyzerstudios.moneymanager.utils.database.TurnoverType;
 import de.xyzerstudios.moneymanager.utils.dialogs.DatePickerFragment;
 import de.xyzerstudios.moneymanager.utils.dialogs.PaymentMethodDialog;
 
-public class EditExpenseOfBalanceActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, PaymentMethodDialog.PaymentMethodDialogListener {
+public class EditExpenseOfBalanceActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener,
+        PaymentMethodDialog.PaymentMethodDialogListener, KeyboardFragment.KeyboardListener {
 
     private final Utils utils = new Utils(this);
     public EditText editTextExpenseAmount, editTextExpenseName;
     public ImageView closeActivityAddExpense, editExpense;
     public TextView textViewExpenseAmount, textViewExpenseTimestamp, textViewExpenseCategory, textViewExpensePaymentMethod;
-    public FrameLayout chooserExpenseTimestamp, chooserExpenseCategory, chooserExpensePaymentMethod;
-    public LinearLayout displayCategoryColor, buttonEditExpenseConvert;
+    public FrameLayout chooserExpenseTimestamp, chooserExpenseCategory, chooserExpensePaymentMethod, amountChooser;
+    public LinearLayout displayCategoryColor, buttonEditExpenseConvert, keyboardContainer;
     public FloatingActionButton deleteExpenseEntry;
     private int categoryId = 9;
     public ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
@@ -90,6 +98,7 @@ public class EditExpenseOfBalanceActivity extends AppCompatActivity implements D
     private int balanceEntryId;
     private int amount = 0;
     private Date date;
+    private boolean softKeyboardOpened = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +116,6 @@ public class EditExpenseOfBalanceActivity extends AppCompatActivity implements D
         initGui();
         initObjects();
         setClickListeners();
-        setOtherListeners();
         manipulateGui();
     }
 
@@ -115,78 +123,8 @@ public class EditExpenseOfBalanceActivity extends AppCompatActivity implements D
         date = new Date();
     }
 
-    private void setOtherListeners() {
-        editTextExpenseAmount.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-            }
-        });
-
-        editTextExpenseAmount.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                if (keyEvent.getAction() == KeyEvent.ACTION_UP) {
-
-
-                    String s = amount + "";
-
-                    if (i == KeyEvent.KEYCODE_DEL)
-                        amount = amount / 10;
-
-                    if (s.length() >= 12)
-                        return false;
-
-                    switch (i) {
-                        case KeyEvent.KEYCODE_0:
-                            amount = amount * 10;
-                            break;
-                        case KeyEvent.KEYCODE_1:
-                            amount = amount * 10 + 1;
-                            break;
-                        case KeyEvent.KEYCODE_2:
-                            amount = amount * 10 + 2;
-                            break;
-                        case KeyEvent.KEYCODE_3:
-                            amount = amount * 10 + 3;
-                            break;
-                        case KeyEvent.KEYCODE_4:
-                            amount = amount * 10 + 4;
-                            break;
-                        case KeyEvent.KEYCODE_5:
-                            amount = amount * 10 + 5;
-                            break;
-                        case KeyEvent.KEYCODE_6:
-                            amount = amount * 10 + 6;
-                            break;
-                        case KeyEvent.KEYCODE_7:
-                            amount = amount * 10 + 7;
-                            break;
-                        case KeyEvent.KEYCODE_8:
-                            amount = amount * 10 + 8;
-                            break;
-                        case KeyEvent.KEYCODE_9:
-                            amount = amount * 10 + 9;
-                            break;
-                    }
-                    textViewExpenseAmount.setText(utils.formatCurrency(amount));
-                }
-                return false;
-            }
-
-        });
-    }
 
     private void initGui() {
-        editTextExpenseAmount = findViewById(R.id.editTextExpenseAmountEdit);
         closeActivityAddExpense = findViewById(R.id.closeActivityEditExpense);
         editExpense = findViewById(R.id.editExpense);
         textViewExpenseAmount = findViewById(R.id.textViewExpenseAmountEdit);
@@ -200,9 +138,55 @@ public class EditExpenseOfBalanceActivity extends AppCompatActivity implements D
         textViewExpensePaymentMethod = findViewById(R.id.textViewExpensePaymentMethodEdit);
         deleteExpenseEntry = findViewById(R.id.deleteExpenseEntry);
         buttonEditExpenseConvert = findViewById(R.id.buttonEditExpenseConvert);
+
+
+        keyboardContainer = findViewById(R.id.keyboardContainerExpenseEdit);
+        amountChooser = findViewById(R.id.amountChooser);
+
+        KeyboardFragment fragment = new KeyboardFragment();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.keyboardContainerExpenseEdit, fragment);
+        fragmentTransaction.commit();
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) ((double) displayMetrics.heightPixels / 2.8));
+        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        keyboardContainer.setLayoutParams(layoutParams);
+
+        setSoftKeyboardOpened(softKeyboardOpened);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (softKeyboardOpened)
+            setSoftKeyboardOpened(false);
+        else
+            super.onBackPressed();
+    }
+
+    private void setSoftKeyboardOpened(boolean opened) {
+        softKeyboardOpened = opened;
+        if (opened) {
+            TransitionManager.beginDelayedTransition(keyboardContainer);
+            keyboardContainer.setVisibility(View.VISIBLE);
+            deleteExpenseEntry.setVisibility(View.GONE);
+        } else {
+            TransitionManager.beginDelayedTransition(keyboardContainer);
+            keyboardContainer.setVisibility(View.GONE);
+            deleteExpenseEntry.setVisibility(View.VISIBLE);
+        }
     }
 
     private void setClickListeners() {
+        amountChooser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!softKeyboardOpened)
+                    setSoftKeyboardOpened(true);
+            }
+        });
+
         closeActivityAddExpense.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -364,5 +348,55 @@ public class EditExpenseOfBalanceActivity extends AppCompatActivity implements D
     public void applyPaymentMethod(String paymentMethodCode) {
         paymentMethod = paymentMethodCode;
         updatePaymentMethodTextView();
+    }
+
+    @Override
+    public void keyPressed(int key) {
+        if (key == 11) {
+            setSoftKeyboardOpened(false);
+            return;
+        }
+
+        String s = amount + "";
+
+        if (key == 10)
+            amount = amount / 10;
+
+        if (s.length() >= 12)
+            return;
+
+        switch (key) {
+            case 0:
+                amount = amount * 10;
+                break;
+            case 1:
+                amount = amount * 10 + 1;
+                break;
+            case 2:
+                amount = amount * 10 + 2;
+                break;
+            case 3:
+                amount = amount * 10 + 3;
+                break;
+            case 4:
+                amount = amount * 10 + 4;
+                break;
+            case 5:
+                amount = amount * 10 + 5;
+                break;
+            case 6:
+                amount = amount * 10 + 6;
+                break;
+            case 7:
+                amount = amount * 10 + 7;
+                break;
+            case 8:
+                amount = amount * 10 + 8;
+                break;
+            case 9:
+                amount = amount * 10 + 9;
+                break;
+        }
+        textViewExpenseAmount.setText(utils.formatCurrency(amount));
     }
 }

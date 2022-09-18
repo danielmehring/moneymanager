@@ -6,6 +6,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -17,16 +18,21 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Html;
+import android.transition.TransitionManager;
+import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -35,20 +41,23 @@ import java.util.Date;
 import de.xyzerstudios.moneymanager.R;
 import de.xyzerstudios.moneymanager.activities.CategoriesActivity;
 import de.xyzerstudios.moneymanager.activities.ConvertCurrencyActivity;
+import de.xyzerstudios.moneymanager.fragments.KeyboardFragment;
 import de.xyzerstudios.moneymanager.utils.Utils;
 import de.xyzerstudios.moneymanager.utils.database.BalanceTurnoversDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.database.CategoriesDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.database.TurnoverType;
 import de.xyzerstudios.moneymanager.utils.dialogs.DatePickerFragment;
 
-public class EditIncomeOfBalanceActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class EditIncomeOfBalanceActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener,
+        KeyboardFragment.KeyboardListener {
 
     private final Utils utils = new Utils(this);
     public EditText editTextIncomeAmount, editTextIncomeName;
     public ImageView closeActivityAddIncome, editIncome;
     public TextView textViewIncomeAmount, textViewIncomeTimestamp, textViewIncomeCategory;
-    public FrameLayout chooserIncomeTimestamp, chooserIncomeCategory;
-    public LinearLayout displayCategoryColor, deleteIncomeEntry, buttonEditIncomeConvert;
+    public FrameLayout chooserIncomeTimestamp, chooserIncomeCategory, amountChooser;
+    public LinearLayout displayCategoryColor, buttonEditIncomeConvert, keyboardContainer;
+    public FloatingActionButton deleteIncomeEntry;
 
 
     private int categoryId = 38;
@@ -90,6 +99,7 @@ public class EditIncomeOfBalanceActivity extends AppCompatActivity implements Da
 
     private int amount = 0;
     private Date date;
+    private boolean softKeyboardOpened = false;
 
 
     @Override
@@ -108,7 +118,6 @@ public class EditIncomeOfBalanceActivity extends AppCompatActivity implements Da
         initGui();
         initObjects();
         setClickListeners();
-        setOtherListeners();
         manipulateGui();
     }
 
@@ -117,7 +126,6 @@ public class EditIncomeOfBalanceActivity extends AppCompatActivity implements Da
     }
 
     private void initGui() {
-        editTextIncomeAmount = findViewById(R.id.editTextIncomeAmountEdit);
         editTextIncomeName = findViewById(R.id.editTextIncomeNameEdit);
         closeActivityAddIncome = findViewById(R.id.closeActivityEditIncome);
         editIncome = findViewById(R.id.editIncome);
@@ -129,9 +137,54 @@ public class EditIncomeOfBalanceActivity extends AppCompatActivity implements Da
         displayCategoryColor = findViewById(R.id.displayCategoryColorEditIncome);
         deleteIncomeEntry = findViewById(R.id.deleteIncomeEntry);
         buttonEditIncomeConvert = findViewById(R.id.buttonEditIncomeConvert);
+
+        keyboardContainer = findViewById(R.id.keyboardContainerIncomeOBEdit);
+        amountChooser = findViewById(R.id.amountChooser);
+
+        KeyboardFragment fragment = new KeyboardFragment();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.keyboardContainerIncomeOBEdit, fragment);
+        fragmentTransaction.commit();
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) ((double) displayMetrics.heightPixels / 2.8));
+        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        keyboardContainer.setLayoutParams(layoutParams);
+
+        setSoftKeyboardOpened(softKeyboardOpened);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (softKeyboardOpened)
+            setSoftKeyboardOpened(false);
+        else
+            super.onBackPressed();
+    }
+
+    private void setSoftKeyboardOpened(boolean opened) {
+        softKeyboardOpened = opened;
+        if (opened) {
+            TransitionManager.beginDelayedTransition(keyboardContainer);
+            keyboardContainer.setVisibility(View.VISIBLE);
+            deleteIncomeEntry.setVisibility(View.GONE);
+        } else {
+            TransitionManager.beginDelayedTransition(keyboardContainer);
+            keyboardContainer.setVisibility(View.GONE);
+            deleteIncomeEntry.setVisibility(View.VISIBLE);
+        }
     }
 
     private void setClickListeners() {
+        amountChooser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!softKeyboardOpened)
+                    setSoftKeyboardOpened(true);
+            }
+        });
+
         closeActivityAddIncome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -208,63 +261,6 @@ public class EditIncomeOfBalanceActivity extends AppCompatActivity implements Da
         });
     }
 
-    private void setOtherListeners() {
-
-        editTextIncomeAmount.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                if (keyEvent.getAction() == KeyEvent.ACTION_UP) {
-
-
-                    String s = amount + "";
-
-                    if (i == KeyEvent.KEYCODE_DEL)
-                        amount = amount / 10;
-
-                    if (s.length() >= 12)
-                        return false;
-
-                    switch (i) {
-                        case KeyEvent.KEYCODE_0:
-                            amount = amount * 10;
-                            break;
-                        case KeyEvent.KEYCODE_1:
-                            amount = amount * 10 + 1;
-                            break;
-                        case KeyEvent.KEYCODE_2:
-                            amount = amount * 10 + 2;
-                            break;
-                        case KeyEvent.KEYCODE_3:
-                            amount = amount * 10 + 3;
-                            break;
-                        case KeyEvent.KEYCODE_4:
-                            amount = amount * 10 + 4;
-                            break;
-                        case KeyEvent.KEYCODE_5:
-                            amount = amount * 10 + 5;
-                            break;
-                        case KeyEvent.KEYCODE_6:
-                            amount = amount * 10 + 6;
-                            break;
-                        case KeyEvent.KEYCODE_7:
-                            amount = amount * 10 + 7;
-                            break;
-                        case KeyEvent.KEYCODE_8:
-                            amount = amount * 10 + 8;
-                            break;
-                        case KeyEvent.KEYCODE_9:
-                            amount = amount * 10 + 9;
-                            break;
-                    }
-                    textViewIncomeAmount.setText(utils.formatCurrency(amount));
-                }
-                return false;
-            }
-
-        });
-    }
-
-
     private void manipulateGui() {
         BalanceTurnoversDatabaseHelper turnoversDatabaseHelper = new BalanceTurnoversDatabaseHelper(this);
         Cursor cursor = turnoversDatabaseHelper.readEntryById(balanceEntryId);
@@ -315,5 +311,55 @@ public class EditIncomeOfBalanceActivity extends AppCompatActivity implements Da
         calendar.set(Calendar.DAY_OF_MONTH, day);
         date = calendar.getTime();
         textViewIncomeTimestamp.setText(Utils.timestampDateDisplayFormat.format(date));
+    }
+
+    @Override
+    public void keyPressed(int key) {
+        if (key == 11) {
+            setSoftKeyboardOpened(false);
+            return;
+        }
+
+        String s = amount + "";
+
+        if (key == 10)
+            amount = amount / 10;
+
+        if (s.length() >= 12)
+            return;
+
+        switch (key) {
+            case 0:
+                amount = amount * 10;
+                break;
+            case 1:
+                amount = amount * 10 + 1;
+                break;
+            case 2:
+                amount = amount * 10 + 2;
+                break;
+            case 3:
+                amount = amount * 10 + 3;
+                break;
+            case 4:
+                amount = amount * 10 + 4;
+                break;
+            case 5:
+                amount = amount * 10 + 5;
+                break;
+            case 6:
+                amount = amount * 10 + 6;
+                break;
+            case 7:
+                amount = amount * 10 + 7;
+                break;
+            case 8:
+                amount = amount * 10 + 8;
+                break;
+            case 9:
+                amount = amount * 10 + 9;
+                break;
+        }
+        textViewIncomeAmount.setText(utils.formatCurrency(amount));
     }
 }

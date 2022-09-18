@@ -155,4 +155,7 @@
     <string name="edit_budget">Redigera budget</string>
     <string name="repeated_income_not_available">\"Upprepad inkomst\" är endast tillgänglig med nyare versioner av Android.</string>
     <string name="menu_title_statistics">Statistik</string>
+    <string name="statistics_explanation">\"Statistik\" visar ett diagram som jämför dina inkomster med dina utgifter under en viss tid. Detta hjälper dig att se ditt månadssaldo över en större tidsperiod.</string>
+    <string name="balance_explanation">En balans tar hänsyn till alla dina omsättningar och utgifter för att beräkna det totala saldot och visa om du har gjort vinst eller förlust.</string>
+    <string name="ok">Ok</string>
 </resources>

@@ -155,4 +155,8 @@
     <string name="category_sales">Verkoop</string>
     <string name="category_home">Home</string>
     <string name="menu_title_statistics">Statistieken</string>
+    <string name="statistics_explanation">\"Statistieken\" toont u een grafiek die uw inkomsten vergelijkt met uw uitgaven in een bepaalde tijd. Dit helpt u om uw maandelijkse saldo over een groter tijdsbestek te zien.</string>
+    <string name="balance_explanation">Een balans neemt al uw omzetten en uitgaven om het totale saldo te berekenen en te laten zien of u winst of verlies hebt gemaakt.</string>
+    <string name="ok">Ok</string>
+
 </resources>

@@ -138,21 +138,11 @@
                         android:orientation="horizontal">
 
                         <FrameLayout
+                            android:id="@+id/amountChooser"
                             android:layout_width="fill_parent"
                             android:layout_height="35dp"
                             android:layout_weight="1">
 
-                            <EditText
-                                android:id="@+id/editTextIncomeAmountEdit"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_margin="1dp"
-                                android:background="@drawable/invisible"
-                                android:elevation="2dp"
-                                android:inputType="number"
-                                android:maxLength="0"
-                                android:textColor="@color/transparent_white"
-                                android:textCursorDrawable="@null" />
 
                             <TextView
                                 android:id="@+id/textViewIncomeAmountEdit"
@@ -395,7 +385,7 @@
 
                 <Space
                     android:layout_width="match_parent"
-                    android:layout_height="50dp" />
+                    android:layout_height="120dp" />
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
@@ -410,11 +400,21 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_gravity="end|bottom"
-        android:layout_margin="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         android:backgroundTint="@color/ui_lime_red"
         android:src="@drawable/ic_delete_list"
         app:borderWidth="0dp"
         app:tint="@color/ui_white" />
 
+    <LinearLayout
+        android:id="@+id/keyboardContainerIncomeEdit"
+        android:layout_width="match_parent"
+        android:layout_height="320dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:visibility="gone" />
 
 </RelativeLayout>

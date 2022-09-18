@@ -29,4 +29,8 @@
     <color name="ui_black_strongly_translucent">#1AFFFFFF</color>
     <color name="ui_black_semi_translucent">#B3FFFFFF</color>
     <color name="ui_black_semi_translucent_s">#1AFFFFFF</color>
+
+    <color name="ui_keyboard_bg">#0A0A0A</color>
+    <color name="ui_keyboard_dark">#171717</color>
+    <color name="ui_keyboard_light">#2D2D2D</color>
 </resources>

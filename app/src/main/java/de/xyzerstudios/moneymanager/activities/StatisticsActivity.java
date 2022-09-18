@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Html;
 import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.View;
@@ -17,15 +17,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.whiteelephant.monthpicker.MonthPickerDialog;
 
 import java.lang.ref.WeakReference;
@@ -39,6 +43,7 @@ import de.xyzerstudios.moneymanager.R;
 import de.xyzerstudios.moneymanager.utils.SimpleStatisticsItem;
 import de.xyzerstudios.moneymanager.utils.StatisticsItem;
 import de.xyzerstudios.moneymanager.utils.Utils;
+import de.xyzerstudios.moneymanager.utils.currency.Currencies;
 import de.xyzerstudios.moneymanager.utils.database.ExpensesDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.database.IncomeDatabaseHelper;
 
@@ -151,14 +156,12 @@ public class StatisticsActivity extends AppCompatActivity {
         lineChartStatistics.getAxisRight().setDrawAxisLine(false);
         lineChartStatistics.getXAxis().setDrawAxisLine(false);
         lineChartStatistics.getAxisLeft().setDrawZeroLine(true);
-        lineChartStatistics.getAxisLeft().setZeroLineWidth(2f);
-        lineChartStatistics.getAxisLeft().setZeroLineColor(getColor(R.color.ui_text));
+        lineChartStatistics.getAxisLeft().setZeroLineWidth(1f);
+        lineChartStatistics.getAxisLeft().setZeroLineColor(getColor(R.color.ui_lime_grey));
         lineChartStatistics.getViewPortHandler().setMaximumScaleY(1);
-        lineChartStatistics.getXAxis().setTextColor(getColor(R.color.ui_text));
+        lineChartStatistics.getXAxis().setTextColor(getColor(R.color.ui_light_background));
         lineChartStatistics.getAxisLeft().setTextColor(getColor(R.color.ui_light_background));
         lineChartStatistics.getAxisRight().setTextColor(getColor(R.color.ui_light_background));
-
-
     }
 
     private void startAsyncTask() {
@@ -345,12 +348,12 @@ public class StatisticsActivity extends AppCompatActivity {
             LineDataSet lineDataSetIncome = new LineDataSet(entriesIncome, getString(R.string.income));
             LineDataSet lineDataSetBalance = new LineDataSet(entriesBalance, getString(R.string.saldo));
 
-            lineDataSetExpenses.setLineWidth(4f);
+            lineDataSetExpenses.setLineWidth(1.5f);
             lineDataSetExpenses.setColor(getColor(R.color.ui_lime_red));
             lineDataSetExpenses.setValueTextSize(0f);
             lineDataSetExpenses.setDrawCircles(false);
             lineDataSetExpenses.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-            lineDataSetExpenses.setCubicIntensity(0.01f);
+            lineDataSetExpenses.setCubicIntensity(0.06f);
             lineDataSetExpenses.setDrawVerticalHighlightIndicator(false);
             lineDataSetExpenses.setDrawHorizontalHighlightIndicator(false);
 
@@ -358,12 +361,12 @@ public class StatisticsActivity extends AppCompatActivity {
             lineDataSetExpenses.setFillColor(getColor(R.color.ui_lime_red));
             lineDataSetExpenses.setFillAlpha(55);
 
-            lineDataSetIncome.setLineWidth(4f);
+            lineDataSetIncome.setLineWidth(1.5f);
             lineDataSetIncome.setColor(getColor(R.color.ui_lime_green));
             lineDataSetIncome.setValueTextSize(0f);
             lineDataSetIncome.setDrawCircles(false);
             lineDataSetIncome.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-            lineDataSetIncome.setCubicIntensity(0.01f);
+            lineDataSetIncome.setCubicIntensity(0.06f);
             lineDataSetIncome.setDrawVerticalHighlightIndicator(false);
             lineDataSetIncome.setDrawHorizontalHighlightIndicator(false);
 
@@ -371,20 +374,32 @@ public class StatisticsActivity extends AppCompatActivity {
             lineDataSetIncome.setFillColor(getColor(R.color.ui_lime_green));
             lineDataSetIncome.setFillAlpha(55);
 
+            SharedPreferences sharedPreferences = getSharedPreferences(Utils.SHARED_PREFS, Context.MODE_PRIVATE);
+            String isoCode = sharedPreferences.getString(Utils.SPS_CURRENCY_ISO_CODE, "USD");
+            String currencySymbol = Currencies.getIsoToUnicode().getOrDefault(isoCode, "$");
 
-            lineDataSetBalance.setLineWidth(2f);
+            lineDataSetBalance.setLineWidth(1.9f);
             lineDataSetBalance.setColor(getColor(R.color.ui_lime_grey));
-            lineDataSetBalance.setValueTextSize(12f);
-            lineDataSetBalance.setValueTextColor(getColor(R.color.ui_text));
+            lineDataSetBalance.setValueTextSize(13f);
+            lineDataSetBalance.setValueTypeface(ResourcesCompat.getFont(StatisticsActivity.this, R.font.poppins_light));
+            lineDataSetBalance.setValueTextColor(getColor(R.color.ui_text_faded));
             lineDataSetBalance.setDrawCircles(false);
             lineDataSetBalance.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-            lineDataSetBalance.setCubicIntensity(0.01f);
+            lineDataSetBalance.setCubicIntensity(0.06f);
+            lineDataSetBalance.setValueFormatter(new ValueFormatter() {
+                @Override
+                public String getPointLabel(Entry entry) {
+                    int index = (int) entry.getX();
+                    StatisticsItem statisticsItem = a.get(index);
+                    float value = (statisticsItem.getIncomeAmount() - statisticsItem.getExpenseAmount()) / 100;
+                    String display = (int)value + currencySymbol + " " + Utils.yearMonthDateFormat.format(statisticsItem.getTimestamp());
+                    return display;
+                }
+            });
 
             lineDataSetBalance.setDrawFilled(true);
             lineDataSetBalance.setFillColor(getColor(R.color.ui_lime_grey));
             lineDataSetBalance.setFillAlpha(0);
-
-
 
             dataSets.add(lineDataSetExpenses);
             dataSets.add(lineDataSetIncome);
@@ -393,16 +408,6 @@ public class StatisticsActivity extends AppCompatActivity {
             LineData lineData = new LineData(dataSets);
             activity.lineChartStatistics.setData(lineData);
             activity.lineChartStatistics.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
-            activity.lineChartStatistics.getXAxis().setValueFormatter(new IndexAxisValueFormatter() {
-                @Override
-                public String getFormattedValue(float value) {
-                    try {
-                        return labels.get((int) value);
-                    } catch (Exception e) {
-                        return "";
-                    }
-                }
-            });
 
             AlphaAnimation alphaAnimation = new AlphaAnimation(0f, 1f);
             alphaAnimation.setDuration(1000);

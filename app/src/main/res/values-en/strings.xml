@@ -131,7 +131,7 @@
     <string name="sum_budgets">Sum of all budgets</string>
     <string name="select">Select</string>
     <string name="apply">Apply</string>
-    <string name="budgets_explanation">With \"Budgets\" you can budget super easy. Choose a category
+    <string name="budgets_explanation">With \"Budgets\" you can budget super easily. Choose a category
         and a monthly limit. As soon as you exceed this amount, the budget turns red. Under
         \"available amount\" you can see your average budget per month. This only includes regular income. </string>
     <string name="portfolios_explanation">With \"Portfolios\" you can separate turnovers from each other.
@@ -164,4 +164,8 @@
     <string name="notification_text">Don\'t forget to enter your income and expenses for today.</string>
     <string name="onboarding_text">Tutorial</string>
     <string name="menu_title_statistics">Statistics</string>
+    <string name="statistics_explanation">\"Statistics\" will show you a graph that compares your
+        income with your expenses in a given time. This helps you see your monthly balance over a larger time frame.</string>
+    <string name="balance_explanation">A balance takes all your turnovers and expenses to calculate the total balance and show whether you made profit or loss.</string>
+    <string name="ok">Ok</string>
 </resources>
