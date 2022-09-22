@@ -144,19 +144,6 @@
                             android:layout_width="fill_parent"
                             android:layout_height="35dp"
                             android:layout_weight="1">
-
-                            <!--EditText
-                                android:id="@+id/editTextExpenseAmount"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_margin="1dp"
-                                android:background="@drawable/invisible"
-                                android:elevation="2dp"
-                                android:inputType="number"
-                                android:maxLength="0"
-                                android:textColor="@color/transparent_white"
-                                android:textCursorDrawable="@null" /-->
-
                             <TextView
                                 android:id="@+id/textViewExpenseAmount"
                                 android:layout_width="match_parent"

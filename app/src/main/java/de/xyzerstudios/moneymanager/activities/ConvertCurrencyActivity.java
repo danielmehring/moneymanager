@@ -8,13 +8,16 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.transition.TransitionManager;
+import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.activity.result.ActivityResult;
@@ -23,6 +26,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -33,20 +37,22 @@ import java.util.Calendar;
 import java.util.Date;
 
 import de.xyzerstudios.moneymanager.R;
+import de.xyzerstudios.moneymanager.fragments.KeyboardFragment;
 import de.xyzerstudios.moneymanager.utils.Json;
 import de.xyzerstudios.moneymanager.utils.Utils;
 import de.xyzerstudios.moneymanager.utils.dialogs.DatePickerFragment;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 
-public class ConvertCurrencyActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class ConvertCurrencyActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener,
+        KeyboardFragment.KeyboardListener {
 
     private ImageButton buttonConvertGoBack;
     private ViewGroup buttonExchangeCurrency;
-    private LinearLayout chooserConvertCurrencyFrom, chooserConvertCurrencyDate;
+    private LinearLayout chooserConvertCurrencyFrom, chooserConvertCurrencyDate, keyboardContainerConvertCurrency;
     private TextView textViewFromCurrency, textViewToCurrency, textViewDateConvertCurrency,
             textViewExchangeRate, textViewExchangeAmount, textViewEqualsToAmount;
-    private EditText editTextConvertAmount;
+    private FrameLayout amountChooser;
 
     private int amount = 0;
     private int amountExchanged = 0;
@@ -76,6 +82,8 @@ public class ConvertCurrencyActivity extends AppCompatActivity implements DatePi
                 }
             });
 
+    private boolean softKeyboardOpened = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,7 +93,6 @@ public class ConvertCurrencyActivity extends AppCompatActivity implements DatePi
         initObjects();
         loadValues();
         setClickListeners();
-        setOtherListeners();
         manipulateGui();
         loadExchangeRate();
     }
@@ -121,11 +128,52 @@ public class ConvertCurrencyActivity extends AppCompatActivity implements DatePi
         textViewExchangeRate = findViewById(R.id.textViewExchangeRate);
         textViewExchangeAmount = findViewById(R.id.textViewExchangeAmount);
         textViewEqualsToAmount = findViewById(R.id.textViewEqualsToAmount);
-        editTextConvertAmount = findViewById(R.id.editTextConvertAmount);
         buttonExchangeCurrency = findViewById(R.id.buttonExchangeCurrency);
+        amountChooser = findViewById(R.id.amountChooser);
+        keyboardContainerConvertCurrency = findViewById(R.id.keyboardContainerConvertCurrency);
+
+        KeyboardFragment fragment = new KeyboardFragment();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.keyboardContainerConvertCurrency, fragment);
+        fragmentTransaction.commit();
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int) ((double)displayMetrics.heightPixels / 2.8));
+        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        keyboardContainerConvertCurrency.setLayoutParams(layoutParams);
+
+        setSoftKeyboardOpened(softKeyboardOpened);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (softKeyboardOpened)
+            setSoftKeyboardOpened(false);
+        else
+            super.onBackPressed();
+    }
+
+    private void setSoftKeyboardOpened(boolean opened) {
+        softKeyboardOpened = opened;
+        if (opened) {
+            TransitionManager.beginDelayedTransition(keyboardContainerConvertCurrency);
+            keyboardContainerConvertCurrency.setVisibility(View.VISIBLE);
+        } else {
+            TransitionManager.beginDelayedTransition(keyboardContainerConvertCurrency);
+            keyboardContainerConvertCurrency.setVisibility(View.GONE);
+        }
     }
 
     private void setClickListeners() {
+        amountChooser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!softKeyboardOpened)
+                    setSoftKeyboardOpened(true);
+            }
+        });
+
         buttonConvertGoBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -161,63 +209,6 @@ public class ConvertCurrencyActivity extends AppCompatActivity implements DatePi
                 setResult(Activity.RESULT_OK, intent);
                 finish();
             }
-        });
-    }
-
-    private void setOtherListeners() {
-
-        editTextConvertAmount.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                if (keyEvent.getAction() == KeyEvent.ACTION_UP) {
-
-
-                    String s = amount + "";
-
-                    if (i == KeyEvent.KEYCODE_DEL)
-                        amount = amount / 10;
-
-                    if (s.length() >= 12)
-                        return false;
-
-                    switch (i) {
-                        case KeyEvent.KEYCODE_0:
-                            amount = amount * 10;
-                            break;
-                        case KeyEvent.KEYCODE_1:
-                            amount = amount * 10 + 1;
-                            break;
-                        case KeyEvent.KEYCODE_2:
-                            amount = amount * 10 + 2;
-                            break;
-                        case KeyEvent.KEYCODE_3:
-                            amount = amount * 10 + 3;
-                            break;
-                        case KeyEvent.KEYCODE_4:
-                            amount = amount * 10 + 4;
-                            break;
-                        case KeyEvent.KEYCODE_5:
-                            amount = amount * 10 + 5;
-                            break;
-                        case KeyEvent.KEYCODE_6:
-                            amount = amount * 10 + 6;
-                            break;
-                        case KeyEvent.KEYCODE_7:
-                            amount = amount * 10 + 7;
-                            break;
-                        case KeyEvent.KEYCODE_8:
-                            amount = amount * 10 + 8;
-                            break;
-                        case KeyEvent.KEYCODE_9:
-                            amount = amount * 10 + 9;
-                            break;
-                    }
-                    amountExchanged = (int) ((double) amount * exchangeRate);
-                    updateAmountToUi();
-                }
-                return false;
-            }
-
         });
     }
 
@@ -276,13 +267,63 @@ public class ConvertCurrencyActivity extends AppCompatActivity implements DatePi
         TransitionManager.beginDelayedTransition(buttonExchangeCurrency);
         buttonExchangeCurrency.setVisibility(error ? View.INVISIBLE : View.VISIBLE);
         buttonExchangeCurrency.setEnabled(!error);
-        editTextConvertAmount.setEnabled(!error);
+        amountChooser.setEnabled(!error);
         chooserConvertCurrencyDate.setEnabled(!error);
     }
 
     private void loadExchangeRate() {
         new exchangeRateAsyncTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,
                 currencyFrom, currencyTo, Utils.isoDateFormatCurrency.format(date));
+    }
+
+    @Override
+    public void keyPressed(int key) {
+        if (key == 11) {
+            setSoftKeyboardOpened(false);
+            return;
+        }
+
+        String s = amount + "";
+
+        if (key == 10)
+            amount = amount / 10;
+
+        if (s.length() >= 12)
+            return;
+
+        switch (key) {
+            case 0:
+                amount = amount * 10;
+                break;
+            case 1:
+                amount = amount * 10 + 1;
+                break;
+            case 2:
+                amount = amount * 10 + 2;
+                break;
+            case 3:
+                amount = amount * 10 + 3;
+                break;
+            case 4:
+                amount = amount * 10 + 4;
+                break;
+            case 5:
+                amount = amount * 10 + 5;
+                break;
+            case 6:
+                amount = amount * 10 + 6;
+                break;
+            case 7:
+                amount = amount * 10 + 7;
+                break;
+            case 8:
+                amount = amount * 10 + 8;
+                break;
+            case 9:
+                amount = amount * 10 + 9;
+                break;
+        }
+        textViewExchangeAmount.setText(utils.formatCurrency(amount));
     }
 
     private class exchangeRateAsyncTask extends AsyncTask<String, String, Double> {
