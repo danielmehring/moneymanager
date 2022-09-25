@@ -117,7 +117,8 @@ public class AddBalanceActivity extends AppCompatActivity implements DatePickerD
                 }
 
                 BalanceDatabaseHelper balanceDatabaseHelper = new BalanceDatabaseHelper(AddBalanceActivity.this);
-                balanceDatabaseHelper.addNewBalance(name, Utils.isoDateFormat.format(date), portfolioId);
+                balanceDatabaseHelper.addNewBalance(name, Utils.isoDateFormat.format(date), portfolioId,
+                        Integer.valueOf(Utils.monthDateFormat.format(date)), Integer.valueOf(Utils.yearDateFormat.format(date)));
 
                 finish();
             }

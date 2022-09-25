@@ -28,6 +28,8 @@ public class BalanceDatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_REVENUES_SUM = "revenue_sum";
     private static final String COLUMN_EXPENSES_SUM = "expense_sum";
     private static final String COLUMN_SALDO = "saldo_sum";
+    private static final String COLUMN_MONTH = "month_created";
+    private static final String COLUMN_YEAR = "created_created";
     private final Context context;
 
 
@@ -45,7 +47,9 @@ public class BalanceDatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_PORTFOLIO_ID + " INTEGER, " +
                 COLUMN_REVENUES_SUM + " INTEGER, " +
                 COLUMN_EXPENSES_SUM + " INTEGER, " +
-                COLUMN_SALDO + " INTEGER);";
+                COLUMN_SALDO + " INTEGER, " +
+                COLUMN_MONTH + " INTEGER, " +
+                COLUMN_YEAR + " INTEGER);";
         database.execSQL(query);
 
         Log.d(tag, "Database created.");
@@ -57,7 +61,7 @@ public class BalanceDatabaseHelper extends SQLiteOpenHelper {
         onCreate(database);
     }
 
-    public void addNewBalance(String name, String timestampOfCreation, int portfolioId) {
+    public void addNewBalance(String name, String timestampOfCreation, int portfolioId, int month, int year) {
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
@@ -67,6 +71,8 @@ public class BalanceDatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(COLUMN_REVENUES_SUM, 0);
         contentValues.put(COLUMN_EXPENSES_SUM, 0);
         contentValues.put(COLUMN_SALDO, 0);
+        contentValues.put(COLUMN_MONTH, month);
+        contentValues.put(COLUMN_YEAR, year);
 
         long result = database.insert(TABLE_NAME, null, contentValues);
         if (result == -1) {
@@ -76,13 +82,15 @@ public class BalanceDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void updateBalance(int balanceId, String name, int portfolioId, String timestamp) {
+    public void updateBalance(int balanceId, String name, int portfolioId, String timestamp, int month, int year) {
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
         contentValues.put(COLUMN_NAME, name);
         contentValues.put(COLUMN_PORTFOLIO_ID, portfolioId);
         contentValues.put(COLUMN_TIMESTAMP_CREATED, timestamp);
+        contentValues.put(COLUMN_MONTH, month);
+        contentValues.put(COLUMN_YEAR, year);
 
         long result = database.update(TABLE_NAME, contentValues, "_id=?", new String[]{String.valueOf(balanceId)});
         if (result == -1) {
@@ -174,6 +182,25 @@ public class BalanceDatabaseHelper extends SQLiteOpenHelper {
                 " Sum(" + COLUMN_SALDO + ") as sum_saldo" +
                 " FROM " + TABLE_NAME +
                 " WHERE " + COLUMN_PORTFOLIO_ID + "=" + portfolioId +
+                " GROUP BY " + COLUMN_PORTFOLIO_ID;
+
+        SQLiteDatabase database = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (database != null) {
+            cursor = database.rawQuery(query, null);
+        }
+        return cursor;
+    }
+
+    public Cursor sumAllByPortfolioIdAndDate(int portfolioId, int month, int year) {
+        String query = "SELECT Sum(" + COLUMN_REVENUES_SUM + ") as sum_revenues, " +
+                " Sum(" + COLUMN_EXPENSES_SUM + ") as sum_expenses, " +
+                " Sum(" + COLUMN_SALDO + ") as sum_saldo" +
+                " FROM " + TABLE_NAME +
+                " WHERE " + COLUMN_PORTFOLIO_ID + "=" + portfolioId +
+                " AND " + COLUMN_MONTH + "=" + month +
+                " AND " + COLUMN_YEAR + "=" + year +
                 " GROUP BY " + COLUMN_PORTFOLIO_ID;
 
         SQLiteDatabase database = this.getReadableDatabase();

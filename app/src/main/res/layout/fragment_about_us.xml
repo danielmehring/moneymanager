@@ -57,6 +57,7 @@
         android:layout_weight="1" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/aboutUsLayoutXS"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp">

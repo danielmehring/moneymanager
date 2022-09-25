@@ -4,32 +4,36 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.Html;
 import android.transition.TransitionManager;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
+import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.whiteelephant.monthpicker.MonthPickerDialog;
 
 import java.lang.ref.WeakReference;
@@ -53,6 +57,8 @@ public class StatisticsActivity extends AppCompatActivity {
     private ViewGroup buttonStatisticsMonthFrom, buttonStatisticsMonthTo;
     private TextView textViewMonthFrom, textViewMonthTo;
     private LineChart lineChartStatistics;
+    private BarChart barChartStatistics;
+    private LinearLayout lineChartStatisticsLegend, barChartStatisticsLegend;
 
     private Calendar calendarFrom;
     private Calendar calendarTo;
@@ -73,8 +79,9 @@ public class StatisticsActivity extends AppCompatActivity {
         textViewMonthFrom = buttonStatisticsMonthFrom.findViewById(R.id.textViewMonthFrom);
         textViewMonthTo = buttonStatisticsMonthTo.findViewById(R.id.textViewMonthTo);
         lineChartStatistics = findViewById(R.id.lineChartStatistics);
-
-        lineChartStatistics.setNoDataTextColor(getColor(R.color.ui_text));
+        barChartStatistics = findViewById(R.id.barChartStatistics);
+        lineChartStatisticsLegend = findViewById(R.id.lineChartStatisticsLegend);
+        barChartStatisticsLegend = findViewById(R.id.barChartStatisticsLegend);
 
         buttonStatisticsMonthFrom.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,6 +148,48 @@ public class StatisticsActivity extends AppCompatActivity {
         updateTextViews();
         startAsyncTask();
         setupLineChart();
+        setupBarChart();
+
+
+        AlphaAnimation alphaAnimation = new AlphaAnimation(0f, 1f);
+        alphaAnimation.setDuration(1500);
+        lineChartStatisticsLegend.startAnimation(alphaAnimation);
+        barChartStatisticsLegend.startAnimation(alphaAnimation);
+    }
+
+    private void setupBarChart() {
+        barChartStatistics.setNoDataTextColor(getColor(R.color.ui_text));
+        barChartStatistics.getXAxis().setAxisMinimum(0f);
+        barChartStatistics.getXAxis().setGranularity(1);
+        barChartStatistics.getXAxis().setCenterAxisLabels(true);
+        barChartStatistics.getDescription().setEnabled(false);
+        barChartStatistics.setTouchEnabled(true);
+        barChartStatistics.getLegend().setEnabled(false);
+        barChartStatistics.setDrawGridBackground(false);
+        barChartStatistics.setDrawBorders(false);
+        barChartStatistics.getAxisLeft().setDrawGridLines(false);
+        barChartStatistics.getAxisRight().setDrawGridLines(false);
+        barChartStatistics.getXAxis().setDrawGridLines(false);
+        barChartStatistics.getAxisLeft().setDrawAxisLine(false);
+        barChartStatistics.getAxisRight().setDrawAxisLine(false);
+        barChartStatistics.getXAxis().setDrawAxisLine(false);
+        barChartStatistics.getAxisLeft().setDrawZeroLine(true);
+        barChartStatistics.getAxisLeft().setZeroLineWidth(1f);
+        barChartStatistics.getAxisLeft().setZeroLineColor(getColor(R.color.ui_lime_grey));
+        barChartStatistics.setFocusable(false);
+        barChartStatistics.setDoubleTapToZoomEnabled(false);
+        barChartStatistics.getXAxis().setTextColor(getColor(R.color.ui_text));
+        barChartStatistics.getXAxis().setTextSize(13f);
+        barChartStatistics.getXAxis().setTypeface(ResourcesCompat.getFont(StatisticsActivity.this, R.font.poppins_regular));
+        barChartStatistics.setExtraTopOffset(5);
+        barChartStatistics.getAxisLeft().setTextColor(getColor(R.color.ui_light_background));
+        barChartStatistics.getAxisRight().setTextColor(getColor(R.color.ui_light_background));
+        barChartStatistics.setScaleYEnabled(false);
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) ((double) displayMetrics.heightPixels / 1.8));
+        barChartStatistics.setLayoutParams(layoutParams);
     }
 
     private void setupLineChart() {
@@ -162,6 +211,13 @@ public class StatisticsActivity extends AppCompatActivity {
         lineChartStatistics.getXAxis().setTextColor(getColor(R.color.ui_light_background));
         lineChartStatistics.getAxisLeft().setTextColor(getColor(R.color.ui_light_background));
         lineChartStatistics.getAxisRight().setTextColor(getColor(R.color.ui_light_background));
+        lineChartStatistics.setNoDataTextColor(getColor(R.color.ui_text));
+        lineChartStatistics.setDoubleTapToZoomEnabled(false);
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) ((double) displayMetrics.heightPixels / 1.8));
+        lineChartStatistics.setLayoutParams(layoutParams);
     }
 
     private void startAsyncTask() {
@@ -328,17 +384,52 @@ public class StatisticsActivity extends AppCompatActivity {
                 return;
             }
 
+            float lowestValue = 1;
+
             final ArrayList<ILineDataSet> dataSets = new ArrayList<>();
 
             final ArrayList<Entry> entriesExpenses = new ArrayList<>();
             final ArrayList<Entry> entriesIncome = new ArrayList<>();
             final ArrayList<Entry> entriesBalance = new ArrayList<>();
+
+            final ArrayList<BarEntry> barEntriesExpenses = new ArrayList<>();
+            final ArrayList<BarEntry> barEntriesIncome = new ArrayList<>();
+            final ArrayList<BarEntry> barEntriesBalance = new ArrayList<>();
+
+            float groupSpace = 0.15f;
+            float barSpace = 0.02f;
+            float barWidth = 0.263f;
+
+            final int sizeOfArray = a.size();
+
             final ArrayList<String> labels = new ArrayList<>();
-            for (int i = 0; i < a.size(); i++) {
+            for (int i = 0; i < sizeOfArray; i++) {
                 StatisticsItem statisticsItem = a.get(i);
-                entriesExpenses.add(new Entry(i, ((float) statisticsItem.getExpenseAmount() / 100f)));
-                entriesIncome.add(new Entry(i, ((float) statisticsItem.getIncomeAmount() / 100f)));
-                entriesBalance.add(new Entry(i, (((float) (statisticsItem.getIncomeAmount() - statisticsItem.getExpenseAmount())) / 100f)));
+
+                float expensesValue = ((float) statisticsItem.getExpenseAmount() / 100f);
+                float incomeValue = ((float) statisticsItem.getIncomeAmount() / 100f);
+                float balanceValue = (((float) (statisticsItem.getIncomeAmount() - statisticsItem.getExpenseAmount())) / 100f);
+
+                entriesExpenses.add(new Entry(i, expensesValue));
+                entriesIncome.add(new Entry(i, incomeValue));
+                entriesBalance.add(new Entry(i, balanceValue));
+
+                barEntriesExpenses.add(new BarEntry(i, expensesValue));
+                barEntriesIncome.add(new BarEntry(i, incomeValue));
+                barEntriesBalance.add(new BarEntry(i, balanceValue));
+
+                if (expensesValue < lowestValue) {
+                    lowestValue = expensesValue;
+                }
+
+                if (incomeValue < lowestValue) {
+                    lowestValue = incomeValue;
+                }
+
+                if (balanceValue < lowestValue) {
+                    lowestValue = balanceValue;
+                }
+
                 labels.add(Utils.yearMonthDateFormat.format(statisticsItem.getTimestamp()));
             }
 
@@ -348,27 +439,39 @@ public class StatisticsActivity extends AppCompatActivity {
             LineDataSet lineDataSetIncome = new LineDataSet(entriesIncome, getString(R.string.income));
             LineDataSet lineDataSetBalance = new LineDataSet(entriesBalance, getString(R.string.saldo));
 
+            BarDataSet barDataSetExpenses = new BarDataSet(barEntriesExpenses, getString(R.string.expenses));
+            BarDataSet barDataSetIncome = new BarDataSet(barEntriesIncome, getString(R.string.income));
+            BarDataSet barDataSetBalance = new BarDataSet(barEntriesBalance, getString(R.string.saldo));
+
+            int colorAlpha = 190;
+
+            int colorExpenses = getColor(R.color.ui_lime_red);
+            barDataSetExpenses.setColor(Color.argb(colorAlpha, Color.red(colorExpenses), Color.green(colorExpenses), Color.blue(colorExpenses)));
+            barDataSetExpenses.setHighlightEnabled(false);
+            barDataSetExpenses.setValueTextSize(10f);
             lineDataSetExpenses.setLineWidth(1.5f);
             lineDataSetExpenses.setColor(getColor(R.color.ui_lime_red));
             lineDataSetExpenses.setValueTextSize(0f);
             lineDataSetExpenses.setDrawCircles(false);
             lineDataSetExpenses.setMode(LineDataSet.Mode.CUBIC_BEZIER);
             lineDataSetExpenses.setCubicIntensity(0.06f);
-            lineDataSetExpenses.setDrawVerticalHighlightIndicator(false);
-            lineDataSetExpenses.setDrawHorizontalHighlightIndicator(false);
+            lineDataSetExpenses.setHighlightEnabled(false);
 
             lineDataSetExpenses.setDrawFilled(true);
             lineDataSetExpenses.setFillColor(getColor(R.color.ui_lime_red));
             lineDataSetExpenses.setFillAlpha(55);
 
+            int colorIncome = getColor(R.color.ui_lime_green);
+            barDataSetIncome.setColor(Color.argb(colorAlpha, Color.red(colorIncome), Color.green(colorIncome), Color.blue(colorIncome)));
+            barDataSetIncome.setHighlightEnabled(false);
+            barDataSetIncome.setValueTextSize(10f);
             lineDataSetIncome.setLineWidth(1.5f);
             lineDataSetIncome.setColor(getColor(R.color.ui_lime_green));
             lineDataSetIncome.setValueTextSize(0f);
             lineDataSetIncome.setDrawCircles(false);
             lineDataSetIncome.setMode(LineDataSet.Mode.CUBIC_BEZIER);
             lineDataSetIncome.setCubicIntensity(0.06f);
-            lineDataSetIncome.setDrawVerticalHighlightIndicator(false);
-            lineDataSetIncome.setDrawHorizontalHighlightIndicator(false);
+            lineDataSetIncome.setHighlightEnabled(false);
 
             lineDataSetIncome.setDrawFilled(true);
             lineDataSetIncome.setFillColor(getColor(R.color.ui_lime_green));
@@ -376,14 +479,19 @@ public class StatisticsActivity extends AppCompatActivity {
 
             SharedPreferences sharedPreferences = getSharedPreferences(Utils.SHARED_PREFS, Context.MODE_PRIVATE);
             String isoCode = sharedPreferences.getString(Utils.SPS_CURRENCY_ISO_CODE, "USD");
-            String currencySymbol = Currencies.getIsoToUnicode().getOrDefault(isoCode, "$");
+            String currencySymbol = Currencies.getIsoToUnicode().getOrDefault(isoCode, isoCode);
 
+            int colorBalance = getColor(R.color.ui_lime_grey);
+            barDataSetBalance.setColor(Color.argb(colorAlpha, Color.red(colorBalance), Color.green(colorBalance), Color.blue(colorBalance)));
+            barDataSetBalance.setHighlightEnabled(false);
+            barDataSetBalance.setValueTextSize(10f);
             lineDataSetBalance.setLineWidth(1.9f);
             lineDataSetBalance.setColor(getColor(R.color.ui_lime_grey));
             lineDataSetBalance.setValueTextSize(13f);
             lineDataSetBalance.setValueTypeface(ResourcesCompat.getFont(StatisticsActivity.this, R.font.poppins_light));
             lineDataSetBalance.setValueTextColor(getColor(R.color.ui_text_faded));
             lineDataSetBalance.setDrawCircles(false);
+            lineDataSetBalance.setHighLightColor(getColor(R.color.ui_text));
             lineDataSetBalance.setMode(LineDataSet.Mode.CUBIC_BEZIER);
             lineDataSetBalance.setCubicIntensity(0.06f);
             lineDataSetBalance.setValueFormatter(new ValueFormatter() {
@@ -392,7 +500,7 @@ public class StatisticsActivity extends AppCompatActivity {
                     int index = (int) entry.getX();
                     StatisticsItem statisticsItem = a.get(index);
                     float value = (statisticsItem.getIncomeAmount() - statisticsItem.getExpenseAmount()) / 100;
-                    String display = (int)value + currencySymbol + " " + Utils.yearMonthDateFormat.format(statisticsItem.getTimestamp());
+                    String display = (int) value + currencySymbol + " " + Utils.yearMonthDateFormat.format(statisticsItem.getTimestamp());
                     return display;
                 }
             });
@@ -400,18 +508,67 @@ public class StatisticsActivity extends AppCompatActivity {
             lineDataSetBalance.setDrawFilled(true);
             lineDataSetBalance.setFillColor(getColor(R.color.ui_lime_grey));
             lineDataSetBalance.setFillAlpha(0);
+            lineDataSetBalance.setHighlightEnabled(false);
 
             dataSets.add(lineDataSetExpenses);
             dataSets.add(lineDataSetIncome);
             dataSets.add(lineDataSetBalance);
 
+            if (sizeOfArray > 3) {
+                barDataSetBalance.setValueTextSize(0);
+                barDataSetExpenses.setValueTextSize(0);
+                barDataSetIncome.setValueTextSize(0);
+            }
+
+            BarData barData = new BarData(barDataSetBalance, barDataSetExpenses, barDataSetIncome);
+            barData.setValueTextColor(getColor(R.color.ui_text));
+            barData.setValueTypeface(ResourcesCompat.getFont(StatisticsActivity.this, R.font.poppins_light));
+            barData.setValueFormatter(new ValueFormatter() {
+                @Override
+                public String getBarLabel(BarEntry barEntry) {
+                    return (int) barEntry.getY() + currencySymbol;
+                }
+            });
+            barData.setBarWidth(barWidth);
+
+            activity.barChartStatistics.setData(barData);
+            activity.barChartStatistics.getXAxis().setAxisMaximum(labels.size());
+            activity.barChartStatistics.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
+
+            activity.barChartStatistics.groupBars(0f, groupSpace, barSpace);
+
             LineData lineData = new LineData(dataSets);
-            activity.lineChartStatistics.setData(lineData);
+            if (sizeOfArray > 1) {
+                activity.lineChartStatistics.setData(lineData);
+            } else {
+                activity.lineChartStatistics.clear();
+            }
+
             activity.lineChartStatistics.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+            activity.lineChartStatistics.getXAxis().setAxisMinimum(lineData.getXMin() - 0.07f);
+            activity.lineChartStatistics.getXAxis().setAxisMaximum(lineData.getXMax() + 0.07f);
+
+            if (lowestValue > 0) {
+                activity.barChartStatistics.getAxisLeft().setAxisMinimum(-0f);
+                activity.barChartStatistics.getAxisRight().setAxisMinimum(-0f);
+                activity.lineChartStatistics.getAxisLeft().setAxisMinimum(-0f);
+                activity.lineChartStatistics.getAxisRight().setAxisMinimum(-0f);
+            }
+
+            activity.barChartStatistics.getAxisLeft().resetAxisMinimum();
+            activity.barChartStatistics.getAxisRight().resetAxisMinimum();
+            activity.lineChartStatistics.getAxisLeft().resetAxisMinimum();
+            activity.lineChartStatistics.getAxisRight().resetAxisMinimum();
 
             AlphaAnimation alphaAnimation = new AlphaAnimation(0f, 1f);
-            alphaAnimation.setDuration(1000);
+            alphaAnimation.setDuration(1500);
             activity.lineChartStatistics.startAnimation(alphaAnimation);
+            activity.lineChartStatistics.animateY(500, Easing.EaseInOutCirc);
+            activity.barChartStatistics.startAnimation(alphaAnimation);
+            activity.barChartStatistics.animateY(500, Easing.EaseInOutCirc);
+            activity.lineChartStatisticsLegend.startAnimation(alphaAnimation);
+            activity.barChartStatisticsLegend.startAnimation(alphaAnimation);
+            activity.barChartStatistics.invalidate();
         }
 
         private int loadPortfolioIdFromSharedPrefs() {

@@ -99,7 +99,7 @@ public class LoadPieChartsAsyncTask extends AsyncTask<Integer, ArrayList<Categor
         int saldoBalances = 0;
 
         BalanceDatabaseHelper balanceDatabaseHelper = new BalanceDatabaseHelper(activity);
-        Cursor balanceCursor = balanceDatabaseHelper.sumAllByPortfolioId(portfolioId);
+        Cursor balanceCursor = balanceDatabaseHelper.sumAllByPortfolioIdAndDate(portfolioId, month, year);
 
         while (balanceCursor.moveToNext()) {
             sumRevenuesBalances = balanceCursor.getInt(0);
