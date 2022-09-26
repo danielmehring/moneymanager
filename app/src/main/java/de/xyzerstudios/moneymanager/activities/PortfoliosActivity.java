@@ -137,7 +137,7 @@ public class PortfoliosActivity extends AppCompatActivity {
     protected void onPostResume() {
         super.onPostResume();
 
-        RewardedAd.load(this, "ca-app-pub-3940256099942544/5224354917",
+        RewardedAd.load(this, "ca-app-pub-6587457839952292/3748778670",
                 adRequest, new RewardedAdLoadCallback() {
                     @Override
                     public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {

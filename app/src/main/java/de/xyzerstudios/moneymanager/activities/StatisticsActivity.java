@@ -10,9 +10,11 @@ import android.os.Bundle;
 import android.transition.TransitionManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -71,7 +73,8 @@ public class StatisticsActivity extends AppCompatActivity {
         calendarFrom = Calendar.getInstance();
         calendarTo = Calendar.getInstance();
 
-        calendarFrom.set(Calendar.YEAR, (calendarTo.get(Calendar.YEAR) - 1));
+        if (calendarTo.get(Calendar.MONTH) > 1)
+            calendarFrom.set(Calendar.MONTH, (calendarTo.get(Calendar.MONTH) - 2));
 
         buttonStatisticsGoBack = findViewById(R.id.buttonStatisticsGoBack);
         buttonStatisticsMonthFrom = findViewById(R.id.buttonStatisticsMonthFrom);
@@ -181,7 +184,7 @@ public class StatisticsActivity extends AppCompatActivity {
         barChartStatistics.getXAxis().setTextColor(getColor(R.color.ui_text));
         barChartStatistics.getXAxis().setTextSize(13f);
         barChartStatistics.getXAxis().setTypeface(ResourcesCompat.getFont(StatisticsActivity.this, R.font.poppins_regular));
-        barChartStatistics.setExtraTopOffset(5);
+        barChartStatistics.setExtraTopOffset(3);
         barChartStatistics.getAxisLeft().setTextColor(getColor(R.color.ui_light_background));
         barChartStatistics.getAxisRight().setTextColor(getColor(R.color.ui_light_background));
         barChartStatistics.setScaleYEnabled(false);

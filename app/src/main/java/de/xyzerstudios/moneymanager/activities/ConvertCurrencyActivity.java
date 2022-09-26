@@ -95,6 +95,7 @@ public class ConvertCurrencyActivity extends AppCompatActivity implements DatePi
         setClickListeners();
         manipulateGui();
         loadExchangeRate();
+        setSoftKeyboardOpened(true);
     }
 
     private void loadValues() {
@@ -323,7 +324,8 @@ public class ConvertCurrencyActivity extends AppCompatActivity implements DatePi
                 amount = amount * 10 + 9;
                 break;
         }
-        textViewExchangeAmount.setText(utils.formatCurrency(amount));
+        amountExchanged = (int) ((double) amount * exchangeRate);
+        updateAmountToUi();
     }
 
     private class exchangeRateAsyncTask extends AsyncTask<String, String, Double> {
