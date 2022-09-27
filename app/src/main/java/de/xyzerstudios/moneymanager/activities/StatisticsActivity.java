@@ -6,20 +6,20 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.transition.TransitionManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
@@ -39,6 +39,11 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.whiteelephant.monthpicker.MonthPickerDialog;
 
 import java.lang.ref.WeakReference;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
@@ -52,6 +57,7 @@ import de.xyzerstudios.moneymanager.utils.Utils;
 import de.xyzerstudios.moneymanager.utils.currency.Currencies;
 import de.xyzerstudios.moneymanager.utils.database.ExpensesDatabaseHelper;
 import de.xyzerstudios.moneymanager.utils.database.IncomeDatabaseHelper;
+import de.xyzerstudios.moneymanager.utils.database.RepeatedIncomeDatabaseHelper;
 
 public class StatisticsActivity extends AppCompatActivity {
 
@@ -184,7 +190,7 @@ public class StatisticsActivity extends AppCompatActivity {
         barChartStatistics.getXAxis().setTextColor(getColor(R.color.ui_text));
         barChartStatistics.getXAxis().setTextSize(13f);
         barChartStatistics.getXAxis().setTypeface(ResourcesCompat.getFont(StatisticsActivity.this, R.font.poppins_regular));
-        barChartStatistics.setExtraTopOffset(3);
+        barChartStatistics.setExtraTopOffset(25);
         barChartStatistics.getAxisLeft().setTextColor(getColor(R.color.ui_light_background));
         barChartStatistics.getAxisRight().setTextColor(getColor(R.color.ui_light_background));
         barChartStatistics.setScaleYEnabled(false);
@@ -339,24 +345,74 @@ public class StatisticsActivity extends AppCompatActivity {
                         incomeCursor.getInt(2), incomeCursor.getInt(0)));
             }
 
+            HashMap<String, Integer> repeatedIncomeMap = new HashMap<>();
+
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+
+                int currentYear = yearFrom;
+                int currentMonth = monthFrom;
+
+                for (;;) {
+                    final String key = currentMonth + "_" + currentYear;
+                    final int value = sumOfRepeatedIncomeInMonth(currentMonth, currentYear, portfolioId);
+                    repeatedIncomeMap.put(key, value);
+                    if (currentYear == yearTo) {
+                        if (currentMonth < monthTo) {
+                            currentMonth++;
+                            continue;
+                        } else {
+                            break;
+                        }
+                    }
+                    if (currentMonth < 12) {
+                        currentMonth++;
+                    } else {
+                        currentMonth = 1;
+                        currentYear++;
+                    }
+                }
+            }
+
+
             expenseMap.forEach((key, value) -> {
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(Calendar.YEAR, value.getYear());
                 calendar.set(Calendar.MONTH, value.getMonth() - 1);
                 calendar.set(Calendar.DAY_OF_MONTH, 1);
                 statisticsItems.add(new StatisticsItem(value.getMonth(), value.getYear(), value.getAmount(),
-                        incomeMap.getOrDefault(key, new SimpleStatisticsItem(0, 0, 0)).getAmount(),
+                        (incomeMap.getOrDefault(key, new SimpleStatisticsItem(0, 0, 0)).getAmount())
+                        + (repeatedIncomeMap.getOrDefault(key, 0)),
                         calendar.getTime()));
                 incomeMap.remove(key);
+                repeatedIncomeMap.remove(key);
             });
 
+
             incomeMap.forEach((key, value) -> {
+                final int year = value.getYear();
+                final int month = value.getMonth();
+                final int amount = value.getAmount();
                 Calendar calendar = Calendar.getInstance();
-                calendar.set(Calendar.YEAR, value.getYear());
-                calendar.set(Calendar.MONTH, value.getMonth() - 1);
+                calendar.set(Calendar.YEAR, year);
+                calendar.set(Calendar.MONTH, month - 1);
                 calendar.set(Calendar.DAY_OF_MONTH, 1);
-                statisticsItems.add(new StatisticsItem(value.getMonth(), value.getYear(), 0, value.getAmount(),
+
+                statisticsItems.add(new StatisticsItem(month, year, 0, amount
+                        + (repeatedIncomeMap.getOrDefault(key, 0)),
                         calendar.getTime()));
+                repeatedIncomeMap.remove(key);
+            });
+
+            repeatedIncomeMap.forEach((key, value) -> {
+                int month = Integer.valueOf(key.split("_")[0]);
+                int year = Integer.valueOf(key.split("_")[1]);
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(Calendar.YEAR, year);
+                calendar.set(Calendar.MONTH, month - 1);
+                calendar.set(Calendar.DAY_OF_MONTH, 1);
+                if (value > 0) {
+                    statisticsItems.add(new StatisticsItem(month, year, 0, value, calendar.getTime()));
+                }
             });
 
             statisticsItems.sort(new Comparator<StatisticsItem>() {
@@ -504,6 +560,11 @@ public class StatisticsActivity extends AppCompatActivity {
                     StatisticsItem statisticsItem = a.get(index);
                     float value = (statisticsItem.getIncomeAmount() - statisticsItem.getExpenseAmount()) / 100;
                     String display = (int) value + currencySymbol + " " + Utils.yearMonthDateFormat.format(statisticsItem.getTimestamp());
+                    if (sizeOfArray > 9) {
+                        display = "";
+                    } else if (sizeOfArray > 5) {
+                        display = Utils.yearMonthDateFormat.format(statisticsItem.getTimestamp());
+                    }
                     return display;
                 }
             });
@@ -578,5 +639,186 @@ public class StatisticsActivity extends AppCompatActivity {
             SharedPreferences sharedPreferences = activity.getSharedPreferences(Utils.SHARED_PREFS, Context.MODE_PRIVATE);
             return sharedPreferences.getInt(Utils.SHARED_PREFS_CURRENT_PORTFOLIO, 1);
         }
+
+        @RequiresApi(api = Build.VERSION_CODES.O)
+        private int sumOfRepeatedIncomeInMonth(int month, int year, int portfolioId) {
+            RepeatedIncomeDatabaseHelper repeatedIncomeDatabaseHelper = new RepeatedIncomeDatabaseHelper(activity);
+            Cursor repeatedCursor = repeatedIncomeDatabaseHelper.readAllDataForPortfolio(portfolioId);
+
+            int amount = 0;
+
+            while (repeatedCursor.moveToNext()) {
+                int amountRepeated = repeatedCursor.getInt(3);
+                String interval = repeatedCursor.getString(4);
+                String timestampOfEntry = repeatedCursor.getString(5);
+
+                int intervalNumber = Integer.valueOf(interval.split("_")[0]);
+                String intervalUnit = interval.split("_")[1];
+
+                int amountToAdd = 0;
+                amountToAdd = amountInMonth(timestampOfEntry, month, year, intervalUnit, intervalNumber, amountRepeated);
+
+                if (amountToAdd <= 0) {
+                    continue;
+                }
+
+                amount = amount + amountToAdd;
+            }
+
+            return amount;
+        }
+
+        @RequiresApi(api = Build.VERSION_CODES.O)
+        private int amountInMonth(String timestampOfEntry, int month, int year, String intervalUnit, int intervalNumber, int amount) {
+            int amountInMonth = 0; // returns -1 when selected month is before timestamp.
+
+            String[] timestampSplit = timestampOfEntry.split("_");
+            int yearTimestamp = Integer.valueOf(timestampSplit[0]);
+            int monthTimestamp = Integer.valueOf(timestampSplit[1]);
+            int dayTimestamp = Integer.valueOf(timestampSplit[2]);
+
+            String firstDayOfMonth = year + "_" + ((month < 10) ? ("0" + month) : month) + "_01";
+            String lastDayOfMonth = year + "_" + ((month < 10) ? ("0" + month) : month) + "_" + getDaysInMonth(month, year);
+
+            switch (intervalUnit) {
+                case "d":
+                    if (monthTimestamp == month && yearTimestamp == year) {
+                        int multiplierAmountInMonth = -1;
+                        int daysInCurrentMonth = getDaysInMonth(month, year);
+                        for (int i = dayTimestamp; i <= daysInCurrentMonth; i += intervalNumber) {
+                            ++multiplierAmountInMonth;
+                        }
+                        amountInMonth = amount * multiplierAmountInMonth;
+                    } else {
+                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy_MM_dd");
+
+                        LocalDate dateTimestamp = LocalDate.parse(timestampOfEntry, dtf);
+                        LocalDate dateStartCurrentMonth = LocalDate.parse(firstDayOfMonth, dtf);
+                        LocalDate dateEndCurrentMonth = LocalDate.parse(lastDayOfMonth, dtf);
+
+                        int rangeStart = Math.toIntExact(ChronoUnit.DAYS.between(dateTimestamp, dateStartCurrentMonth));
+                        int rangeEnd = Math.toIntExact(ChronoUnit.DAYS.between(dateTimestamp, dateEndCurrentMonth));
+
+                        if (rangeStart < 0 || rangeEnd < 0) {
+                            amountInMonth = -1;
+                            break;
+                        }
+                        int multiplier = 0;
+                        for (int i = rangeStart; i <= rangeEnd; ++i) {
+                            if (i % intervalNumber == 0) multiplier++;
+                        }
+                        amountInMonth = amount * multiplier;
+                    }
+                    break;
+                case "w":
+                    intervalNumber *= 7;
+                    if (monthTimestamp == month && yearTimestamp == year) {
+                        int multiplierAmountInMonth = -1;
+                        int daysInCurrentMonth = getDaysInMonth(month, year);
+                        for (int i = dayTimestamp; i <= daysInCurrentMonth; i += intervalNumber) {
+                            ++multiplierAmountInMonth;
+                        }
+                        amountInMonth = amount * multiplierAmountInMonth;
+                    } else {
+                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy_MM_dd");
+
+                        String endOfThisMonth = year + "_" + ((month < 10) ? ("0" + month) : month) + "_" + getDaysInMonth(month, year);
+
+                        LocalDate dateTimestamp = LocalDate.parse(timestampOfEntry, dtf);
+                        LocalDate dateStartCurrentMonth = LocalDate.parse(firstDayOfMonth, dtf);
+                        LocalDate dateEndCurrentMonth = LocalDate.parse(endOfThisMonth, dtf);
+
+                        int rangeStart = Math.toIntExact(ChronoUnit.DAYS.between(dateTimestamp, dateStartCurrentMonth));
+                        int rangeEnd = Math.toIntExact(ChronoUnit.DAYS.between(dateTimestamp, dateEndCurrentMonth));
+
+                        if (rangeStart < 0 || rangeEnd < 0) {
+                            amountInMonth = -1;
+                            break;
+                        }
+
+                        int multiplier = 0;
+                        for (int i = rangeStart; i <= rangeEnd; ++i) {
+                            if (i % intervalNumber == 0) multiplier++;
+                        }
+                        amountInMonth = amount * multiplier;
+                    }
+                    break;
+                case "m":
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy_MM_dd");
+                    String timestampModified = timestampOfEntry.split("_")[0] + "_" + timestampOfEntry.split("_")[1] + "_01";
+
+                    LocalDate dateTimestampMonth = LocalDate.parse(timestampModified, dtf);
+                    LocalDate dateSelectedMonth = LocalDate.parse(firstDayOfMonth, dtf);
+
+                    int monthsBetween = Math.toIntExact(ChronoUnit.MONTHS.between(dateTimestampMonth, dateSelectedMonth));
+                    if (monthsBetween == 0) {
+                        amountInMonth = 0;
+                        break;
+                    }
+                    if (monthsBetween < 0) {
+                        amountInMonth = -1;
+                        break;
+                    }
+                    if (monthsBetween % intervalNumber == 0) {
+                        amountInMonth = amount;
+                    }
+                    break;
+                case "y":
+                    try {
+                        SimpleDateFormat simpleDateFormat = Utils.isoDateFormat;
+                        Date dateTimestamp = simpleDateFormat.parse(timestampOfEntry);
+                        int timestampYear = Integer.valueOf(Utils.yearDateFormat.format(dateTimestamp));
+                        int timestampMonth = Integer.valueOf(Utils.monthDateFormat.format(dateTimestamp));
+                        if (timestampMonth == month && year > timestampYear) {
+                            amountInMonth = amount;
+                        } else if (year < timestampYear || (year == timestampYear && month < timestampMonth)) {
+                            amountInMonth = -1;
+                        } else {
+                            amountInMonth = 0;
+                        }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+            }
+            return amountInMonth;
+        }
+
+        private int getDaysInMonth(int month, int year) {
+            int length;
+            switch (month) {
+                case 1:
+                case 3:
+                case 5:
+                case 7:
+                case 8:
+                case 10:
+                case 12:
+                    length = 31;
+                    break;
+                default:
+                case 4:
+                case 6:
+                case 9:
+                case 11:
+                    length = 30;
+                    break;
+                case 2:
+                    length = checkLeapYear(year) ? 29 : 28;
+                    break;
+            }
+            return length;
+        }
+
+        private boolean checkLeapYear(int year) {
+            if (year % 400 == 0) {
+                return true;
+            }
+            if (year % 100 == 0) {
+                return false;
+            }
+            return year % 4 == 0;
+        }
+
     }
 }

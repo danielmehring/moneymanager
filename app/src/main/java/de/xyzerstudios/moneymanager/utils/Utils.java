@@ -91,6 +91,27 @@ public class Utils {
         return formatter.format(d);
     }
 
+    public String formatCurrency(long amount, String currencyIsoCode, boolean displayWithSymbol) {
+        String currencySymbol = Currencies.getIsoToUnicode().getOrDefault(currencyIsoCode, currencyIsoCode);
+
+        long nachKomma = amount % 100;
+        double d = amount / 100 + (nachKomma / 100.0);
+
+        DecimalFormat formatter = (DecimalFormat) NumberFormat.getCurrencyInstance();
+        if (!displayWithSymbol || currencyIsoCode.matches("EUR")) {
+            formatter = (DecimalFormat) NumberFormat.getCurrencyInstance(Locale.GERMANY);
+        }
+        DecimalFormatSymbols symbols = formatter.getDecimalFormatSymbols();
+        if (displayWithSymbol) {
+            symbols.setCurrencySymbol(currencySymbol);
+        } else {
+            symbols.setCurrencySymbol(currencyIsoCode);
+        }
+        formatter.setDecimalFormatSymbols(symbols);
+
+        return formatter.format(d);
+    }
+
     public static String translateUsingGoogle(String langFrom, String langTo, String text) throws IOException {
         OkHttpClient okHttpClient = new OkHttpClient();
         String urlStr = "https://script.google.com/macros/s/" +

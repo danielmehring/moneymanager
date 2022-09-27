@@ -54,7 +54,7 @@ public class ConvertCurrencyActivity extends AppCompatActivity implements DatePi
             textViewExchangeRate, textViewExchangeAmount, textViewEqualsToAmount;
     private FrameLayout amountChooser;
 
-    private int amount = 0;
+    private long amount = 0;
     private int amountExchanged = 0;
     private double exchangeRate = 1;
     private Utils utils;

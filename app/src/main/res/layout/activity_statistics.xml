@@ -151,7 +151,7 @@
 
                     <Space
                         android:layout_width="match_parent"
-                        android:layout_height="30dp" />
+                        android:layout_height="10dp" />
 
                     <com.github.mikephil.charting.charts.BarChart
                         android:id="@+id/barChartStatistics"

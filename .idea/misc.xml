@@ -113,7 +113,7 @@
         <entry key="app/src/main/res/layout/activity_add_portfolio.xml" value="0.2105978260869565" />
         <entry key="app/src/main/res/layout/activity_balance.xml" value="0.2105978260869565" />
         <entry key="app/src/main/res/layout/activity_balances.xml" value="0.2105978260869565" />
-        <entry key="app/src/main/res/layout/activity_convert_currency.xml" value="0.2105978260869565" />
+        <entry key="app/src/main/res/layout/activity_convert_currency.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_currencies.xml" value="0.2105978260869565" />
         <entry key="app/src/main/res/layout/activity_edit_balance.xml" value="0.2105978260869565" />
         <entry key="app/src/main/res/layout/activity_edit_budget.xml" value="0.2105978260869565" />
