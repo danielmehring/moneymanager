@@ -9,8 +9,8 @@ android {
         applicationId "de.xyzerstudios.moneymanager"
         minSdk 24
         targetSdk 32
-        versionCode 5
-        versionName "r-1.0"
+        versionCode 6
+        versionName "r-1.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
